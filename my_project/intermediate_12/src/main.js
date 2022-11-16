@@ -4,6 +4,7 @@ import * as CONTROLS from "controls";
 
 // Own modules
 import Television from "./objects/Television.js";
+import Arcade from "./objects/Arcade.js";
 
 // Event functions
 import { updateAspectRatio } from "./eventfunctions/updateAspectRatio.js";
@@ -30,6 +31,10 @@ function main() {
   const television = new Television();
   television.position.set(0, 16.8, 0);
   window.scene.add(television);
+
+  /*   const arcade = new Arcade();
+  arcade.position.set(0, 16.8, 0);
+  window.scene.add(arcade); */
 
   const planeGeometry = new THREE.PlaneGeometry(200, 200);
   const planeMaterial = new THREE.MeshLambertMaterial({

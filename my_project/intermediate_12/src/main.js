@@ -32,9 +32,9 @@ function main() {
   television.position.set(0, 16.8, 0);
   window.scene.add(television);
 
-  /*   const arcade = new Arcade();
-  arcade.position.set(0, 16.8, 0);
-  window.scene.add(arcade); */
+  const arcade = new Arcade();
+  arcade.position.set(0, 0, 0);
+  window.scene.add(arcade);
 
   const planeGeometry = new THREE.PlaneGeometry(200, 200);
   const planeMaterial = new THREE.MeshLambertMaterial({

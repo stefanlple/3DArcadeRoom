@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-export default class Television extends THREE.Group {
+export default class Arcade extends THREE.Group {
   constructor() {
     super();
 
@@ -11,129 +11,95 @@ export default class Television extends THREE.Group {
     const corpusMaterial = new THREE.MeshPhongMaterial({
       color: 0xff4000,
       flatShading: true,
+      side: THREE.DoubleSide,
     });
 
-    // Corpus
+    // Outer Corpus
+    // Start upper left and clockwise
     // ------
     const positions = [
-      -0.54295,
-      0.69106,
-      2.9196, // 0 top edge left
-      -0.77945,
-      0.69106,
-      2.7751, // 1 clock wise
-      -0.79777,
-      0.69106,
-      2.4777, // 2
-      25.0,
-      -14.7,
-      16.5, // 3
-      16.8,
-      11.0,
-      -18.0, // 4
-      -16.8,
-      11.0,
-      -18.0, // 5
-      -16.8,
-      -13.0,
-      -18.0, // 6
-      16.8,
-      -13.0,
-      -18.0, // 7
-      17.5,
-      -14.6,
-      14.0, // 8
-      -17.5,
-      -14.6,
-      14.0, // 9
-      -17.5,
-      -16.8,
-      14.0, // 10
-      17.5,
-      -16.8,
-      14.0, // 11
-      14.8,
-      -13.85,
-      -2.0, // 12
-      -14.8,
-      -13.85,
-      -2.0, // 13
-      -14.8,
-      -16.8,
-      -2.0, // 14
-      14.8,
-      -16.8,
-      -2.0, // 15
-    ];
+      -0.542951,
+      2.91963,
+      0.691061, //0
+      -0.779445,
+      2.77506,
+      0.691061, //1
+      -0.797771,
+      2.47766,
+      0.691061, //2
+      -0.506879,
+      2.32456,
+      0.691061, //3
+      -0.581514,
+      1.49935,
+      0.691061, //4
+      -0.990774,
+      1.50038,
+      0.691061, //5
+      -0.990774,
+      1.15698,
+      0.691061, //6
+      -0.739914,
+      0,
+      0.691061, // 7
+      0.499795,
+      0,
+      0.691061, //8
+      0.498101,
+      2.77506,
+      0.691061, //9
+      //other side of outercorpus
+      -0.542951,
+      2.91963,
+      0.591929, //10
+      -0.779445,
+      2.77506,
+      0.591929, //11
+      -0.797771,
+      2.47766,
+      0.591929, //12
+      -0.506879,
+      2.32456,
+      0.591929, //13
+      -0.581514,
+      1.49935,
+      0.591929, //14
+      -0.990774,
+      1.50038,
+      0.591929, //15
+      -0.990774,
+      1.15698,
+      0.591929, //16
+      -0.739914,
+      0,
+      0.591929, //17
+      0.499795,
+      0,
+      0.591929, //18
+      0.498101,
+      2.77506,
+      0.591929, // 19
+    ].map((e) => 35 * e);
 
     const indices = [
-      0,
-      1,
-      2, // body front 1/2
-      0,
-      2,
-      3, // body front 2/2
-      1,
-      5,
-      6, // body left 1/2
-      1,
-      6,
-      2, // body left 2/2
-      4,
-      0,
-      3, // body right 1/2
-      4,
-      3,
-      7, // body right 2/2
-      4,
-      5,
-      1, // body top 1/2
-      4,
-      1,
-      0, // body top 2/2
-      3,
-      2,
-      6, // body bottom 1/2
-      3,
-      6,
-      7, // body bottom 2/2
-      5,
-      4,
-      7, // body back 1/2
-      5,
-      7,
-      6, // body back 2/2
-      8,
-      9,
-      10, // foot front 1/2
-      8,
-      10,
-      11, // foot front 2/2
-      9,
-      13,
-      14, // foot left 1/2
-      9,
-      14,
-      10, // foot left 2/2
-      12,
-      8,
-      11, // foot right 1/2
-      12,
-      11,
-      15, // foot right 2/2
-      11,
-      10,
-      14, // foot bottom 1/2
-      11,
-      14,
-      15, // foot bottom 2/2
-      13,
-      12,
-      15, // foot back 1/2
-      13,
-      15,
-      14, // foot back 2/2
+      //right outer side of arcade
+      0, 1, 3, 1, 2, 3, 0, 3, 9, 3, 4, 9, 4, 8, 9, 4, 7, 8, 4, 6, 7, 4, 5, 6,
+      //right outer side other side of arcade
+      10, 11, 13, 11, 12, 13, 10, 13, 19, 13, 14, 19, 14, 18, 19, 14, 17, 18,
+      14, 16, 17, 14, 15, 16,
+      //merge two planes --- pattern increment by 1 every 3 or 6
+      0, 9, 19, 0, 10, 19, 0, 1, 10, 1, 10, 11, 1, 11, 2, 2, 12, 11, 2, 3, 13,
+      2, 13, 12, 3, 4, 14, 3, 14, 13, 4, 5, 15, 4, 14, 15, 5, 6, 16, 5, 15, 16,
+      6, 7, 17, 6, 16, 17, 7, 8, 18, 7, 17, 18, 8, 9, 19, 8, 18, 19,
     ];
+
+    function toDouble(modArray) {
+      for (var i = 2; i < modArray.length; i += 3) {
+        modArray[i] -= 0.099132;
+        //modArray[i] += 5000;
+      }
+      return modArray;
+    }
 
     const corpusGeometry = new THREE.BufferGeometry();
     corpusGeometry.setAttribute(

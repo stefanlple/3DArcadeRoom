@@ -28,9 +28,9 @@ function main() {
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
-  const television = new Television();
+  /* const television = new Television();
   television.position.set(0, 16.8, 0);
-  window.scene.add(television);
+  window.scene.add(television); */
 
   const arcade = new Arcade();
   arcade.position.set(0, 0, 0);

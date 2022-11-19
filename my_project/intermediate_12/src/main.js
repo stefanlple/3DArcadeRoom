@@ -23,7 +23,7 @@ function main() {
 
   window.renderer = new THREE.WebGLRenderer({ antialias: true });
   window.renderer.setSize(window.innerWidth, window.innerHeight);
-  window.renderer.setClearColor(0xffffff);
+  window.renderer.setClearColor(0x202020);
   window.renderer.shadowMap.enabled = true;
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
@@ -36,7 +36,7 @@ function main() {
   arcade.position.set(0, 0, 0);
   window.scene.add(arcade);
 
-  const planeGeometry = new THREE.PlaneGeometry(200, 200);
+  const planeGeometry = new THREE.PlaneGeometry(300, 300);
   const planeMaterial = new THREE.MeshLambertMaterial({
     color: 0xaaaaaa,
     wireframe: false,
@@ -47,11 +47,11 @@ function main() {
   window.scene.add(plane);
 
   const ambientLight = new THREE.AmbientLight(0xffffff);
-  ambientLight.intensity = 0.5;
+  ambientLight.intensity = 1;
   window.scene.add(ambientLight);
 
   const spotLight = new THREE.SpotLight(0xffffff);
-  spotLight.position.set(100, 100, 100);
+  spotLight.position.set(100, 200, 100);
   spotLight.intensity = 0.8;
   spotLight.target = plane;
   spotLight.angle = THREE.MathUtils.degToRad(30);

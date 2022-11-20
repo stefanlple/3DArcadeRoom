@@ -27,7 +27,6 @@ function main() {
   window.renderer.shadowMap.enabled = true;
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
-
   /* const television = new Television();
   television.position.set(0, 16.8, 0);
   window.scene.add(television); */
@@ -74,6 +73,8 @@ function main() {
     window.renderer.domElement
   );
   orbitControls.target = new THREE.Vector3(0, 0, 0);
+  //orbitControls.maxPolarAngle = Math.PI / 2.1;
+
   orbitControls.update();
 
   function mainLoop() {

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
 
 export default class Arcade extends THREE.Group {
   constructor() {
@@ -250,6 +251,7 @@ export default class Arcade extends THREE.Group {
       }
       return modArray;
     }
+    //corpus
     const corpusGeometry = new THREE.BufferGeometry();
     corpusGeometry.setAttribute(
       "position",
@@ -259,6 +261,74 @@ export default class Arcade extends THREE.Group {
     corpusGeometry.computeVertexNormals();
     const corpus = new THREE.Mesh(corpusGeometry, corpusMaterial);
     corpus.castShadow = true;
-    this.add(corpus);
+    //this.add(corpus);
+
+    //buttonHolder
+    const buttonHolderGeometry = new THREE.CylinderGeometry(
+      0.0571145,
+      0.0571145,
+      0.0288,
+      8
+    );
+    buttonHolderGeometry.scale(35, 35, 35);
+
+    const buttonHolder1 = new THREE.Mesh(buttonHolderGeometry, corpusMaterial);
+    buttonHolder1.position.set(-0.758528 * 35, 1.3904 * 35, +0.321495 * 35);
+    this.add(buttonHolder1);
+
+    const buttonHolder2 = buttonHolder1.clone();
+    buttonHolder2.position.set(-0.758528 * 35, 1.3904 * 35, -0.181031 * 35);
+    this.add(buttonHolder2);
+
+    const buttonHolder3 = buttonHolder1.clone();
+    buttonHolder3.position.set(-0.758528 * 35, 1.3904 * 35, -0.353658 * 35);
+    this.add(buttonHolder3);
+
+    //button
+    const buttonGeometry = new THREE.CylinderGeometry(
+      0.0393855,
+      0.0393855,
+      0.019893,
+      8
+    );
+    buttonGeometry.scale(35, 35, 35);
+    const button2 = new THREE.Mesh(buttonGeometry, corpusMaterial);
+    button2.position.set(-0.758528 * 35, 1.41056 * 35, -0.181031 * 35);
+    this.add(button2);
+
+    const button3 = button2.clone();
+    button3.position.set(-0.758528 * 35, 1.41056 * 35, -0.353658 * 35);
+    this.add(button3);
+
+    //joystick
+
+    //stick
+    const stickGeometry = new THREE.CylinderGeometry(
+      0.018595,
+      0.018595,
+      0.147959,
+      10
+    );
+    stickGeometry.scale(35, 35, 35);
+    const stick = new THREE.Mesh(stickGeometry, corpusMaterial);
+    stick.position.set(-0.759288 * 35, 1.44271 * 35, 0.321495 * 35);
+    this.add(stick);
+
+    //ball
+    const ballGeometry = new THREE.SphereGeometry(0.0415);
+    ballGeometry.scale(35, 35, 35);
+    const ball = new THREE.Mesh(ballGeometry, corpusMaterial);
+    ball.position.set(-0.758528 * 35, 1.515 * 35, 0.321495 * 35);
+    this.add(ball);
+
+    const stickCSG = CSG.fromMesh(stick);
+    const ballCSG = CSG.fromMesh(ball);
+    const joystick = CSG.toMesh(
+      stickCSG.union(ballCSG),
+      stick.matrix,
+      stick.material
+    );
+    joystick.castShadow = true;
+    this.add(joystick);
   }
 }

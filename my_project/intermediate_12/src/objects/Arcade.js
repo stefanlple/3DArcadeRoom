@@ -10,7 +10,12 @@ export default class Arcade extends THREE.Group {
 
   addParts() {
     const corpusMaterial = new THREE.MeshPhongMaterial({
-      color: 0xff4000,
+      color: 0xf00000,
+      flatShading: true,
+      side: THREE.DoubleSide,
+    });
+    const corpusMaterial2 = new THREE.MeshPhongMaterial({
+      color: 0xff50f0,
       flatShading: true,
       side: THREE.DoubleSide,
     });
@@ -261,7 +266,7 @@ export default class Arcade extends THREE.Group {
     corpusGeometry.computeVertexNormals();
     const corpus = new THREE.Mesh(corpusGeometry, corpusMaterial);
     corpus.castShadow = true;
-    //this.add(corpus);
+    this.add(corpus);
 
     //buttonHolder
     const buttonHolderGeometry = new THREE.CylinderGeometry(
@@ -310,17 +315,18 @@ export default class Arcade extends THREE.Group {
       10
     );
     stickGeometry.scale(35, 35, 35);
+    stickGeometry.translate(-0.759288 * 35, 1.44271 * 35, 0.321495 * 35);
     const stick = new THREE.Mesh(stickGeometry, corpusMaterial);
-    stick.position.set(-0.759288 * 35, 1.44271 * 35, 0.321495 * 35);
-    this.add(stick);
+    /* stick.position.set(-0.759288 * 35, 1.44271 * 35, 0.321495 * 35);
+    this.add(stick); */
 
     //ball
     const ballGeometry = new THREE.SphereGeometry(0.0415);
     ballGeometry.scale(35, 35, 35);
+    ballGeometry.translate(-0.758528 * 35, 1.515 * 35, 0.321495 * 35);
     const ball = new THREE.Mesh(ballGeometry, corpusMaterial);
-    ball.position.set(-0.758528 * 35, 1.515 * 35, 0.321495 * 35);
-    this.add(ball);
 
+    //joystick
     const stickCSG = CSG.fromMesh(stick);
     const ballCSG = CSG.fromMesh(ball);
     const joystick = CSG.toMesh(
@@ -330,5 +336,88 @@ export default class Arcade extends THREE.Group {
     );
     joystick.castShadow = true;
     this.add(joystick);
+
+    //--coin mashine--
+    const coinMashineGeometry = new THREE.BoxGeometry(
+      0.142827,
+      0.374662,
+      0.43747
+    );
+    coinMashineGeometry.scale(35, 35, 35);
+    coinMashineGeometry.translate(-0.856942 * 35, 0.968442 * 35, 0.000747 * 35);
+    const coinMashineBody = new THREE.Mesh(
+      coinMashineGeometry,
+      corpusMaterial2
+    );
+    //this.add(coinMashineBody);
+
+    //coin mashine cavity
+    const coinMashineCavityGeometry = new THREE.BoxGeometry(
+      0.182579,
+      0.17851,
+      0.27444
+    );
+    coinMashineCavityGeometry.scale(35, 35, 35);
+    coinMashineCavityGeometry.translate(
+      -0.845961 * 35,
+      0.910578 * 35,
+      0.001557 * 35
+    );
+    const coinMashineCavity = new THREE.Mesh(
+      coinMashineCavityGeometry,
+      corpusMaterial
+    );
+    //this.add(coinMashineCavity);
+
+    //coin mashine buttonholder
+    const coinMashineButtonHolderGeometry = new THREE.BoxGeometry(
+      0.037769,
+      0.052703,
+      0.04475
+    );
+    coinMashineButtonHolderGeometry.scale(35, 35, 35);
+    const coinMashineButtonHolder = new THREE.Mesh(
+      coinMashineButtonHolderGeometry,
+      corpusMaterial2
+    );
+    coinMashineButtonHolder.position.set(
+      -0.916687 * 35,
+      1.0619 * 35,
+      -0.011106 * 35
+    );
+    this.add(coinMashineButtonHolder);
+
+    //coin mashine button
+    const coinMashineButtonGeometry = new THREE.BoxGeometry(
+      0.037767,
+      0.035593,
+      0.0305
+    );
+    coinMashineButtonGeometry.scale(35, 35, 35);
+    const coinMashineButton = new THREE.Mesh(
+      coinMashineButtonGeometry,
+      corpusMaterial
+    );
+    coinMashineButton.position.set(-0.925485 * 35, 1.0619 * 35, -0.011276 * 35);
+    this.add(coinMashineButton);
+
+    //coin mashine button
+    const coinSlotGeometry = new THREE.BoxGeometry(0.25, 0.042678, 0.017);
+    coinSlotGeometry.scale(35, 35, 35);
+    coinSlotGeometry.translate(-0.87 * 35, 1.06167 * 35, 0.03771 * 35);
+    const coinSlot = new THREE.Mesh(coinSlotGeometry, corpusMaterial);
+    //this.add(coinSlot);
+
+    //coin mashine CSG
+    const coinMashineBodyCSG = CSG.fromMesh(coinMashineBody);
+    const coinMashineCavityCSG = CSG.fromMesh(coinMashineCavity);
+    const coinSlotCSG = CSG.fromMesh(coinSlot);
+    const coinMashine = CSG.toMesh(
+      coinMashineBodyCSG.subtract(coinSlotCSG).subtract(coinMashineCavityCSG),
+      coinMashineBody.matrix,
+      coinMashineBody.material
+    );
+    coinMashineBody.castShadow = true;
+    this.add(coinMashine);
   }
 }

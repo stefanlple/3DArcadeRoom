@@ -61,12 +61,12 @@ function main() {
   spotLight.shadow.camera.near = 10;
   spotLight.shadow.camera.far = 500;
   window.scene.add(spotLight);
-  //window.scene.add(new THREE.CameraHelper(spotLight.shadow.camera));
+  window.scene.add(new THREE.CameraHelper(spotLight.shadow.camera));
 
   const gui = new DATGUI.GUI();
-  gui.add(spotLight.position, "x", 0, 200);
+  gui.add(spotLight.position, "x", -200, 200);
   gui.add(spotLight.position, "y", 0, 200);
-  gui.add(spotLight.position, "z", 0, 200);
+  gui.add(spotLight.position, "z", -200, 200);
 
   const orbitControls = new CONTROLS.OrbitControls(
     window.camera,

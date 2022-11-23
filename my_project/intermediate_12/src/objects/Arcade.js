@@ -419,5 +419,17 @@ export default class Arcade extends THREE.Group {
     );
     coinMashineBody.castShadow = true;
     this.add(coinMashine);
+
+    //pedal mashine
+    const cylinderGeometry = new THREE.CylinderGeometry(
+      (0.367916 / 2) * 35,
+      (0.367916 / 2) * 35,
+      0.073079 * 35,
+      32
+    );
+    const cylinder = new THREE.Mesh(cylinderGeometry, corpusMaterial);
+    cylinder.position.set(-1.41066 * 35, 0.459419 * 35, 0);
+    cylinder.rotateX(Math.PI / 2);
+    scene.add(cylinder);
   }
 }

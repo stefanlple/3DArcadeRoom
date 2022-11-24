@@ -88,7 +88,11 @@ function main() {
   };
   document.addEventListener("keydown", onDocumentKeyDown);
 
+  const clock = new THREE.Clock();
+
   function mainLoop() {
+    const delta = clock.getDelta();
+
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);
   }

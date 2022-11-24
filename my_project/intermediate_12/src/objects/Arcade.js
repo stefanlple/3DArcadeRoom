@@ -266,7 +266,7 @@ export default class Arcade extends THREE.Group {
     corpusGeometry.computeVertexNormals();
     const corpus = new THREE.Mesh(corpusGeometry, corpusMaterial);
     corpus.castShadow = true;
-    //this.add(corpus);
+    this.add(corpus);
 
     //buttonHolder
     const buttonHolderGeometry = new THREE.CylinderGeometry(

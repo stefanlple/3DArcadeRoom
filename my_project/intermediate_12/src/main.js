@@ -80,7 +80,10 @@ function main() {
   const onDocumentKeyDown = (event) => {
     let keyCode = event.which;
     if (keyCode == 74) {
-      arcade.children;
+      arcade.children[1].translateY(-0.01413 * 35);
+    }
+    if (keyCode == 75) {
+      arcade.children[2].translateY(-0.01413 * 35);
     }
   };
   document.addEventListener("keydown", onDocumentKeyDown);

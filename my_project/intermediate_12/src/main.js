@@ -3,7 +3,6 @@ import * as DATGUI from "datgui";
 import * as CONTROLS from "controls";
 
 // Own modules
-import Television from "./objects/Television.js";
 import Arcade from "./objects/Arcade.js";
 
 // Event functions
@@ -79,12 +78,22 @@ function main() {
 
   const onDocumentKeyDown = (event) => {
     let keyCode = event.which;
+    const button2 = arcade.children[1];
     if (keyCode == 74) {
-      arcade.children[1].translateY(-0.01413 * 35);
-    }
-    if (keyCode == 75) {
-      arcade.children[2].translateY(-0.01413 * 35);
-    }
+      setTimeout(button2.linearAnimation.toggleEndPosition(), 2000);
+
+      //setTimeout(button2.linearAnimation.toggleEndPosition(), 2000);
+    } //arcade.children[1].translateY(-0.01413 * 35); //J
+    const button3 = arcade.children[2];
+    if (keyCode == 75) button3.translateY(-0.01413 * 35); //K
+
+    //joystick
+    const joystick = arcade.children[3];
+    if (keyCode == 87) joystick.rotateZ(-0.261799);
+    //console.log(joystick.rotation.z); //W
+    if (keyCode == 65) joystick.rotateX(-0.261799); //A
+    if (keyCode == 83) joystick.rotateZ(0.261799); //S
+    if (keyCode == 68) joystick.rotateX(0.261799); //D
   };
   document.addEventListener("keydown", onDocumentKeyDown);
 
@@ -92,6 +101,10 @@ function main() {
 
   function mainLoop() {
     const delta = clock.getDelta();
+
+    arcade.animations.forEach((animation) => {
+      animation.update(delta);
+    });
 
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);

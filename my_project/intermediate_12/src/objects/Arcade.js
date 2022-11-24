@@ -1,10 +1,16 @@
 import * as THREE from "three";
 import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
+import {
+  Animation,
+  AnimationType,
+  AnimationAxis,
+} from "../animation/Animation.js";
 
 export default class Arcade extends THREE.Group {
   constructor() {
     super();
 
+    this.animations = [];
     this.addParts();
   }
 
@@ -304,9 +310,19 @@ export default class Arcade extends THREE.Group {
     const button3 = button2.clone();
     button3.position.set(-0.758528 * 35, 1.41056 * 35, -0.353658 * 35);
     this.add(button3);
+    //button 2 animations
+    const button2Animation = new Animation(
+      button2,
+      AnimationType.TRANSLATION,
+      AnimationAxis.Y
+    );
+    button2Animation.setAmount(-0.01413 * 35);
+    button2Animation.setSpeed(2 * Math.PI);
+    button2.linearAnimation = button2Animation;
+    this.animations.push(button2Animation);
 
     //joystick
-
+    //-----------
     //stick
     const stickGeometry = new THREE.CylinderGeometry(
       0.018595,
@@ -315,13 +331,14 @@ export default class Arcade extends THREE.Group {
       10
     );
     stickGeometry.scale(35, 35, 35);
-    stickGeometry.translate(-0.759288 * 35, 1.44271 * 35, 0.321495 * 35);
+    //stickGeometry.translate(-0.759288 * 35, 1.44271 * 35, 0.321495 * 35);
     const stick = new THREE.Mesh(stickGeometry, corpusMaterial2);
 
     //ball
     const ballGeometry = new THREE.SphereGeometry(0.0415);
     ballGeometry.scale(35, 35, 35);
-    ballGeometry.translate(-0.758528 * 35, 1.515 * 35, 0.321495 * 35);
+    //ballGeometry.translate(-0.758528 * 35, 1.515 * 35, 0.321495 * 35);
+    ballGeometry.translate(0, (1.515 - 1.44271) * 35, 0);
     const ball = new THREE.Mesh(ballGeometry, corpusMaterial);
 
     //joystick
@@ -332,6 +349,7 @@ export default class Arcade extends THREE.Group {
       stick.matrix,
       stick.material
     );
+    joystick.position.set(-0.759288 * 35, 1.44271 * 35, 0.321495 * 35);
     joystick.castShadow = true;
     this.add(joystick);
 

@@ -266,7 +266,7 @@ export default class Arcade extends THREE.Group {
     corpusGeometry.computeVertexNormals();
     const corpus = new THREE.Mesh(corpusGeometry, corpusMaterial);
     corpus.castShadow = true;
-    this.add(corpus);
+    //this.add(corpus);
 
     //buttonHolder
     const buttonHolderGeometry = new THREE.CylinderGeometry(
@@ -279,15 +279,15 @@ export default class Arcade extends THREE.Group {
 
     const buttonHolder1 = new THREE.Mesh(buttonHolderGeometry, corpusMaterial);
     buttonHolder1.position.set(-0.758528 * 35, 1.3904 * 35, +0.321495 * 35);
-    this.add(buttonHolder1);
+    corpus.add(buttonHolder1);
 
     const buttonHolder2 = buttonHolder1.clone();
     buttonHolder2.position.set(-0.758528 * 35, 1.3904 * 35, -0.181031 * 35);
-    this.add(buttonHolder2);
+    corpus.add(buttonHolder2);
 
     const buttonHolder3 = buttonHolder1.clone();
     buttonHolder3.position.set(-0.758528 * 35, 1.3904 * 35, -0.353658 * 35);
-    this.add(buttonHolder3);
+    corpus.add(buttonHolder3);
 
     //button 2 -> first in the 2nd buttonholder slot
     const buttonGeometry = new THREE.CylinderGeometry(
@@ -365,6 +365,38 @@ export default class Arcade extends THREE.Group {
       corpusMaterial
     );
 
+    //coin slot
+    const coinSlotGeometry = new THREE.BoxGeometry(0.25, 0.042678, 0.017);
+    coinSlotGeometry.scale(35, 35, 35);
+    coinSlotGeometry.translate(-0.87 * 35, 1.06167 * 35, 0.03771 * 35);
+    const coinSlot = new THREE.Mesh(coinSlotGeometry, corpusMaterial);
+
+    //coin mashine CSG
+    const coinMashineBodyCSG = CSG.fromMesh(coinMashineBody);
+    const coinMashineCavityCSG = CSG.fromMesh(coinMashineCavity);
+    const coinSlotCSG = CSG.fromMesh(coinSlot);
+    const coinMashine = CSG.toMesh(
+      coinMashineBodyCSG.subtract(coinSlotCSG).subtract(coinMashineCavityCSG),
+      coinMashineBody.matrix,
+      coinMashineBody.material
+    );
+    coinMashineBody.castShadow = true;
+    this.add(coinMashine);
+
+    //coin mashine button
+    const coinMashineButtonGeometry = new THREE.BoxGeometry(
+      0.037767,
+      0.035593,
+      0.0305
+    );
+    coinMashineButtonGeometry.scale(35, 35, 35);
+    const coinMashineButton = new THREE.Mesh(
+      coinMashineButtonGeometry,
+      corpusMaterial2
+    );
+    coinMashineButton.position.set(-0.925485 * 35, 1.0619 * 35, -0.011276 * 35);
+    coinMashine.add(coinMashineButton);
+
     //coin mashine buttonholder
     const coinMashineButtonHolderGeometry = new THREE.BoxGeometry(
       0.037769,
@@ -381,38 +413,7 @@ export default class Arcade extends THREE.Group {
       1.0619 * 35,
       -0.011106 * 35
     );
-
-    //coin mashine button
-    const coinMashineButtonGeometry = new THREE.BoxGeometry(
-      0.037767,
-      0.035593,
-      0.0305
-    );
-    coinMashineButtonGeometry.scale(35, 35, 35);
-    const coinMashineButton = new THREE.Mesh(
-      coinMashineButtonGeometry,
-      corpusMaterial2
-    );
-    coinMashineButton.position.set(-0.925485 * 35, 1.0619 * 35, -0.011276 * 35);
-    this.add(coinMashineButton);
-
-    //coin mashine button
-    const coinSlotGeometry = new THREE.BoxGeometry(0.25, 0.042678, 0.017);
-    coinSlotGeometry.scale(35, 35, 35);
-    coinSlotGeometry.translate(-0.87 * 35, 1.06167 * 35, 0.03771 * 35);
-    const coinSlot = new THREE.Mesh(coinSlotGeometry, corpusMaterial);
-
-    //coin mashine CSG
-    const coinMashineBodyCSG = CSG.fromMesh(coinMashineBody);
-    const coinMashineCavityCSG = CSG.fromMesh(coinMashineCavity);
-    const coinSlotCSG = CSG.fromMesh(coinSlot);
-    const coinMashine = CSG.toMesh(
-      coinMashineBodyCSG.subtract(coinSlotCSG).subtract(coinMashineCavityCSG),
-      coinMashineBody.matrix,
-      coinMashineBody.material
-    ).add(coinMashineButtonHolder);
-    coinMashineBody.castShadow = true;
-    this.add(coinMashine);
+    coinMashine.add(coinMashineButtonHolder);
 
     //pedal mashine
     const pedalMashineCorpusPosition = [

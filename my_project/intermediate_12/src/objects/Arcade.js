@@ -251,7 +251,7 @@ export default class Arcade extends THREE.Group {
 
     function toDouble(modArray) {
       for (var i = 2; i < modArray.length; i += 3) {
-        modArray[i] -= 1.183858;
+        modArray[i] -= 0.073296;
         //modArray[i] += 5000;
       }
       return modArray;
@@ -289,7 +289,7 @@ export default class Arcade extends THREE.Group {
     buttonHolder3.position.set(-0.758528 * 35, 1.3904 * 35, -0.353658 * 35);
     this.add(buttonHolder3);
 
-    //button
+    //button 2 -> first in the 2nd buttonholder slot
     const buttonGeometry = new THREE.CylinderGeometry(
       0.0393855,
       0.0393855,
@@ -297,10 +297,10 @@ export default class Arcade extends THREE.Group {
       8
     );
     buttonGeometry.scale(35, 35, 35);
-    const button2 = new THREE.Mesh(buttonGeometry, corpusMaterial);
+    const button2 = new THREE.Mesh(buttonGeometry, corpusMaterial2);
     button2.position.set(-0.758528 * 35, 1.41056 * 35, -0.181031 * 35);
     this.add(button2);
-
+    console.log(this.children);
     const button3 = button2.clone();
     button3.position.set(-0.758528 * 35, 1.41056 * 35, -0.353658 * 35);
     this.add(button3);
@@ -316,9 +316,7 @@ export default class Arcade extends THREE.Group {
     );
     stickGeometry.scale(35, 35, 35);
     stickGeometry.translate(-0.759288 * 35, 1.44271 * 35, 0.321495 * 35);
-    const stick = new THREE.Mesh(stickGeometry, corpusMaterial);
-    /* stick.position.set(-0.759288 * 35, 1.44271 * 35, 0.321495 * 35);
-    this.add(stick); */
+    const stick = new THREE.Mesh(stickGeometry, corpusMaterial2);
 
     //ball
     const ballGeometry = new THREE.SphereGeometry(0.0415);
@@ -349,7 +347,6 @@ export default class Arcade extends THREE.Group {
       coinMashineGeometry,
       corpusMaterial2
     );
-    //this.add(coinMashineBody);
 
     //coin mashine cavity
     const coinMashineCavityGeometry = new THREE.BoxGeometry(
@@ -367,7 +364,6 @@ export default class Arcade extends THREE.Group {
       coinMashineCavityGeometry,
       corpusMaterial
     );
-    //this.add(coinMashineCavity);
 
     //coin mashine buttonholder
     const coinMashineButtonHolderGeometry = new THREE.BoxGeometry(
@@ -378,14 +374,13 @@ export default class Arcade extends THREE.Group {
     coinMashineButtonHolderGeometry.scale(35, 35, 35);
     const coinMashineButtonHolder = new THREE.Mesh(
       coinMashineButtonHolderGeometry,
-      corpusMaterial2
+      corpusMaterial
     );
     coinMashineButtonHolder.position.set(
       -0.916687 * 35,
       1.0619 * 35,
       -0.011106 * 35
     );
-    this.add(coinMashineButtonHolder);
 
     //coin mashine button
     const coinMashineButtonGeometry = new THREE.BoxGeometry(
@@ -396,7 +391,7 @@ export default class Arcade extends THREE.Group {
     coinMashineButtonGeometry.scale(35, 35, 35);
     const coinMashineButton = new THREE.Mesh(
       coinMashineButtonGeometry,
-      corpusMaterial
+      corpusMaterial2
     );
     coinMashineButton.position.set(-0.925485 * 35, 1.0619 * 35, -0.011276 * 35);
     this.add(coinMashineButton);
@@ -406,7 +401,6 @@ export default class Arcade extends THREE.Group {
     coinSlotGeometry.scale(35, 35, 35);
     coinSlotGeometry.translate(-0.87 * 35, 1.06167 * 35, 0.03771 * 35);
     const coinSlot = new THREE.Mesh(coinSlotGeometry, corpusMaterial);
-    //this.add(coinSlot);
 
     //coin mashine CSG
     const coinMashineBodyCSG = CSG.fromMesh(coinMashineBody);
@@ -416,20 +410,70 @@ export default class Arcade extends THREE.Group {
       coinMashineBodyCSG.subtract(coinSlotCSG).subtract(coinMashineCavityCSG),
       coinMashineBody.matrix,
       coinMashineBody.material
-    );
+    ).add(coinMashineButtonHolder);
     coinMashineBody.castShadow = true;
     this.add(coinMashine);
 
     //pedal mashine
+    const pedalMashineCorpusPosition = [
+      -1.39038,
+      0.641729,
+      0.036648, //0
+      -1.39038,
+      0.276415,
+      0.036648, //1
+      -0.694447,
+      0.329801,
+      0.036648, //2
+      -0.694447,
+      0.588343,
+      0.036648, //3
+      -1.39038,
+      0.641729,
+      -0.036648, //4
+      -1.39038,
+      0.276415,
+      -0.036648, //5
+      -0.694447,
+      0.329801,
+      -0.036648, //6
+      -0.694447,
+      0.588343,
+      -0.036648, //7
+    ].map((e) => 35 * e);
+
+    const pedalMashineCorpusIndices = [
+      //right side
+      0, 1, 2, 0, 2, 3,
+      //left side
+      4, 5, 6, 4, 6, 7,
+      //connect both sides
+      0, 3, 7, 0, 4, 7, 0, 4, 1, 4, 5, 1, 1, 5, 2, 5, 6, 2, 2, 6, 3, 6, 7, 3,
+    ];
+
+    const pedalMashineCorpusGeometry = new THREE.BufferGeometry();
+    pedalMashineCorpusGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(new Float32Array(pedalMashineCorpusPosition), 3)
+    );
+    pedalMashineCorpusGeometry.setIndex(pedalMashineCorpusIndices);
+    pedalMashineCorpusGeometry.computeVertexNormals();
+    const pedalMashineCorpus = new THREE.Mesh(
+      pedalMashineCorpusGeometry,
+      corpusMaterial2
+    );
+    pedalMashineCorpus.castShadow = true;
+    this.add(pedalMashineCorpus);
+
     const cylinderGeometry = new THREE.CylinderGeometry(
       (0.367916 / 2) * 35,
       (0.367916 / 2) * 35,
       0.073079 * 35,
       32
     );
-    const cylinder = new THREE.Mesh(cylinderGeometry, corpusMaterial);
+    const cylinder = new THREE.Mesh(cylinderGeometry, corpusMaterial2);
     cylinder.position.set(-1.41066 * 35, 0.459419 * 35, 0);
     cylinder.rotateX(Math.PI / 2);
-    scene.add(cylinder);
+    pedalMashineCorpus.add(cylinder);
   }
 }

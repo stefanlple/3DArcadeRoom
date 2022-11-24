@@ -77,9 +77,17 @@ function main() {
 
   orbitControls.update();
 
+  document.addEventListener("keydown", onDocumentKeyDown);
+
+  const onDocumentKeyDown = (event) => {
+    let keyCode = event.which;
+    if (keyCode == 74) {
+      arcade.children;
+    }
+  };
+
   function mainLoop() {
     window.renderer.render(window.scene, window.camera);
-
     requestAnimationFrame(mainLoop);
   }
 

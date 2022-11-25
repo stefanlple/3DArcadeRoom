@@ -86,6 +86,10 @@ function main() {
     const button3 = arcade.children[2];
     if (keyCode == 75) button3.tweenAnimation.start(); //Button K
 
+    if (keyCode == 13) {
+      arcade.children[8].tweenAnimation.start();
+    }
+
     const joystick = arcade.children[3];
     if (keyCode == 87) joystick.tweenAnimation("W").start(); // Button W
     if (keyCode == 65) joystick.tweenAnimation("A").start(); // Button A

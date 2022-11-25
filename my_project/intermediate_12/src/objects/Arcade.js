@@ -271,7 +271,7 @@ export default class Arcade extends THREE.Group {
     corpusGeometry.computeVertexNormals();
     const corpus = new THREE.Mesh(corpusGeometry, corpusMaterial);
     corpus.castShadow = true;
-    //this.add(corpus);
+    this.add(corpus);
 
     //buttonHolder
     const buttonHolderGeometry = new THREE.CylinderGeometry(
@@ -539,7 +539,7 @@ export default class Arcade extends THREE.Group {
     pedalMashineCorpusGeometry.computeVertexNormals();
     const pedalMashineCorpus = new THREE.Mesh(
       pedalMashineCorpusGeometry,
-      corpusMaterial2
+      corpusMaterial
     );
     pedalMashineCorpus.castShadow = true;
     this.add(pedalMashineCorpus);
@@ -553,8 +553,6 @@ export default class Arcade extends THREE.Group {
     );
     cylinderGeometry.rotateX(Math.PI / 2);
     const cylinder = new THREE.Mesh(cylinderGeometry, corpusMaterial2);
-    //cylinder.position.set(-1.41066 * 35, 0.459419 * 35, 0);
-    //pedalMashineCorpus.add(cylinder);
 
     //pedalRight
     const pedalRightGeometry = new THREE.BoxGeometry(
@@ -562,7 +560,7 @@ export default class Arcade extends THREE.Group {
       0.044733 * 35,
       0.172584 * 35
     );
-    const pedalRight = new THREE.Mesh(pedalRightGeometry, corpusMaterial2);
+    const pedalRight = new THREE.Mesh(pedalRightGeometry, corpusMaterial);
     pedalRight.position.set(-1.41066 * 35, 0.804968 * 35, 0.154831 * 35);
     this.add(pedalRight);
 
@@ -577,17 +575,31 @@ export default class Arcade extends THREE.Group {
       0.367916 * 35,
       0.032 * 35
     );
+    pedalStickRightGeometry.translate(
+      0,
+      0.367916 * 35 - 0.18399 * 35,
+      0.0365395 * 35 + 0.016 * 35
+    );
     const pedalStickRight = new THREE.Mesh(
       pedalStickRightGeometry,
       corpusMaterial
     );
-    pedalStickRight.position.set(-1.41066 * 35, 0.459419 * 35, 0.05254 * 35);
-    //this.add(pedalStickRight);
 
     //pedalStickLeft
-    const pedalStickLeft = pedalStickRight.clone();
-    pedalStickLeft.position.set(-1.41066 * 35, 0.459419 * 35, -0.05254 * 35);
-    //this.add(pedalStickLeft);
+    const pedalStickLeftGeometry = new THREE.BoxGeometry(
+      0.07 * 35,
+      0.367916 * 35,
+      0.032 * 35
+    );
+    pedalStickLeftGeometry.translate(
+      0,
+      -0.367916 * 35 - -0.18399 * 35,
+      -0.0365395 * 35 + -0.016 * 35
+    );
+    const pedalStickLeft = new THREE.Mesh(
+      pedalStickLeftGeometry,
+      corpusMaterial
+    );
 
     const cylinderCSG = CSG.fromMesh(cylinder);
     const pedalStickRightCSG = CSG.fromMesh(pedalStickRight);
@@ -597,7 +609,21 @@ export default class Arcade extends THREE.Group {
       cylinder.matrix,
       cylinder.material
     );
+    cylinderBody.position.set(-1.41066 * 35, 0.459419 * 35, 0);
+
     cylinderBody.castShadow = true;
     this.add(cylinderBody);
+
+    //cylinderBody spinning
+    cylinderBody.tweenAnimation = new TWEEN.Tween(cylinderBody.rotation)
+      .to(
+        new THREE.Vector3(
+          cylinderBody.rotation.x,
+          cylinderBody.rotation.y,
+          cylinderBody.rotation.z - 8 * Math.PI
+        ),
+        5000
+      )
+      .easing(TWEEN.Easing.Cubic.InOut);
   }
 }

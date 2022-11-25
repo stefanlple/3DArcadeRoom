@@ -1,12 +1,6 @@
 import * as THREE from "three";
 import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
-import {
-  Animation,
-  AnimationType,
-  AnimationAxis,
-} from "../animation/Animation.js";
 import * as TWEEN from "tween";
-import { Vector3 } from "../../../../lib/three.js-r139/build/three.module.js";
 
 export default class Arcade extends THREE.Group {
   constructor() {
@@ -27,6 +21,9 @@ export default class Arcade extends THREE.Group {
       flatShading: true,
       side: THREE.DoubleSide,
     });
+
+    /*corpus*/
+    /*------*/
 
     // Outer Corpus
     // Start upper left and clockwise
@@ -341,8 +338,9 @@ export default class Arcade extends THREE.Group {
     //button3 Animation;
     button3.tweenAnimation = toggleButtonTween(button3);
 
-    //joystick
-    //-----------
+    /*joyStick*/
+    /*--------*/
+
     //stick
     const stickGeometry = new THREE.CylinderGeometry(
       0.018595,
@@ -412,7 +410,8 @@ export default class Arcade extends THREE.Group {
 
     joystick.tweenAnimation = toggleJoystickTween;
 
-    //--coin mashine--
+    /*coin mashine*/
+    /*------------*/
     const coinMashineGeometry = new THREE.BoxGeometry(
       0.142827,
       0.374662,
@@ -492,7 +491,8 @@ export default class Arcade extends THREE.Group {
     );
     coinMashine.add(coinMashineButtonHolder);
 
-    //pedal mashine
+    /* pedal mashine */
+    /*---------------*/
     const pedalMashineCorpusPosition = [
       -1.39038,
       0.641729,
@@ -529,6 +529,7 @@ export default class Arcade extends THREE.Group {
       0, 3, 7, 0, 4, 7, 0, 4, 1, 4, 5, 1, 1, 5, 2, 5, 6, 2, 2, 6, 3, 6, 7, 3,
     ];
 
+    //pedalMashineCorpus
     const pedalMashineCorpusGeometry = new THREE.BufferGeometry();
     pedalMashineCorpusGeometry.setAttribute(
       "position",
@@ -543,6 +544,7 @@ export default class Arcade extends THREE.Group {
     pedalMashineCorpus.castShadow = true;
     this.add(pedalMashineCorpus);
 
+    //cylinder
     const cylinderGeometry = new THREE.CylinderGeometry(
       (0.367916 / 2) * 35,
       (0.367916 / 2) * 35,
@@ -553,5 +555,38 @@ export default class Arcade extends THREE.Group {
     cylinder.position.set(-1.41066 * 35, 0.459419 * 35, 0);
     cylinder.rotateX(Math.PI / 2);
     pedalMashineCorpus.add(cylinder);
+
+    //pedalRight
+    const pedalRightGeometry = new THREE.BoxGeometry(
+      0.137131 * 35,
+      0.044733 * 35,
+      0.172584 * 35
+    );
+    const pedalRight = new THREE.Mesh(pedalRightGeometry, corpusMaterial2);
+    pedalRight.position.set(-1.41066 * 35, 0.804968 * 35, 0.154831 * 35);
+    this.add(pedalRight);
+
+    //pedalLeft
+    const pedalLeft = pedalRight.clone();
+    pedalLeft.position.set(-1.41066 * 35, 0.11387 * 35, -0.154831 * 35);
+    corpus.add(pedalLeft);
+
+    //pedalStickRight
+    const pedalStickRightGeometry = new THREE.BoxGeometry(
+      0.07 * 35,
+      0.367916 * 35,
+      0.032 * 35
+    );
+    const pedalStickRight = new THREE.Mesh(
+      pedalStickRightGeometry,
+      corpusMaterial
+    );
+    pedalStickRight.position.set(-1.41066 * 35, 0.459419 * 35, 0.05254 * 35);
+    this.add(pedalStickRight);
+
+    //pedalStickLeft
+    const pedalStickLeft = pedalStickRight.clone();
+    pedalStickLeft.position.set(-1.41066 * 35, 0.459419 * 35, -0.05254 * 35);
+    corpus.add(pedalStickLeft);
   }
 }

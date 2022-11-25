@@ -271,7 +271,7 @@ export default class Arcade extends THREE.Group {
     corpusGeometry.computeVertexNormals();
     const corpus = new THREE.Mesh(corpusGeometry, corpusMaterial);
     corpus.castShadow = true;
-    this.add(corpus);
+    //this.add(corpus);
 
     //buttonHolder
     const buttonHolderGeometry = new THREE.CylinderGeometry(
@@ -551,10 +551,10 @@ export default class Arcade extends THREE.Group {
       0.073079 * 35,
       32
     );
+    cylinderGeometry.rotateX(Math.PI / 2);
     const cylinder = new THREE.Mesh(cylinderGeometry, corpusMaterial2);
-    cylinder.position.set(-1.41066 * 35, 0.459419 * 35, 0);
-    cylinder.rotateX(Math.PI / 2);
-    pedalMashineCorpus.add(cylinder);
+    //cylinder.position.set(-1.41066 * 35, 0.459419 * 35, 0);
+    //pedalMashineCorpus.add(cylinder);
 
     //pedalRight
     const pedalRightGeometry = new THREE.BoxGeometry(
@@ -569,7 +569,7 @@ export default class Arcade extends THREE.Group {
     //pedalLeft
     const pedalLeft = pedalRight.clone();
     pedalLeft.position.set(-1.41066 * 35, 0.11387 * 35, -0.154831 * 35);
-    corpus.add(pedalLeft);
+    this.add(pedalLeft);
 
     //pedalStickRight
     const pedalStickRightGeometry = new THREE.BoxGeometry(
@@ -582,11 +582,22 @@ export default class Arcade extends THREE.Group {
       corpusMaterial
     );
     pedalStickRight.position.set(-1.41066 * 35, 0.459419 * 35, 0.05254 * 35);
-    this.add(pedalStickRight);
+    //this.add(pedalStickRight);
 
     //pedalStickLeft
     const pedalStickLeft = pedalStickRight.clone();
     pedalStickLeft.position.set(-1.41066 * 35, 0.459419 * 35, -0.05254 * 35);
-    corpus.add(pedalStickLeft);
+    //this.add(pedalStickLeft);
+
+    const cylinderCSG = CSG.fromMesh(cylinder);
+    const pedalStickRightCSG = CSG.fromMesh(pedalStickRight);
+    const pedalStickLeftCSG = CSG.fromMesh(pedalStickLeft);
+    const cylinderBody = CSG.toMesh(
+      cylinderCSG.union(pedalStickLeftCSG).union(pedalStickRightCSG),
+      cylinder.matrix,
+      cylinder.material
+    );
+    cylinderBody.castShadow = true;
+    this.add(cylinderBody);
   }
 }

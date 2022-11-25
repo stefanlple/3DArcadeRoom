@@ -5,6 +5,8 @@ import {
   AnimationType,
   AnimationAxis,
 } from "../animation/Animation.js";
+import * as TWEEN from "tween";
+import { Vector3 } from "../../../../lib/three.js-r139/build/three.module.js";
 
 export default class Arcade extends THREE.Group {
   constructor() {
@@ -306,20 +308,38 @@ export default class Arcade extends THREE.Group {
     const button2 = new THREE.Mesh(buttonGeometry, corpusMaterial2);
     button2.position.set(-0.758528 * 35, 1.41056 * 35, -0.181031 * 35);
     this.add(button2);
-    console.log(this.children);
+
+    //button2 & button3 Animation;
+    const toggleButtonTween = (object) => {
+      return new TWEEN.Tween(object.position)
+        .to(
+          new THREE.Vector3(
+            object.position.x,
+            object.position.y - 0.01413 * 35,
+            object.position.z
+          ),
+          150
+        )
+        .chain(
+          new TWEEN.Tween(object.position).to(
+            new THREE.Vector3(
+              object.position.x,
+              object.position.y,
+              object.position.z
+            ),
+            150
+          )
+        );
+    };
+    button2.tweenAnimation = toggleButtonTween(button2);
+
+    //button3
     const button3 = button2.clone();
     button3.position.set(-0.758528 * 35, 1.41056 * 35, -0.353658 * 35);
     this.add(button3);
-    //button 2 animations
-    const button2Animation = new Animation(
-      button2,
-      AnimationType.TRANSLATION,
-      AnimationAxis.Y
-    );
-    button2Animation.setAmount(-0.01413 * 35);
-    button2Animation.setSpeed(2 * Math.PI);
-    button2.linearAnimation = button2Animation;
-    this.animations.push(button2Animation);
+
+    //button3 Animation;
+    button3.tweenAnimation = toggleButtonTween(button3);
 
     //joystick
     //-----------

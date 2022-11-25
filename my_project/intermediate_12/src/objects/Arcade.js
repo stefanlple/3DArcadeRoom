@@ -382,16 +382,16 @@ export default class Arcade extends THREE.Group {
       );
       switch (direction) {
         case "W":
-          directionVector.z -= THREE.MathUtils.degToRad(12);
+          directionVector.z -= THREE.MathUtils.degToRad(15);
           break;
         case "S":
-          directionVector.z += THREE.MathUtils.degToRad(12);
+          directionVector.z += THREE.MathUtils.degToRad(15);
           break;
         case "A":
-          directionVector.x -= THREE.MathUtils.degToRad(12);
+          directionVector.x -= THREE.MathUtils.degToRad(15);
           break;
         case "D":
-          directionVector.x += THREE.MathUtils.degToRad(12);
+          directionVector.x += THREE.MathUtils.degToRad(15);
           break;
         default:
           directionVector;

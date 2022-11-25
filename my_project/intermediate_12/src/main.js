@@ -77,6 +77,7 @@ function main() {
 
   orbitControls.update();
 
+  //Animations onKeyDown
   const onDocumentKeyDown = (event) => {
     let keyCode = event.which;
     const button2 = arcade.children[1];
@@ -85,13 +86,11 @@ function main() {
     const button3 = arcade.children[2];
     if (keyCode == 75) button3.tweenAnimation.start(); //Button K
 
-    //joystick
     const joystick = arcade.children[3];
-    if (keyCode == 87) joystick.rotateZ(-0.261799);
-    //console.log(joystick.rotation.z); // Button W
-    if (keyCode == 65) joystick.rotateX(-0.261799); // Button A
-    if (keyCode == 83) joystick.rotateZ(0.261799); // Button S
-    if (keyCode == 68) joystick.rotateX(0.261799); // Button D
+    if (keyCode == 87) joystick.tweenAnimation("W").start(); // Button W
+    if (keyCode == 65) joystick.tweenAnimation("A").start(); // Button A
+    if (keyCode == 83) joystick.tweenAnimation("S").start(); // Button S
+    if (keyCode == 68) joystick.tweenAnimation("D").start(); // Button D
   };
   document.addEventListener("keydown", onDocumentKeyDown);
 

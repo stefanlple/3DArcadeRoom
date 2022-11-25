@@ -351,14 +351,14 @@ export default class Arcade extends THREE.Group {
       10
     );
     stickGeometry.scale(35, 35, 35);
-    //stickGeometry.translate(-0.759288 * 35, 1.44271 * 35, 0.321495 * 35);
+    stickGeometry.translate(0, 0.042026 * 35, 0);
     const stick = new THREE.Mesh(stickGeometry, corpusMaterial2);
 
     //ball
     const ballGeometry = new THREE.SphereGeometry(0.0415);
     ballGeometry.scale(35, 35, 35);
     //ballGeometry.translate(-0.758528 * 35, 1.515 * 35, 0.321495 * 35);
-    ballGeometry.translate(0, (1.515 - 1.44271) * 35, 0);
+    ballGeometry.translate(0, (1.515 - 1.44271) * 35 + 0.042026 * 35, 0);
     const ball = new THREE.Mesh(ballGeometry, corpusMaterial);
 
     //joystick
@@ -369,9 +369,48 @@ export default class Arcade extends THREE.Group {
       stick.matrix,
       stick.material
     );
-    joystick.position.set(-0.759288 * 35, 1.44271 * 35, 0.321495 * 35);
+    joystick.position.set(-0.759288 * 35, 1.39423 * 35, 0.321495 * 35);
     joystick.castShadow = true;
     this.add(joystick);
+
+    //joystickAnimation
+    const toggleJoystickTween = (direction) => {
+      let directionVector = new THREE.Vector3(
+        (joystick.rotation.x = 0),
+        (joystick.rotation.y = 0),
+        (joystick.rotation.z = 0)
+      );
+      switch (direction) {
+        case "W":
+          directionVector.z -= THREE.MathUtils.degToRad(12);
+          break;
+        case "S":
+          directionVector.z += THREE.MathUtils.degToRad(12);
+          break;
+        case "A":
+          directionVector.x -= THREE.MathUtils.degToRad(12);
+          break;
+        case "D":
+          directionVector.x += THREE.MathUtils.degToRad(12);
+          break;
+        default:
+          directionVector;
+      }
+      return new TWEEN.Tween(joystick.rotation)
+        .to(directionVector, 150)
+        .chain(
+          new TWEEN.Tween(joystick.rotation).to(
+            new THREE.Vector3(
+              joystick.rotation.x,
+              joystick.rotation.y,
+              joystick.rotation.z
+            ),
+            150
+          )
+        );
+    };
+
+    joystick.tweenAnimation = toggleJoystickTween;
 
     //--coin mashine--
     const coinMashineGeometry = new THREE.BoxGeometry(

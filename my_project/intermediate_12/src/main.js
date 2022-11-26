@@ -11,7 +11,7 @@ import { updateAspectRatio } from "./eventfunctions/updateAspectRatio.js";
 
 function main() {
   window.scene = new THREE.Scene();
-  window.scene.add(new THREE.AxesHelper(50));
+  window.scene.add(new THREE.AxesHelper(200));
 
   window.camera = new THREE.PerspectiveCamera(
     45,
@@ -88,6 +88,8 @@ function main() {
 
     if (keyCode == 13) {
       arcade.children[8].tweenAnimation.start();
+      arcade.children[6].tweenAnimation.start();
+      arcade.children[7].tweenAnimation.start();
     }
 
     const joystick = arcade.children[3];

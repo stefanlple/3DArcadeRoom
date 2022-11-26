@@ -569,6 +569,50 @@ export default class Arcade extends THREE.Group {
     pedalLeft.position.set(-1.41066 * 35, 0.11387 * 35, -0.154831 * 35);
     this.add(pedalLeft);
 
+    //pedal spinning animation
+    const pedalSpinningAnimation = (object) => {
+      let tween = new TWEEN.Tween(object.position)
+        .to(
+          new THREE.Vector3(
+            Math.cos((2 * Math.PI) / 3000) * 35,
+            Math.sin((2 * Math.PI) / 3000) * 35,
+            object.position.z
+          ),
+          3000
+        )
+        .chain(
+          new TWEEN.Tween(object.position).to(
+            new THREE.Vector3(
+              Math.cos(Math.PI / 2) * 35,
+              Math.sin(Math.PI / 2) * 35,
+              object.position.z
+            ),
+            3000
+          )
+        );
+      /* for (let i = 0; i < 2 * Math.PI; i += Math.PI / 2) {
+         for (
+        let i = (2 * Math.PI) / 3000;
+        i < 2 * Math.PI;
+        i += (2 * Math.PI) / 3000
+      ) 
+        console.log(i);
+        tween.chain(
+          new TWEEN.Tween(object.position).to(
+            new THREE.Vector3(
+              Math.cos(i) * 35,
+              Math.sin(i) * 35,
+              object.position.z
+            ),
+            3000
+          )
+        );
+      } */
+      return tween.easing(TWEEN.Easing.Cubic.InOut);
+    };
+    pedalRight.tweenAnimation = pedalSpinningAnimation(pedalRight);
+    pedalLeft.tweenAnimation = pedalSpinningAnimation(pedalLeft);
+
     //pedalStickRight
     const pedalStickRightGeometry = new THREE.BoxGeometry(
       0.07 * 35,
@@ -614,7 +658,7 @@ export default class Arcade extends THREE.Group {
     cylinderBody.castShadow = true;
     this.add(cylinderBody);
 
-    //cylinderBody spinning
+    //cylinderBody spinning animation
     cylinderBody.tweenAnimation = new TWEEN.Tween(cylinderBody.rotation)
       .to(
         new THREE.Vector3(
@@ -622,7 +666,7 @@ export default class Arcade extends THREE.Group {
           cylinderBody.rotation.y,
           cylinderBody.rotation.z - 8 * Math.PI
         ),
-        5000
+        3000
       )
       .easing(TWEEN.Easing.Cubic.InOut);
   }

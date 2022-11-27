@@ -1,6 +1,12 @@
 import * as THREE from "three";
+import {
+  Animation,
+  AnimationType,
+  AnimationAxis,
+} from "../animation/Animation.js";
 import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
 import * as TWEEN from "tween";
+import { MathUtils } from "three";
 
 export default class Arcade extends THREE.Group {
   constructor() {
@@ -569,49 +575,40 @@ export default class Arcade extends THREE.Group {
     pedalLeft.position.set(-1.41066 * 35, 0.11387 * 35, -0.154831 * 35);
     this.add(pedalLeft);
 
-    //pedal spinning animation
-    const pedalSpinningAnimation = (object) => {
-      let tween = new TWEEN.Tween(object.position)
-        .to(
-          new THREE.Vector3(
-            Math.cos((2 * Math.PI) / 3000) * 35,
-            Math.sin((2 * Math.PI) / 3000) * 35,
-            object.position.z
-          ),
-          3000
-        )
-        .chain(
-          new TWEEN.Tween(object.position).to(
-            new THREE.Vector3(
-              Math.cos(Math.PI / 2) * 35,
-              Math.sin(Math.PI / 2) * 35,
-              object.position.z
-            ),
-            3000
-          )
-        );
-      /* for (let i = 0; i < 2 * Math.PI; i += Math.PI / 2) {
-         for (
-        let i = (2 * Math.PI) / 3000;
-        i < 2 * Math.PI;
-        i += (2 * Math.PI) / 3000
-      ) 
-        console.log(i);
-        tween.chain(
-          new TWEEN.Tween(object.position).to(
-            new THREE.Vector3(
-              Math.cos(i) * 35,
-              Math.sin(i) * 35,
-              object.position.z
-            ),
-            3000
-          )
-        );
-      } */
-      return tween.easing(TWEEN.Easing.Cubic.InOut);
+    //pedal spinning
+    const pedalSpinningAnimation = (object, degrees) => {
+      let tween = new TWEEN.Tween(object.position).to(
+        new THREE.Vector3(
+          Math.cos(THREE.MathUtils.degToRad(degrees)) * 35,
+          Math.sin(THREE.MathUtils.degToRad(degrees)) * 35,
+          object.position.z
+        ),
+        100
+      );
+      return tween; //.easing(TWEEN.Easing.Cubic.InOut);
     };
     pedalRight.tweenAnimation = pedalSpinningAnimation(pedalRight);
-    pedalLeft.tweenAnimation = pedalSpinningAnimation(pedalLeft);
+    //pedalLeft.tweenAnimation = pedalSpinningAnimation(pedalLeft);
+
+    /* const pedalAnimationX = new Animation(
+      pedalRight,
+      AnimationType.TRANSLATION,
+      AnimationAxis.X
+    );
+    pedalAnimationX.setAmount(Math.cos(THREE.MathUtils.degToRad(10)));
+    pedalAnimationX.setSpeed(THREE.MathUtils.degToRad(360));
+    pedalRight.rightAnimation = pedalAnimationX;
+    this.animations.push(pedalAnimationX);
+
+    const pedalAnimationY = new Animation(
+      pedalLeft,
+      AnimationType.TRANSLATION,
+      AnimationAxis.Y
+    );
+    pedalAnimationY.setAmount(Math.sin(THREE.MathUtils.degToRad(10)));
+    pedalAnimationY.setSpeed(THREE.MathUtils.degToRad(360));
+    pedalRight.rightAnimation = pedalAnimationY;
+    this.animations.push(pedalAnimationY); */
 
     //pedalStickRight
     const pedalStickRightGeometry = new THREE.BoxGeometry(

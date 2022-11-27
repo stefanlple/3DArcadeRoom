@@ -91,6 +91,18 @@ function main() {
       arcade.children[6].tweenAnimation.start();
       arcade.children[7].tweenAnimation.start();
     }
+    if (keyCode == 81) {
+      arcade.children[6].position.set(
+        Math.cos((3 / 2) * Math.PI) * 35,
+        Math.sin((3 / 2) * Math.PI) * 35,
+        0
+      );
+      arcade.children[7].position.set(
+        Math.cos((3 / 2) * Math.PI) * 35,
+        Math.sin((3 / 2) * Math.PI) * 35,
+        0
+      );
+    }
 
     const joystick = arcade.children[3];
     if (keyCode == 87) joystick.tweenAnimation("W").start(); // Button W
@@ -102,8 +114,17 @@ function main() {
 
   const clock = new THREE.Clock();
 
+  let timeCounter = 0;
   function mainLoop() {
     const delta = clock.getDelta();
+
+    timeCounter += delta;
+    console.log(timeCounter);
+    arcade.children[6].position.set(
+      Math.cos(timeCounter) * 35,
+      Math.sin(timeCounter) * 35,
+      0
+    );
 
     arcade.animations.forEach((animation) => {
       animation.update(delta);

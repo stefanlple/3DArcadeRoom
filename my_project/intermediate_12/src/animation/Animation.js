@@ -1,29 +1,27 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 
 export const AnimationType = {
   TRANSLATION: 0,
-  ROTATION: 1
+  ROTATION: 1,
 };
 
 export const AnimationAxis = {
   X: 0,
   Y: 1,
-  Z: 2
+  Z: 2,
 };
 
 export class Animation {
-
   constructor(target, type, axis) {
-
     this.target = target;
     this.type = type;
     this.axis = axis;
     this.amount = 0;
     this.speed = 0;
-    this.initialPositionIsEndPosition = true;   // true so that the object will initially not move
+    this.initialPositionIsEndPosition = true; // true so that the object will initially not move
 
     this.initialPosition = target.position.clone();
-    this.initialRotation = (new THREE.Vector3()).setFromEuler(target.rotation);
+    this.initialRotation = new THREE.Vector3().setFromEuler(target.rotation);
 
     this.completed = true;
     this.onCompleteCallback = null;
@@ -42,7 +40,6 @@ export class Animation {
   }
 
   update(delta) {
-
     let endPositionValue = 0;
 
     // Assume the initial position/rotation to be the end position/rotation
@@ -62,13 +59,14 @@ export class Animation {
 
     // Move as required
     switch (this.type) {
-
       case AnimationType.TRANSLATION:
-
         let newTranslation = 0;
 
-        if (Math.abs(this.target.position.getComponent(this.axis) - endPositionValue) < 0.05) {
-
+        if (
+          Math.abs(
+            this.target.position.getComponent(this.axis) - endPositionValue
+          ) < 0.05
+        ) {
           // If the current position is less than 0.01 units away from the end position, set it finally
           this.target.position.setComponent(this.axis, endPositionValue);
 
@@ -77,14 +75,14 @@ export class Animation {
             this.onCompleteCallback();
             this.completed = true;
           }
-
         } else {
-
           // Else increase or decrease the current position by (speed * delta)
           if (this.target.position.getComponent(this.axis) < endPositionValue) {
-            newTranslation = this.target.position.getComponent(this.axis) + this.speed * delta;
+            newTranslation =
+              this.target.position.getComponent(this.axis) + this.speed * delta;
           } else {
-            newTranslation = this.target.position.getComponent(this.axis) - this.speed * delta;
+            newTranslation =
+              this.target.position.getComponent(this.axis) - this.speed * delta;
           }
           this.target.position.setComponent(this.axis, newTranslation);
 
@@ -94,11 +92,15 @@ export class Animation {
         break;
 
       case AnimationType.ROTATION:
-
         let newRotation = this.initialRotation.clone();
 
-        if (Math.abs((new THREE.Vector3()).setFromEuler(this.target.rotation).getComponent(this.axis) - endPositionValue) < 0.05) {
-
+        if (
+          Math.abs(
+            new THREE.Vector3()
+              .setFromEuler(this.target.rotation)
+              .getComponent(this.axis) - endPositionValue
+          ) < 0.05
+        ) {
           // If the current rotation is less than 0.01 radians away from the end rotation, set it finally
           newRotation.setComponent(this.axis, endPositionValue);
           this.target.rotation.setFromVector3(newRotation);
@@ -108,14 +110,28 @@ export class Animation {
             this.onCompleteCallback();
             this.completed = true;
           }
-
         } else {
-
           // Else increase or decrease the current rotation by (speed * delta)
-          if ((new THREE.Vector3()).setFromEuler(this.target.rotation).getComponent(this.axis) < endPositionValue) {
-            newRotation.setComponent(this.axis, (new THREE.Vector3()).setFromEuler(this.target.rotation).getComponent(this.axis) + this.speed * delta);
+          if (
+            new THREE.Vector3()
+              .setFromEuler(this.target.rotation)
+              .getComponent(this.axis) < endPositionValue
+          ) {
+            newRotation.setComponent(
+              this.axis,
+              new THREE.Vector3()
+                .setFromEuler(this.target.rotation)
+                .getComponent(this.axis) +
+                this.speed * delta
+            );
           } else {
-            newRotation.setComponent(this.axis, (new THREE.Vector3()).setFromEuler(this.target.rotation).getComponent(this.axis) - this.speed * delta);
+            newRotation.setComponent(
+              this.axis,
+              new THREE.Vector3()
+                .setFromEuler(this.target.rotation)
+                .getComponent(this.axis) -
+                this.speed * delta
+            );
           }
           this.target.rotation.setFromVector3(newRotation);
 

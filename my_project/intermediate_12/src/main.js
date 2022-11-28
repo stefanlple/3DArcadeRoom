@@ -78,6 +78,7 @@ function main() {
   orbitControls.update();
 
   //Animations onKeyDown
+  const cylinderBody = arcade.children[8];
   const onDocumentKeyDown = (event) => {
     let keyCode = event.which;
     const button2 = arcade.children[1];
@@ -87,23 +88,8 @@ function main() {
     if (keyCode == 75) button3.tweenAnimation.start(); //Button K
 
     if (keyCode == 13) {
-      arcade.children[8].tweenAnimation.start();
-      arcade.children[6].tweenAnimation.start();
-      arcade.children[7].tweenAnimation.start();
+      cylinderBody.tweenAnimation.start();
     }
-    if (keyCode == 81) {
-      arcade.children[6].position.set(
-        Math.cos((3 / 2) * Math.PI) * 35,
-        Math.sin((3 / 2) * Math.PI) * 35,
-        0
-      );
-      arcade.children[7].position.set(
-        Math.cos((3 / 2) * Math.PI) * 35,
-        Math.sin((3 / 2) * Math.PI) * 35,
-        0
-      );
-    }
-
     const joystick = arcade.children[3];
     if (keyCode == 87) joystick.tweenAnimation("W").start(); // Button W
     if (keyCode == 65) joystick.tweenAnimation("A").start(); // Button A
@@ -112,23 +98,35 @@ function main() {
   };
   document.addEventListener("keydown", onDocumentKeyDown);
 
+  function setPedalPostionAnimation() {
+    const pedalLeft = arcade.children[6];
+    const pedalRight = arcade.children[7];
+
+    pedalLeft.position.set(
+      -Math.cos(cylinderBody.rotation.z + Math.PI / 2) * 35 * 0.345549 -
+        +1.41066 * 35,
+      -Math.sin(cylinderBody.rotation.z + Math.PI / 2) * 35 * 0.345549 +
+        0.459419 * 35,
+      -0.1548315 * 35
+    );
+    pedalRight.position.set(
+      -Math.cos(cylinderBody.rotation.z + (3 / 2) * Math.PI) * 35 * 0.345549 -
+        +1.41066 * 35,
+      -Math.sin(cylinderBody.rotation.z + (3 / 2) * Math.PI) * 35 * 0.345549 +
+        0.459419 * 35,
+      0.1548315 * 35
+    );
+  }
+
   const clock = new THREE.Clock();
 
-  let timeCounter = 0;
   function mainLoop() {
     const delta = clock.getDelta();
-
-    timeCounter += delta;
-    console.log(timeCounter);
-    arcade.children[6].position.set(
-      Math.cos(timeCounter) * 35,
-      Math.sin(timeCounter) * 35,
-      0
-    );
 
     arcade.animations.forEach((animation) => {
       animation.update(delta);
     });
+    setPedalPostionAnimation();
 
     TWEEN.update();
 

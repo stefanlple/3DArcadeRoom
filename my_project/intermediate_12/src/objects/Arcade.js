@@ -567,48 +567,11 @@ export default class Arcade extends THREE.Group {
       0.172584 * 35
     );
     const pedalRight = new THREE.Mesh(pedalRightGeometry, corpusMaterial);
-    pedalRight.position.set(-1.41066 * 35, 0.804968 * 35, 0.154831 * 35);
     this.add(pedalRight);
 
     //pedalLeft
     const pedalLeft = pedalRight.clone();
-    pedalLeft.position.set(-1.41066 * 35, 0.11387 * 35, -0.154831 * 35);
     this.add(pedalLeft);
-
-    //pedal spinning
-    const pedalSpinningAnimation = (object, degrees) => {
-      let tween = new TWEEN.Tween(object.position).to(
-        new THREE.Vector3(
-          Math.cos(THREE.MathUtils.degToRad(degrees)) * 35,
-          Math.sin(THREE.MathUtils.degToRad(degrees)) * 35,
-          object.position.z
-        ),
-        100
-      );
-      return tween; //.easing(TWEEN.Easing.Cubic.InOut);
-    };
-    pedalRight.tweenAnimation = pedalSpinningAnimation(pedalRight);
-    //pedalLeft.tweenAnimation = pedalSpinningAnimation(pedalLeft);
-
-    /* const pedalAnimationX = new Animation(
-      pedalRight,
-      AnimationType.TRANSLATION,
-      AnimationAxis.X
-    );
-    pedalAnimationX.setAmount(Math.cos(THREE.MathUtils.degToRad(10)));
-    pedalAnimationX.setSpeed(THREE.MathUtils.degToRad(360));
-    pedalRight.rightAnimation = pedalAnimationX;
-    this.animations.push(pedalAnimationX);
-
-    const pedalAnimationY = new Animation(
-      pedalLeft,
-      AnimationType.TRANSLATION,
-      AnimationAxis.Y
-    );
-    pedalAnimationY.setAmount(Math.sin(THREE.MathUtils.degToRad(10)));
-    pedalAnimationY.setSpeed(THREE.MathUtils.degToRad(360));
-    pedalRight.rightAnimation = pedalAnimationY;
-    this.animations.push(pedalAnimationY); */
 
     //pedalStickRight
     const pedalStickRightGeometry = new THREE.BoxGeometry(

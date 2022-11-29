@@ -630,5 +630,10 @@ export default class Arcade extends THREE.Group {
         5000
       )
       .easing(TWEEN.Easing.Cubic.InOut);
+
+    /* screen */
+    const screen = new SpaceInvadersGame();
+    //screen.translate(-0.504, 1.85974, 0);
+    this.add(screen);
   }
 }

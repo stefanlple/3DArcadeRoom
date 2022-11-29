@@ -30,5 +30,12 @@ export default class SpaceInvadersGame extends THREE.Group {
 
     /* canvas */
     //
+    const screenGeometry = new THREE.PlaneGeometry(0.864, 1.13);
+    screenGeometry.rotateY(Math.PI / 2);
+    screenGeometry.rotateX(Math.PI / 2);
+    screenGeometry.translate(-0.504, 1.85974, 0);
+    screenGeometry.scale(35, 35, 35);
+    const screen = new THREE.Mesh(screenGeometry, corpusMaterial2);
+    this.add(screen);
   }
 }

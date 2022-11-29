@@ -166,10 +166,10 @@ export default class Arcade extends THREE.Group {
       2.81251,
       0.591929, //40
       -0.733992,
-      2.70058,
+      2.77505,
       0.591929, //41
       -0.744387,
-      2.55882,
+      2.47771,
       0.591929, //42
       -0.439962,
       2.39965,
@@ -197,10 +197,10 @@ export default class Arcade extends THREE.Group {
       2.81251,
       -0.591929, //50
       -0.733992,
-      2.70058,
+      2.77505,
       -0.591929, //51
       -0.744387,
-      2.55882,
+      2.47771,
       -0.591929, //52
       -0.439962,
       2.39965,
@@ -624,9 +624,9 @@ export default class Arcade extends THREE.Group {
         new THREE.Vector3(
           cylinderBody.rotation.x,
           cylinderBody.rotation.y,
-          cylinderBody.rotation.z - 8 * Math.PI
+          cylinderBody.rotation.z - 4 * Math.PI
         ),
-        3000
+        5000
       )
       .easing(TWEEN.Easing.Cubic.InOut);
   }

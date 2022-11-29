@@ -7,6 +7,7 @@ import {
 import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
 import * as TWEEN from "tween";
 import { MathUtils } from "three";
+import SpaceInvadersGame from "./SpaceInvadersGame.js";
 
 export default class Arcade extends THREE.Group {
   constructor() {
@@ -171,10 +172,10 @@ export default class Arcade extends THREE.Group {
       -0.744387,
       2.47771,
       0.591929, //42
-      -0.439962,
-      2.39965,
+      -0.5036,
+      2.32456,
       0.591929, //43
-      -0.529323,
+      -0.5036,
       1.39492,
       0.591929, //44
       -0.930213,
@@ -202,10 +203,10 @@ export default class Arcade extends THREE.Group {
       -0.744387,
       2.47771,
       -0.591929, //52
-      -0.439962,
-      2.39965,
+      -0.5036,
+      2.32456,
       -0.591929, //53
-      -0.529323,
+      -0.5036,
       1.39492,
       -0.591929, //54
       -0.930213,
@@ -254,10 +255,10 @@ export default class Arcade extends THREE.Group {
 
       /* --corpus-- */
       //merge two planes --- pattern increment by 1
-      40, 49, 59, 40, 50, 59, 40, 41, 50, 41, 50, 51, 1, 51, 42, 42, 52, 51, 42,
-      43, 53, 42, 53, 52, 43, 44, 54, 43, 54, 53, 44, 45, 55, 44, 54, 55, 45,
-      46, 56, 45, 55, 56, 46, 47, 57, 46, 56, 57, 47, 48, 58, 47, 57, 58, 48,
-      49, 59, 48, 58, 59,
+      40, 49, 59, 40, 50, 59, 40, 41, 50, 41, 50, 51, 41, 51, 42, 42, 52, 51,
+      42, 43, 53, 42, 53, 52, 43, 44, 54, 43, 54, 53, 44, 45, 55, 44, 54, 55,
+      45, 46, 56, 45, 55, 56, 46, 47, 57, 46, 56, 57, 47, 48, 58, 47, 57, 58,
+      48, 49, 59, 48, 58, 59,
     ];
 
     function toDouble(modArray) {

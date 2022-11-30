@@ -101,7 +101,7 @@ function main() {
     const screen = arcade.children[9];
     const player = screen.children[1];
 
-    const speed = 0.615;
+    const speed = 0.615 * 2;
 
     if (keyCode == 87) {
       joystick.tweenAnimation("W").start(); // Button W

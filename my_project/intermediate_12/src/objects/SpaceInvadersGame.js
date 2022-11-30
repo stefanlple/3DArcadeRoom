@@ -59,41 +59,49 @@ export default class SpaceInvadersGame extends THREE.Group {
       switch (direction) {
         case "right":
           if (
-            /* player.position.z + (playerSize * 35) / 2 <=
-            screen.position.z + (screenWidth * 35) / 2 */
-            true
+            player.position.z + (playerSize * 35) / 2 + speed <=
+            screen.position.z + (screenWidth * 35) / 2
           ) {
             player.translateZ(speed);
-            break;
           }
+          break;
         case "left":
           if (
-            /* player.position.z + (playerSize * 35) / 2 >=
-            screen.position.z + (screenWidth * 35) / 2 */
-            true
+            player.position.z - (playerSize * 35) / 2 - speed >=
+            screen.position.z - (screenWidth * 35) / 2
           ) {
             player.translateZ(-speed);
-            break;
           }
+          break;
         case "up":
           if (
-            /* player.position.z + (playerSize * 35) / 2 <=
-            screen.position.z + (screenWidth * 35) / 2 */
-            true
+            player.position.y + (playerSize * 35) / 2 + speed <=
+            screen.position.y + (screenHeight * 35) / 2
           ) {
             player.translateY(speed);
-            break;
           }
+          break;
         case "down":
           if (
-            /* player.position.z + (playerSize * 35) / 2 <=
-            screen.position.z + (screenWidth * 35) / 2 */
-            true
+            player.position.y - (playerSize * 35) / 2 - speed >=
+            screen.position.y - (screenHeight * 35) / 2
           ) {
             player.translateY(-speed);
-            break;
           }
+          break;
       }
     };
+    const bullet = 0.025;
+
+    const createBullet = (size) => {
+      const bulletGeometry = new THREE.PlaneGeometry(size, size);
+      bulletGeometry.rotateY(Math.PI / 2);
+      bulletGeometry.scale(35, 35, 35);
+      const bullet = new THREE.Mesh(bulletGeometry, corpusMaterial2);
+      return bullet;
+    };
+    player.shootOne = () => {};
+
+    player.shootOne = () => {};
   }
 }

@@ -45,13 +45,55 @@ export default class SpaceInvadersGame extends THREE.Group {
     const screen = new THREE.Mesh(screenGeometry, corpusMaterial3);
     this.add(screen);
 
-    const scale = 0.15;
-    const playerSize = 0.07;
+    /* player */
+    //
+    const playerSize = 0.075;
     const playerGeometry = new THREE.PlaneGeometry(playerSize, playerSize);
-    playerGeometry.translate(0, -(screenHeight / 2 - playerSize / 2), 0);
     playerGeometry.rotateY(Math.PI / 2);
     playerGeometry.scale(35, 35, 35);
     const player = new THREE.Mesh(playerGeometry, corpusMaterial2);
     this.add(player);
+    player.translateY(-(screenHeight / 2 - playerSize / 2) * 35);
+
+    player.move = (direction, speed) => {
+      switch (direction) {
+        case "right":
+          if (
+            /* player.position.z + (playerSize * 35) / 2 <=
+            screen.position.z + (screenWidth * 35) / 2 */
+            true
+          ) {
+            player.translateZ(speed);
+            break;
+          }
+        case "left":
+          if (
+            /* player.position.z + (playerSize * 35) / 2 >=
+            screen.position.z + (screenWidth * 35) / 2 */
+            true
+          ) {
+            player.translateZ(-speed);
+            break;
+          }
+        case "up":
+          if (
+            /* player.position.z + (playerSize * 35) / 2 <=
+            screen.position.z + (screenWidth * 35) / 2 */
+            true
+          ) {
+            player.translateY(speed);
+            break;
+          }
+        case "down":
+          if (
+            /* player.position.z + (playerSize * 35) / 2 <=
+            screen.position.z + (screenWidth * 35) / 2 */
+            true
+          ) {
+            player.translateY(-speed);
+            break;
+          }
+      }
+    };
   }
 }

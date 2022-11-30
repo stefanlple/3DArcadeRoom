@@ -96,11 +96,29 @@ function main() {
     if (keyCode == 13) {
       cylinderBody.tweenAnimation.start();
     }
+
     const joystick = arcade.children[3];
-    if (keyCode == 87) joystick.tweenAnimation("W").start(); // Button W
-    if (keyCode == 65) joystick.tweenAnimation("A").start(); // Button A
-    if (keyCode == 83) joystick.tweenAnimation("S").start(); // Button S
-    if (keyCode == 68) joystick.tweenAnimation("D").start(); // Button D
+    const screen = arcade.children[9];
+    const player = screen.children[1];
+
+    const speed = 0.615;
+
+    if (keyCode == 87) {
+      joystick.tweenAnimation("W").start(); // Button W
+      player.move("up", speed);
+    }
+    if (keyCode == 65) {
+      joystick.tweenAnimation("A").start(); // Button A
+      player.move("left", speed);
+    }
+    if (keyCode == 83) {
+      joystick.tweenAnimation("S").start(); // Button S
+      player.move("down", speed);
+    }
+    if (keyCode == 68) {
+      joystick.tweenAnimation("D").start(); // Button D
+      player.move("right", speed);
+    }
   };
   document.addEventListener("keydown", onDocumentKeyDown);
 

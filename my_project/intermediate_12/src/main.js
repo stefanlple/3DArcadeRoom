@@ -13,13 +13,26 @@ function main() {
   window.scene = new THREE.Scene();
   window.scene.add(new THREE.AxesHelper(200));
 
+  const arcade = new Arcade();
+  arcade.position.set(0, 0, 0);
+  window.scene.add(arcade);
+
+  /* window.camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+  window.camera.position.set(-100, 100, 100); */
+
   window.camera = new THREE.PerspectiveCamera(
     45,
     window.innerWidth / window.innerHeight,
     0.1,
     1000
   );
-  window.camera.position.set(-100, 100, 100);
+  window.camera.position.set(-2.3 * 35, 2.2 * 35, 0);
+  window.camera.lookAt(-0.51 * 35, 1.85974 * 35, 0);
 
   window.renderer = new THREE.WebGLRenderer({ antialias: true });
   window.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -27,13 +40,6 @@ function main() {
   window.renderer.shadowMap.enabled = true;
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
-  /* const television = new Television();
-  television.position.set(0, 16.8, 0);
-  window.scene.add(television); */
-
-  const arcade = new Arcade();
-  arcade.position.set(0, 0, 0);
-  window.scene.add(arcade);
 
   const planeGeometry = new THREE.PlaneGeometry(300, 300);
   const planeMaterial = new THREE.MeshLambertMaterial({
@@ -60,22 +66,22 @@ function main() {
   spotLight.shadow.camera.aspect = 1;
   spotLight.shadow.camera.near = 10;
   spotLight.shadow.camera.far = 500;
-  window.scene.add(spotLight);
-  window.scene.add(new THREE.CameraHelper(spotLight.shadow.camera));
+  /*   window.scene.add(spotLight);
+  window.scene.add(new THREE.CameraHelper(spotLight.shadow.camera)); */
 
   const gui = new DATGUI.GUI();
   gui.add(spotLight.position, "x", -200, 200);
   gui.add(spotLight.position, "y", 0, 200);
   gui.add(spotLight.position, "z", -200, 200);
 
-  const orbitControls = new CONTROLS.OrbitControls(
+  /*   const orbitControls = new CONTROLS.OrbitControls(
     window.camera,
     window.renderer.domElement
   );
   orbitControls.target = new THREE.Vector3(0, 0, 0);
   //orbitControls.maxPolarAngle = Math.PI / 2.1;
 
-  orbitControls.update();
+  orbitControls.update(); */
 
   //Animations onKeyDown
   const cylinderBody = arcade.children[8];
@@ -98,26 +104,6 @@ function main() {
   };
   document.addEventListener("keydown", onDocumentKeyDown);
 
-  function setPedalPostionAnimation() {
-    const pedalLeft = arcade.children[6];
-    const pedalRight = arcade.children[7];
-
-    pedalLeft.position.set(
-      -Math.cos(cylinderBody.rotation.z + Math.PI / 2) * 35 * 0.345549 -
-        +1.41066 * 35,
-      -Math.sin(cylinderBody.rotation.z + Math.PI / 2) * 35 * 0.345549 +
-        0.459419 * 35,
-      -0.1548315 * 35
-    );
-    pedalRight.position.set(
-      -Math.cos(cylinderBody.rotation.z + (3 / 2) * Math.PI) * 35 * 0.345549 -
-        +1.41066 * 35,
-      -Math.sin(cylinderBody.rotation.z + (3 / 2) * Math.PI) * 35 * 0.345549 +
-        0.459419 * 35,
-      0.1548315 * 35
-    );
-  }
-
   const clock = new THREE.Clock();
 
   function mainLoop() {
@@ -126,7 +112,7 @@ function main() {
     arcade.animations.forEach((animation) => {
       animation.update(delta);
     });
-    setPedalPostionAnimation();
+    arcade.pedalAnimation(arcade);
 
     TWEEN.update();
 

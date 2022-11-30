@@ -574,6 +574,26 @@ export default class Arcade extends THREE.Group {
     const pedalLeft = pedalRight.clone();
     this.add(pedalLeft);
 
+    this.pedalAnimation = function setPedalPostionAnimation(arcade) {
+      const pedalLeft = arcade.children[6];
+      const pedalRight = arcade.children[7];
+
+      pedalLeft.position.set(
+        -Math.cos(cylinderBody.rotation.z + Math.PI / 2) * 35 * 0.345549 -
+          +1.41066 * 35,
+        -Math.sin(cylinderBody.rotation.z + Math.PI / 2) * 35 * 0.345549 +
+          0.459419 * 35,
+        -0.1548315 * 35
+      );
+      pedalRight.position.set(
+        -Math.cos(cylinderBody.rotation.z + (3 / 2) * Math.PI) * 35 * 0.345549 -
+          +1.41066 * 35,
+        -Math.sin(cylinderBody.rotation.z + (3 / 2) * Math.PI) * 35 * 0.345549 +
+          0.459419 * 35,
+        0.1548315 * 35
+      );
+    };
+
     //pedalStickRight
     const pedalStickRightGeometry = new THREE.BoxGeometry(
       0.07 * 35,
@@ -633,7 +653,8 @@ export default class Arcade extends THREE.Group {
 
     /* screen */
     const screen = new SpaceInvadersGame();
-    //screen.translate(-0.504, 1.85974, 0);
+    screen.translateX(-0.51 * 35);
+    screen.translateY(1.85974 * 35);
     this.add(screen);
   }
 }

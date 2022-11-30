@@ -84,14 +84,23 @@ function main() {
   orbitControls.update(); */
 
   //Animations onKeyDown
+  let button2Pressed = false;
+  let button3Pressed = false;
+
   const cylinderBody = arcade.children[8];
   const onDocumentKeyDown = (event) => {
     let keyCode = event.which;
     const button2 = arcade.children[1];
-    if (keyCode == 74) button2.tweenAnimation.start(); //Button J
+    if (keyCode == 74 && button2Pressed === false) {
+      button2.tweenAnimation1.start(); //Button J
+      button2Pressed = true;
+    }
 
     const button3 = arcade.children[2];
-    if (keyCode == 75) button3.tweenAnimation.start(); //Button K
+    if (keyCode == 75 && button3Pressed === false) {
+      button3.tweenAnimation1.start(); //Button K
+      button3Pressed = true;
+    }
 
     if (keyCode == 13) {
       cylinderBody.tweenAnimation.start();
@@ -120,7 +129,24 @@ function main() {
       player.move("right", speed);
     }
   };
+
+  const onDocumentKeyUp = (event) => {
+    let keyCode = event.which;
+    const button2 = arcade.children[1];
+    if (keyCode == 74) {
+      button2.tweenAnimation2.start(); //Button J
+      button2Pressed = false;
+    }
+
+    const button3 = arcade.children[2];
+    if (keyCode == 75) {
+      button3.tweenAnimation2.start(); //Button K
+      button3Pressed = false;
+    }
+  };
+
   document.addEventListener("keydown", onDocumentKeyDown);
+  document.addEventListener("keyup", onDocumentKeyUp);
 
   const clock = new THREE.Clock();
 

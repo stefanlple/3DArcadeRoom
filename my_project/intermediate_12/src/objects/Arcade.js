@@ -314,28 +314,29 @@ export default class Arcade extends THREE.Group {
     this.add(button2);
 
     //button2 & button3 Animation;
-    const toggleButtonTween = (object) => {
-      return new TWEEN.Tween(object.position)
-        .to(
-          new THREE.Vector3(
-            object.position.x,
-            object.position.y - 0.01413 * 35,
-            object.position.z
-          ),
-          150
-        )
-        .chain(
-          new TWEEN.Tween(object.position).to(
-            new THREE.Vector3(
-              object.position.x,
-              object.position.y,
-              object.position.z
-            ),
-            150
-          )
-        );
+    const pressedButtonTween = (object) => {
+      return new TWEEN.Tween(object.position).to(
+        new THREE.Vector3(
+          object.position.x,
+          object.position.y - 0.01413 * 35,
+          object.position.z
+        ),
+        150
+      );
     };
-    button2.tweenAnimation = toggleButtonTween(button2);
+    //button2 & button3 Animation;
+    const releasedButtonTween = (object) => {
+      return new TWEEN.Tween(object.position).to(
+        new THREE.Vector3(
+          object.position.x,
+          object.position.y,
+          object.position.z
+        ),
+        150
+      );
+    };
+    button2.tweenAnimation1 = pressedButtonTween(button2);
+    button2.tweenAnimation2 = releasedButtonTween(button2);
 
     //button3
     const button3 = button2.clone();
@@ -343,8 +344,8 @@ export default class Arcade extends THREE.Group {
     this.add(button3);
 
     //button3 Animation;
-    button3.tweenAnimation = toggleButtonTween(button3);
-
+    button3.tweenAnimation1 = pressedButtonTween(button3);
+    button3.tweenAnimation2 = releasedButtonTween(button3);
     /*joyStick*/
     /*--------*/
 

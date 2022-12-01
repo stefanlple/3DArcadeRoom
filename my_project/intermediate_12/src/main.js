@@ -41,6 +41,7 @@ function main() {
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
+  //room
   const planeGeometry = new THREE.PlaneGeometry(300, 300);
   const planeMaterial = new THREE.MeshLambertMaterial({
     color: 0xaaaaaa,
@@ -51,6 +52,7 @@ function main() {
   plane.receiveShadow = true;
   window.scene.add(plane);
 
+  //Light
   const ambientLight = new THREE.AmbientLight(0xffffff);
   ambientLight.intensity = 1;
   window.scene.add(ambientLight);
@@ -96,53 +98,56 @@ function main() {
 
   const onDocumentKeyDown = ({ which }) => {
     let keyCode = which;
-    if (keyCode == 74 && button2Pressed === false) {
-      button2.tweenAnimation1.start(); //Button J
-      button2Pressed = true;
-      screen.shootOne(screen, player.position.y, player.position.z);
-    }
-
-    if (keyCode == 75 && button3Pressed === false) {
-      button3.tweenAnimation1.start(); //Button K
-      button3Pressed = true;
-      screen.shootTwo(screen, player.position.y, player.position.z);
-    }
-
-    if (keyCode == 13) {
-      cylinderBody.tweenAnimation.start();
-    }
-
     const speed = 0.615 * 2;
 
-    if (keyCode == 87) {
-      joystick.tweenAnimation("W").start(); // Button W
-      player.move("up", speed);
-    }
-    if (keyCode == 65) {
-      joystick.tweenAnimation("A").start(); // Button A
-      player.move("left", speed);
-    }
-    if (keyCode == 83) {
-      joystick.tweenAnimation("S").start(); // Button S
-      player.move("down", speed);
-    }
-    if (keyCode == 68) {
-      joystick.tweenAnimation("D").start(); // Button D
-      player.move("right", speed);
+    switch (keyCode) {
+      case 74: //Button J
+        if (button2Pressed === false) {
+          button2.tweenAnimation1.start(); //Button J
+          button2Pressed = true;
+          screen.shootOne(screen, player.position.y, player.position.z);
+        }
+        break;
+      case 75: //Button K
+        if (button3Pressed === false) {
+          button3.tweenAnimation1.start(); //Button K
+          button3Pressed = true;
+          screen.shootTwo(screen, player.position.y, player.position.z);
+        }
+        break;
+      case 13: //Button Enter
+        cylinderBody.tweenAnimation.start();
+        break;
+      case 87: //Button W
+        joystick.tweenAnimation("W").start(); // Button W
+        player.move("up", speed);
+        break;
+      case 65: //Button A
+        joystick.tweenAnimation("A").start(); // Button A
+        player.move("left", speed);
+        break;
+      case 83: //Button S
+        joystick.tweenAnimation("S").start(); // Button S
+        player.move("down", speed);
+        break;
+      case 68: //Button D
+        joystick.tweenAnimation("D").start(); // Button D
+        player.move("right", speed);
+        break;
     }
   };
 
   const onDocumentKeyUp = ({ which }) => {
     let keyCode = which;
-
-    if (keyCode == 74) {
-      button2.tweenAnimation2.start(); //Button J
-      button2Pressed = false;
-    }
-
-    if (keyCode == 75) {
-      button3.tweenAnimation2.start(); //Button K
-      button3Pressed = false;
+    switch (keyCode) {
+      case 74: //Button J
+        button2.tweenAnimation2.start(); //Button J
+        button2Pressed = false;
+        break;
+      case 75: //Button K
+        button3.tweenAnimation2.start(); //Button K
+        button3Pressed = false;
+        break;
     }
   };
 

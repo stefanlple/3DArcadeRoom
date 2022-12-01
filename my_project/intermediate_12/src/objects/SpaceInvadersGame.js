@@ -93,16 +93,21 @@ export default class SpaceInvadersGame extends THREE.Group {
       }
     };
 
-    const createBullet = (playerPosition) => {
-      const bulletGeometry = new THREE.CircleGeometry(0.0122, 32);
+    const bulletRadius = 0.0122;
+    const createBullet = (playerPositionY, playerPositionZ) => {
+      const bulletGeometry = new THREE.CircleGeometry(bulletRadius, 32);
       bulletGeometry.rotateY(Math.PI / 2);
       bulletGeometry.scale(35, 35, 35);
       const bullet = new THREE.Mesh(bulletGeometry, corpusMaterial2);
+      bullet.translateY(
+        playerPositionY + (playerSize / 2) * 35 + bulletRadius * 35
+      );
+      bullet.translateZ(playerPositionZ);
       return bullet;
     };
 
-    this.shootOne = (screen) => {
-      let bullet = createBullet();
+    this.shootOne = (screen, playerPositionY, playerPositionZ) => {
+      let bullet = createBullet(playerPositionY, playerPositionZ);
       screen.add(bullet);
       this.projectiles.push(bullet);
       //this.projectiles.forEach((bullet) => {});
@@ -111,8 +116,16 @@ export default class SpaceInvadersGame extends THREE.Group {
     this.shootTwo = () => {};
 
     this.updateBullet = () => {
-      this.projectiles.forEach((projectile) => {
-        projectile.translateY(0.0122 / 2);
+      this.projectiles.forEach((projectile, index) => {
+        const speed = 0.0122;
+        if (
+          projectile.position.y + bulletRadius * 35 + speed >=
+          screen.position.y + (screenHeight * 35) / 2
+        ) {
+          this.projectiles.splice(index, 1);
+          projectile.removeFromParent();
+        }
+        projectile.translateY(speed * 11);
       });
     };
   }

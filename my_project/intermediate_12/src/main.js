@@ -105,6 +105,7 @@ function main() {
     if (keyCode == 75 && button3Pressed === false) {
       button3.tweenAnimation1.start(); //Button K
       button3Pressed = true;
+      screen.shootTwo(screen, player.position.y, player.position.z);
     }
 
     if (keyCode == 13) {

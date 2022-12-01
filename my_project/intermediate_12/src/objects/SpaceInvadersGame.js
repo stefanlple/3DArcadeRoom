@@ -93,33 +93,52 @@ export default class SpaceInvadersGame extends THREE.Group {
       }
     };
 
-    const bulletRadius = 0.0122;
-    const createBullet = (playerPositionY, playerPositionZ) => {
+    const bulletRadiusBig = 0.0122;
+    const bulletRadiusSmall = 0.009;
+
+    const createBullet = (bulletRadius) => {
       const bulletGeometry = new THREE.CircleGeometry(bulletRadius, 32);
       bulletGeometry.rotateY(Math.PI / 2);
       bulletGeometry.scale(35, 35, 35);
       const bullet = new THREE.Mesh(bulletGeometry, corpusMaterial2);
-      bullet.translateY(
-        playerPositionY + (playerSize / 2) * 35 + bulletRadius * 35
-      );
-      bullet.translateZ(playerPositionZ);
       return bullet;
     };
 
     this.shootOne = (screen, playerPositionY, playerPositionZ) => {
-      let bullet = createBullet(playerPositionY, playerPositionZ);
+      let bullet = createBullet(bulletRadiusBig);
+      bullet.radius = bulletRadiusBig;
+      bullet.translateY(
+        playerPositionY + (playerSize / 2) * 35 + bulletRadiusBig * 35
+      );
+      bullet.translateZ(playerPositionZ);
       screen.add(bullet);
       this.projectiles.push(bullet);
-      //this.projectiles.forEach((bullet) => {});
     };
 
-    this.shootTwo = () => {};
+    this.shootTwo = (screen, playerPositionY, playerPositionZ) => {
+      let bullet1 = createBullet(bulletRadiusSmall);
+      bullet1.radius = bulletRadiusSmall;
+      let bullet2 = createBullet(bulletRadiusSmall);
+      bullet2.radius = bulletRadiusSmall;
+      bullet1.translateY(
+        playerPositionY + (playerSize / 2) * 35 + bulletRadiusSmall * 35
+      );
+      bullet2.translateY(
+        playerPositionY + (playerSize / 2) * 35 + bulletRadiusSmall * 35
+      );
+      bullet1.translateZ(playerPositionZ + (playerSize / 2) * 35);
+      bullet2.translateZ(playerPositionZ - (playerSize / 2) * 35);
+      screen.add(bullet1);
+      screen.add(bullet2);
+      this.projectiles.push(bullet1);
+      this.projectiles.push(bullet2);
+    };
 
     this.updateBullet = () => {
       this.projectiles.forEach((projectile, index) => {
         const speed = 0.0122;
         if (
-          projectile.position.y + bulletRadius * 35 + speed >=
+          projectile.position.y + projectile.radius * 35 + speed >=
           screen.position.y + (screenHeight * 35) / 2
         ) {
           this.projectiles.splice(index, 1);

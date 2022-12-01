@@ -100,11 +100,20 @@ export default class SpaceInvadersGame extends THREE.Group {
       const bullet = new THREE.Mesh(bulletGeometry, corpusMaterial2);
       return bullet;
     };
-    player.shootOne = (screen) => {
-      screen.add(createBullet());
+
+    this.shootOne = (screen) => {
+      let bullet = createBullet();
+      screen.add(bullet);
+      this.projectiles.push(bullet);
       //this.projectiles.forEach((bullet) => {});
     };
 
-    player.shootTwo = () => {};
+    this.shootTwo = () => {};
+
+    this.updateBullet = () => {
+      this.projectiles.forEach((projectile) => {
+        projectile.translateY(0.0122 / 2);
+      });
+    };
   }
 }

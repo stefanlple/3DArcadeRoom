@@ -98,7 +98,7 @@ function main() {
     if (keyCode == 74 && button2Pressed === false) {
       button2.tweenAnimation1.start(); //Button J
       button2Pressed = true;
-      player.shootOne(screen);
+      screen.shootOne(screen);
     }
 
     const button3 = arcade.children[2];
@@ -158,6 +158,7 @@ function main() {
       animation.update(delta);
     });
     arcade.pedalAnimation(arcade);
+    screen.updateBullet();
 
     TWEEN.update();
 

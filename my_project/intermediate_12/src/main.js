@@ -88,12 +88,17 @@ function main() {
   let button3Pressed = false;
 
   const cylinderBody = arcade.children[8];
-  const onDocumentKeyDown = (event) => {
-    let keyCode = event.which;
+  const joystick = arcade.children[3];
+  const screen = arcade.children[9];
+  const player = screen.children[1];
+
+  const onDocumentKeyDown = ({ which }) => {
+    let keyCode = which;
     const button2 = arcade.children[1];
     if (keyCode == 74 && button2Pressed === false) {
       button2.tweenAnimation1.start(); //Button J
       button2Pressed = true;
+      player.shootOne(screen);
     }
 
     const button3 = arcade.children[2];
@@ -105,10 +110,6 @@ function main() {
     if (keyCode == 13) {
       cylinderBody.tweenAnimation.start();
     }
-
-    const joystick = arcade.children[3];
-    const screen = arcade.children[9];
-    const player = screen.children[1];
 
     const speed = 0.615 * 2;
 
@@ -145,8 +146,8 @@ function main() {
     }
   };
 
-  document.addEventListener("keydown", onDocumentKeyDown);
-  document.addEventListener("keyup", onDocumentKeyUp);
+  window.addEventListener("keydown", onDocumentKeyDown);
+  window.addEventListener("keyup", onDocumentKeyUp);
 
   const clock = new THREE.Clock();
 

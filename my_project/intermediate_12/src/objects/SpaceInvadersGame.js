@@ -12,6 +12,7 @@ export default class SpaceInvadersGame extends THREE.Group {
   constructor() {
     super();
 
+    this.projectiles = [];
     this.animations = [];
     this.addParts();
   }
@@ -92,14 +93,17 @@ export default class SpaceInvadersGame extends THREE.Group {
       }
     };
 
-    const createBullet = (bulletWidth, bulletHeight) => {
-      const bulletGeometry = new THREE.PlaneGeometry(bulletWidth, bulletHeight);
+    const createBullet = (playerPosition) => {
+      const bulletGeometry = new THREE.CircleGeometry(0.0122, 32);
       bulletGeometry.rotateY(Math.PI / 2);
       bulletGeometry.scale(35, 35, 35);
       const bullet = new THREE.Mesh(bulletGeometry, corpusMaterial2);
       return bullet;
     };
-    player.shootOne = () => {};
+    player.shootOne = (screen) => {
+      screen.add(createBullet());
+      //this.projectiles.forEach((bullet) => {});
+    };
 
     player.shootTwo = () => {};
   }

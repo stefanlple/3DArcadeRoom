@@ -91,17 +91,17 @@ function main() {
   const joystick = arcade.children[3];
   const screen = arcade.children[9];
   const player = screen.children[1];
+  const button2 = arcade.children[1];
+  const button3 = arcade.children[2];
 
   const onDocumentKeyDown = ({ which }) => {
     let keyCode = which;
-    const button2 = arcade.children[1];
     if (keyCode == 74 && button2Pressed === false) {
       button2.tweenAnimation1.start(); //Button J
       button2Pressed = true;
       screen.shootOne(screen, player.position.y, player.position.z);
     }
 
-    const button3 = arcade.children[2];
     if (keyCode == 75 && button3Pressed === false) {
       button3.tweenAnimation1.start(); //Button K
       button3Pressed = true;
@@ -132,15 +132,14 @@ function main() {
     }
   };
 
-  const onDocumentKeyUp = (event) => {
-    let keyCode = event.which;
-    const button2 = arcade.children[1];
+  const onDocumentKeyUp = ({ which }) => {
+    let keyCode = which;
+
     if (keyCode == 74) {
       button2.tweenAnimation2.start(); //Button J
       button2Pressed = false;
     }
 
-    const button3 = arcade.children[2];
     if (keyCode == 75) {
       button3.tweenAnimation2.start(); //Button K
       button3Pressed = false;

@@ -164,6 +164,7 @@ function main() {
     });
     arcade.pedalAnimation(arcade);
     screen.updateBullet();
+
     TWEEN.update();
 
     window.renderer.render(window.scene, window.camera);

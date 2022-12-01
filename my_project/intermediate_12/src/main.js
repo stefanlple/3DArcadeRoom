@@ -84,15 +84,15 @@ function main() {
   orbitControls.update(); */
 
   //Animations onKeyDown
-  let button2Pressed = false;
-  let button3Pressed = false;
-
   const cylinderBody = arcade.children[8];
   const joystick = arcade.children[3];
   const screen = arcade.children[9];
   const player = screen.children[1];
   const button2 = arcade.children[1];
   const button3 = arcade.children[2];
+
+  let button2Pressed = false;
+  let button3Pressed = false;
 
   const onDocumentKeyDown = ({ which }) => {
     let keyCode = which;

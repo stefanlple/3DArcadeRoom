@@ -12,6 +12,7 @@ export default class SpaceInvadersGame extends THREE.Group {
   constructor() {
     super();
 
+    this.enemies = [];
     this.projectiles = [];
     this.animations = [];
     this.addParts();
@@ -29,7 +30,7 @@ export default class SpaceInvadersGame extends THREE.Group {
       side: THREE.DoubleSide,
     });
     const corpusMaterial3 = new THREE.MeshPhongMaterial({
-      color: 0x00000,
+      color: 0x00ff00,
       flatShading: true,
       side: THREE.DoubleSide,
     });
@@ -147,5 +148,15 @@ export default class SpaceInvadersGame extends THREE.Group {
         projectile.translateY(speed * 11);
       });
     };
+
+    const createEnemy = (enemyWidth) => {
+      const enemyGeometry = new THREE.PlaneGeometry(enemyWidth, 0.075);
+      enemyGeometry.rotateY(Math.PI / 2);
+      enemyGeometry.scale(35, 35, 35);
+      const bullet = new THREE.Mesh(enemyGeometry, corpusMaterial3);
+      return bullet;
+    };
+
+    const spawnEnemy = (range1, range2) => {};
   }
 }

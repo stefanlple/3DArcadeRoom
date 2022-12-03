@@ -180,6 +180,7 @@ export default class SpaceInvadersGame extends THREE.Group {
       this.enemies.push(enemy)
     };
 
+    this.spawnEnemiesInterval=0
     this.updateEnemies=()=>{
       this.enemies.forEach((enemy, index) => {
         const speed = 0.0122;

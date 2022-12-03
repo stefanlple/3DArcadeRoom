@@ -121,7 +121,6 @@ function main() {
       case 87: //Button W
         joystick.tweenAnimation("W").start(); // Button W
         player.move("up", speed);
-        screen.spawnEnemy(1,1)
         break;
       case 65: //Button A
         joystick.tweenAnimation("A").start(); // Button A
@@ -165,8 +164,16 @@ function main() {
     });
     arcade.pedalAnimation(arcade);
 
+
+    //game
     screen.updateBullet();
-    screen.updateEnemies();
+
+    screen.spawnEnemiesInterval++
+    if(screen.spawnEnemiesInterval===50){
+      screen.spawnEnemy(1,1)
+      screen.spawnEnemiesInterval=0
+    }
+    screen.updateEnemies()
 
     TWEEN.update();
 

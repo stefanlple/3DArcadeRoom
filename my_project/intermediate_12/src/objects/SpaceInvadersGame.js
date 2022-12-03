@@ -155,44 +155,80 @@ export default class SpaceInvadersGame extends THREE.Group {
     };
 
     //Enemies
-    const createEnemy = (enemyWidth,enemyHeight) => {
+    const createEnemy = (enemyWidth, enemyHeight) => {
       const enemyGeometry = new THREE.PlaneGeometry(enemyWidth, enemyHeight);
       enemyGeometry.rotateY(Math.PI / 2);
       enemyGeometry.scale(35, 35, 35);
       const enemy = new THREE.Mesh(enemyGeometry, corpusMaterial4);
       enemy.translateY((screenHeight / 2 - enemyHeight / 2) * 35);
-      enemy.height=enemyHeight
-      enemy.width=enemyWidth
+      enemy.height = enemyHeight;
+      enemy.width = enemyWidth;
 
       //spawn at random positions
-      enemy.minSpawnpoint=(-screenWidth/2+enemyWidth/2)*35
-      enemy.maxSpawnpoint=(screenWidth/2-enemyWidth/2)*35
-      let spawnRange = (Math.random() * (enemy.maxSpawnpoint - enemy.
-        minSpawnpoint)) + enemy.minSpawnpoint;
-      enemy.translateZ(spawnRange)
+      enemy.minSpawnpoint = (-screenWidth / 2 + enemyWidth / 2) * 35;
+      enemy.maxSpawnpoint = (screenWidth / 2 - enemyWidth / 2) * 35;
+      let spawnRange =
+        Math.random() * (enemy.maxSpawnpoint - enemy.minSpawnpoint) +
+        enemy.minSpawnpoint;
+      enemy.translateZ(spawnRange);
       return enemy;
     };
 
     this.spawnEnemy = () => {
-      let sizes=[0.075]
-      let enemy=createEnemy(sizes[0],sizes[0])
-      screen.add(enemy)
-      this.enemies.push(enemy)
+      let sizes = [0.075];
+      let enemy = createEnemy(sizes[0], sizes[0]);
+      screen.add(enemy);
+      this.enemies.push(enemy);
     };
 
-    this.spawnEnemiesInterval=0
-    this.updateEnemies=()=>{
+    this.spawnEnemiesInterval = 0;
+    this.updateEnemies = () => {
       this.enemies.forEach((enemy, index) => {
         const speed = 0.0122;
         if (
-          enemy.position.y - enemy.height/2 * 35 - speed <=
+          enemy.position.y - (enemy.height / 2) * 35 - speed <=
           screen.position.y - (screenHeight * 35) / 2
         ) {
           this.enemies.splice(index, 1);
           enemy.removeFromParent();
         }
-        enemy.translateY(-enemy.height*2);
+        enemy.translateY(-enemy.height * 2);
+
+        //hit detection with player
+        if (this.hitDetectionWithPlayer(enemy)) {
+          this.enemies.splice(index, 1);
+          enemy.removeFromParent();
+          player.removeFromParent();
+        }
       });
-    }
+    };
+
+    const hitZone = (position) => {
+      return {
+        z: position.z,
+        y: position.y,
+      };
+    };
+
+    //euclidean distance
+    const getDistance = (coordinate1, coordinate2) => {
+      return Math.sqrt(
+        (coordinate2.z - coordinate1.z) ** 2 +
+          (coordinate2.y - coordinate1.y) ** 2
+      );
+    };
+
+    this.hitDetectionWithPlayer = (enemy) => {
+      let playerHitZone = hitZone(player.position);
+      let enemyHitZone = hitZone(enemy.position);
+      const hitWithPlayerDistance = playerSize * 35;
+      console.log(hitWithPlayerDistance);
+      console.log(getDistance(playerHitZone, enemyHitZone));
+      if (getDistance(playerHitZone, enemyHitZone) < hitWithPlayerDistance) {
+        return true;
+      }
+    };
+
+    const hitDetectionWithBullet = () => {};
   }
 }

@@ -164,16 +164,16 @@ function main() {
     });
     arcade.pedalAnimation(arcade);
 
-
     //game
     screen.updateBullet();
 
-    screen.spawnEnemiesInterval++
-    if(screen.spawnEnemiesInterval===50){
-      screen.spawnEnemy(1,1)
-      screen.spawnEnemiesInterval=0
+    screen.spawnEnemiesInterval++;
+    if (screen.spawnEnemiesInterval === 50) {
+      screen.spawnEnemy(1, 1);
+      screen.spawnEnemiesInterval = 0;
     }
-    screen.updateEnemies()
+
+    screen.updateEnemies();
 
     TWEEN.update();
 

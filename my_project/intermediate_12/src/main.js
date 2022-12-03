@@ -121,6 +121,7 @@ function main() {
       case 87: //Button W
         joystick.tweenAnimation("W").start(); // Button W
         player.move("up", speed);
+        screen.spawnEnemy(1,1)
         break;
       case 65: //Button A
         joystick.tweenAnimation("A").start(); // Button A
@@ -163,14 +164,15 @@ function main() {
       animation.update(delta);
     });
     arcade.pedalAnimation(arcade);
+
     screen.updateBullet();
+    screen.updateEnemies();
 
     TWEEN.update();
 
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);
   }
-
   mainLoop();
 }
 

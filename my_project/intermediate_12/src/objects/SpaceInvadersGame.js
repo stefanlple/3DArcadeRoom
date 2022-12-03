@@ -30,6 +30,11 @@ export default class SpaceInvadersGame extends THREE.Group {
       side: THREE.DoubleSide,
     });
     const corpusMaterial3 = new THREE.MeshPhongMaterial({
+      color: 0x000000,
+      flatShading: true,
+      side: THREE.DoubleSide,
+    });
+    const corpusMaterial4 = new THREE.MeshPhongMaterial({
       color: 0x00ff00,
       flatShading: true,
       side: THREE.DoubleSide,
@@ -145,18 +150,48 @@ export default class SpaceInvadersGame extends THREE.Group {
           this.projectiles.splice(index, 1);
           projectile.removeFromParent();
         }
-        projectile.translateY(speed * 11);
+        projectile.translateY(speed * 21);
       });
     };
 
-    const createEnemy = (enemyWidth) => {
-      const enemyGeometry = new THREE.PlaneGeometry(enemyWidth, 0.075);
+    //Enemies
+    const createEnemy = (enemyWidth,enemyHeight) => {
+      const enemyGeometry = new THREE.PlaneGeometry(enemyWidth, enemyHeight);
       enemyGeometry.rotateY(Math.PI / 2);
       enemyGeometry.scale(35, 35, 35);
-      const bullet = new THREE.Mesh(enemyGeometry, corpusMaterial3);
-      return bullet;
+      const enemy = new THREE.Mesh(enemyGeometry, corpusMaterial4);
+      enemy.translateY((screenHeight / 2 - enemyHeight / 2) * 35);
+      enemy.height=enemyHeight
+      enemy.width=enemyWidth
+
+      //spawn at random positions
+      enemy.minSpawnpoint=(-screenWidth/2+enemyWidth/2)*35
+      enemy.maxSpawnpoint=(screenWidth/2-enemyWidth/2)*35
+      let spawnRange = (Math.random() * (enemy.maxSpawnpoint - enemy.
+        minSpawnpoint)) + enemy.minSpawnpoint;
+      enemy.translateZ(spawnRange)
+      return enemy;
     };
 
-    const spawnEnemy = (range1, range2) => {};
+    this.spawnEnemy = () => {
+      let sizes=[0.075]
+      let enemy=createEnemy(sizes[0],sizes[0])
+      screen.add(enemy)
+      this.enemies.push(enemy)
+    };
+
+    this.updateEnemies=()=>{
+      this.enemies.forEach((enemy, index) => {
+        const speed = 0.0122;
+        if (
+          enemy.position.y - enemy.height/2 * 35 - speed <=
+          screen.position.y - (screenHeight * 35) / 2
+        ) {
+          this.enemies.splice(index, 1);
+          enemy.removeFromParent();
+        }
+        enemy.translateY(-enemy.height*2);
+      });
+    }
   }
 }

@@ -99,7 +99,6 @@ function main() {
   const onDocumentKeyDown = ({ which }) => {
     let keyCode = which;
     const speed = 0.615 * 2;
-
     switch (keyCode) {
       case 74: //Button J
         if (button2Pressed === false) {
@@ -172,11 +171,10 @@ function main() {
       screen.spawnEnemy(1, 1);
       screen.spawnEnemiesInterval = 0;
     }
+    console.log(screen.children[1]);
 
     screen.updateEnemies();
-
     TWEEN.update();
-
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);
   }

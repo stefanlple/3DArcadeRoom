@@ -7,6 +7,7 @@ import {
 import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
 import * as TWEEN from "tween";
 import { MathUtils } from "three";
+import { Scene } from "../../../../lib/three.js-r139/build/three.module.js";
 
 export default class SpaceInvadersGame extends THREE.Group {
   constructor() {
@@ -58,7 +59,7 @@ export default class SpaceInvadersGame extends THREE.Group {
     const playerGeometry = new THREE.PlaneGeometry(playerSize, playerSize);
     playerGeometry.rotateY(Math.PI / 2);
     playerGeometry.scale(35, 35, 35);
-    const player = new THREE.Mesh(playerGeometry, corpusMaterial2);
+    let player = new THREE.Mesh(playerGeometry, corpusMaterial2);
     this.add(player);
     player.translateY(-(screenHeight / 2 - playerSize / 2) * 35);
 
@@ -140,6 +141,24 @@ export default class SpaceInvadersGame extends THREE.Group {
       this.projectiles.push(bullet2);
     };
 
+    const removeObject3D = (object) => {
+      if (object.geometry) object.geometry.dispose();
+
+      if (object.material) {
+        if (object.material instanceof Array) {
+          // for better memory management and performance
+          object.material.forEach((material) => material.dispose());
+        } else {
+          // for better memory management and performance
+          object.material.dispose();
+        }
+      }
+      object.clear();
+      object.removeFromParent();
+      object = undefined; // the parent might be the scene or another object, but it is sure to be removed this way
+      renderer.renderLists.dispose();
+    };
+
     this.updateBullet = () => {
       this.projectiles.forEach((projectile, index) => {
         const speed = 0.0122;
@@ -148,7 +167,7 @@ export default class SpaceInvadersGame extends THREE.Group {
           screen.position.y + (screenHeight * 35) / 2
         ) {
           this.projectiles.splice(index, 1);
-          projectile.removeFromParent();
+          removeObject3D(projectile);
         }
         projectile.translateY(speed * 21);
       });
@@ -185,20 +204,22 @@ export default class SpaceInvadersGame extends THREE.Group {
     this.updateEnemies = () => {
       this.enemies.forEach((enemy, index) => {
         const speed = 0.0122;
+        //hit detection with player
+        if (this.hitDetectionWithPlayer(enemy)) {
+          if (player.parent) {
+            this.enemies.splice(index, 1);
+            removeObject3D(enemy);
+            removeObject3D(player);
+          }
+        }
         if (
           enemy.position.y - (enemy.height / 2) * 35 - speed <=
           screen.position.y - (screenHeight * 35) / 2
         ) {
           this.enemies.splice(index, 1);
-          enemy.removeFromParent();
-        }
-        enemy.translateY(-enemy.height * 2);
-
-        //hit detection with player
-        if (this.hitDetectionWithPlayer(enemy)) {
-          this.enemies.splice(index, 1);
-          enemy.removeFromParent();
-          player.removeFromParent();
+          removeObject3D(enemy);
+        } else {
+          enemy.translateY(-enemy.height * 2);
         }
       });
     };
@@ -222,13 +243,19 @@ export default class SpaceInvadersGame extends THREE.Group {
       let playerHitZone = hitZone(player.position);
       let enemyHitZone = hitZone(enemy.position);
       const hitWithPlayerDistance = playerSize * 35;
-      console.log(hitWithPlayerDistance);
-      console.log(getDistance(playerHitZone, enemyHitZone));
       if (getDistance(playerHitZone, enemyHitZone) < hitWithPlayerDistance) {
         return true;
       }
     };
 
-    const hitDetectionWithBullet = () => {};
+    const hitDetectionWithBullet = (enemy, bullet) => {
+      let enemyHitZone = hitZone(enemy.position);
+      let projectileHitZone = hitZone(projectile.position);
+
+      const collideDistance = bullet.radius;
+      if (getDistance(projectileHitZone, enemyHitZone) < collideDistance) {
+        return true;
+      }
+    };
   }
 }

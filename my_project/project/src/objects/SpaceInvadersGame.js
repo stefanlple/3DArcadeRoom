@@ -157,6 +157,7 @@ export default class SpaceInvadersGame extends THREE.Group {
           object.material.dispose();
         }
       }
+
       object.clear();
       object.removeFromParent();
       object = undefined; // the parent might be the scene or another object, but it is sure to be removed this way
@@ -209,6 +210,9 @@ export default class SpaceInvadersGame extends THREE.Group {
       this.enemies.forEach((enemy, index) => {
         const speed = 0.0122;
         //hit detection with player
+        if (this.gameManager.lives <= 0) {
+          //removeObject3D(this);
+        }
         this.projectiles.forEach((projectile, indexProjectile) => {
           if (this.hitDetectionWithBullet(enemy, projectile)) {
             if (projectile.parent) {
@@ -216,6 +220,7 @@ export default class SpaceInvadersGame extends THREE.Group {
               this.projectiles.splice(indexProjectile, 1);
               removeObject3D(enemy);
               removeObject3D(projectile);
+              this.gameManager.score++;
             }
           }
         });
@@ -225,6 +230,7 @@ export default class SpaceInvadersGame extends THREE.Group {
             this.enemies.splice(index, 1);
             removeObject3D(enemy);
             removeObject3D(player);
+            this.gameManager.lives = 0;
           }
         }
         if (
@@ -233,6 +239,7 @@ export default class SpaceInvadersGame extends THREE.Group {
         ) {
           this.enemies.splice(index, 1);
           removeObject3D(enemy);
+          this.gameManager.lives--;
         } else {
           enemy.translateY(-enemy.height * 2);
         }

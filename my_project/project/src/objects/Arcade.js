@@ -13,6 +13,7 @@ export default class Arcade extends THREE.Group {
   constructor() {
     super();
 
+    this.rectLights = [];
     this.animations = [];
     this.addParts();
   }
@@ -657,5 +658,12 @@ export default class Arcade extends THREE.Group {
     screen.translateX(-0.515 * 35);
     screen.translateY(1.85974 * 35);
     this.add(screen);
+
+    /* LIGHT */
+    /*  const rectLightsWidth = 0.066088 * 35;
+    const rectLight = new THREE.RectAreaLight(0xffffff, 100, 50, 50);
+    rectLight.position.set(0, 20, 0); //(-0.661872 * 35, 2.84734 * 35, 0.641495 * 35);
+    rectLight.lookAt(0, 100, 0);
+    this.add(rectLight); */
   }
 }

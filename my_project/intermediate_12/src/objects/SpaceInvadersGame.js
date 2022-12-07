@@ -205,6 +205,17 @@ export default class SpaceInvadersGame extends THREE.Group {
       this.enemies.forEach((enemy, index) => {
         const speed = 0.0122;
         //hit detection with player
+        this.projectiles.forEach((projectile, indexProjectile) => {
+          if (this.hitDetectionWithBullet(enemy, projectile)) {
+            if (projectile.parent) {
+              this.enemies.splice(index, 1);
+              this.projectiles.splice(indexProjectile, 1);
+              removeObject3D(enemy);
+              removeObject3D(projectile);
+            }
+          }
+        });
+
         if (this.hitDetectionWithPlayer(enemy)) {
           if (player.parent) {
             this.enemies.splice(index, 1);
@@ -242,17 +253,18 @@ export default class SpaceInvadersGame extends THREE.Group {
     this.hitDetectionWithPlayer = (enemy) => {
       let playerHitZone = hitZone(player.position);
       let enemyHitZone = hitZone(enemy.position);
+
       const hitWithPlayerDistance = playerSize * 35;
       if (getDistance(playerHitZone, enemyHitZone) < hitWithPlayerDistance) {
         return true;
       }
     };
 
-    const hitDetectionWithBullet = (enemy, bullet) => {
+    this.hitDetectionWithBullet = (enemy, projectile) => {
       let enemyHitZone = hitZone(enemy.position);
       let projectileHitZone = hitZone(projectile.position);
 
-      const collideDistance = bullet.radius;
+      const collideDistance = playerSize * 35 - projectile.radius;
       if (getDistance(projectileHitZone, enemyHitZone) < collideDistance) {
         return true;
       }

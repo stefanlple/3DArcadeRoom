@@ -171,8 +171,7 @@ function main() {
       screen.spawnEnemy(1, 1);
       screen.spawnEnemiesInterval = 0;
     }
-    console.log(screen.children[1]);
-
+    console.log(screen.projectiles);
     screen.updateEnemies();
     TWEEN.update();
     window.renderer.render(window.scene, window.camera);

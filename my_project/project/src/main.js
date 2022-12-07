@@ -5,6 +5,7 @@ import * as TWEEN from "tween";
 
 // Own modules
 import Arcade from "./objects/Arcade.js";
+import Enviroment from "./enviroment/enviroment.js";
 
 // Event functions
 import { updateAspectRatio } from "./eventfunctions/updateAspectRatio.js";
@@ -17,13 +18,9 @@ function main() {
   arcade.position.set(0, 0, 0);
   window.scene.add(arcade);
 
-  /* window.camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  window.camera.position.set(-100, 100, 100); */
+  const room = new Enviroment();
+  room.position.set(0, 0, 0);
+  window.scene.add(room);
 
   window.camera = new THREE.PerspectiveCamera(
     45,
@@ -31,8 +28,16 @@ function main() {
     0.1,
     1000
   );
+  window.camera.position.set(-100, 100, 100);
+
+  /* window.camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
   window.camera.position.set(-2.3 * 35, 2.2 * 35, 0);
-  window.camera.lookAt(-0.51 * 35, 1.85974 * 35, 0);
+  window.camera.lookAt(-0.51 * 35, 1.85974 * 35, 0); */
 
   window.renderer = new THREE.WebGLRenderer({ antialias: true });
   window.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -41,49 +46,14 @@ function main() {
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
-  //room
-  const planeGeometry = new THREE.PlaneGeometry(300, 300);
-  const planeMaterial = new THREE.MeshLambertMaterial({
-    color: 0xaaaaaa,
-    wireframe: false,
-  });
-  const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-  plane.rotation.set(THREE.MathUtils.degToRad(-90), 0, 0);
-  plane.receiveShadow = true;
-  window.scene.add(plane);
-
-  //Light
-  const ambientLight = new THREE.AmbientLight(0xffffff);
-  ambientLight.intensity = 1;
-  window.scene.add(ambientLight);
-
-  const spotLight = new THREE.SpotLight(0xffffff);
-  spotLight.position.set(100, 200, 100);
-  spotLight.intensity = 0.8;
-  spotLight.target = plane;
-  spotLight.angle = THREE.MathUtils.degToRad(30);
-  spotLight.penumbra = 1.0;
-  spotLight.castShadow = true;
-  spotLight.shadow.mapSize.set(2048, 2048);
-  spotLight.shadow.camera.aspect = 1;
-  spotLight.shadow.camera.near = 10;
-  spotLight.shadow.camera.far = 500;
-  /*   window.scene.add(spotLight);
-  window.scene.add(new THREE.CameraHelper(spotLight.shadow.camera)); */
-
-  const gui = new DATGUI.GUI();
-  gui.add(spotLight.position, "x", -200, 200);
-  gui.add(spotLight.position, "y", 0, 200);
-  gui.add(spotLight.position, "z", -200, 200);
-
-  /*   const orbitControls = new CONTROLS.OrbitControls(
+  const orbitControls = new CONTROLS.OrbitControls(
     window.camera,
     window.renderer.domElement
   );
   orbitControls.target = new THREE.Vector3(0, 0, 0);
   //orbitControls.maxPolarAngle = Math.PI / 2.1;
 
-  orbitControls.update(); */
+  orbitControls.update();
 
   //Animations onKeyDown
   const cylinderBody = arcade.children[8];
@@ -176,6 +146,7 @@ function main() {
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);
   }
+
   mainLoop();
 }
 

@@ -13,6 +13,10 @@ export default class SpaceInvadersGame extends THREE.Group {
   constructor() {
     super();
 
+    this.gameManager = {
+      score: 0,
+      lives: 3,
+    };
     this.enemies = [];
     this.projectiles = [];
     this.animations = [];

@@ -134,14 +134,14 @@ function main() {
     arcade.pedalAnimation(arcade);
 
     //game
-    screen.updateBullet();
+    screen.updateGame();
     console.log(screen.gameManager.lives);
     screen.spawnEnemiesInterval++;
     if (screen.spawnEnemiesInterval === 50) {
       screen.spawnEnemy(1, 1);
       screen.spawnEnemiesInterval = 0;
     }
-    screen.updateEnemies();
+
     TWEEN.update();
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);

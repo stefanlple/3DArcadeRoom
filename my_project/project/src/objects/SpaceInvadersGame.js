@@ -165,6 +165,7 @@ export default class SpaceInvadersGame extends THREE.Group {
     };
 
     this.updateBullet = () => {
+    const updateBullet = () => {
       this.projectiles.forEach((projectile, index) => {
         const speed = 0.0122;
         if (
@@ -210,6 +211,7 @@ export default class SpaceInvadersGame extends THREE.Group {
 
     this.spawnEnemiesInterval = 0;
     this.updateEnemies = () => {
+    const updateEnemies = () => {
       this.enemies.forEach((enemy, index) => {
         const speed = 0.0122;
         //hit detection with player
@@ -247,6 +249,11 @@ export default class SpaceInvadersGame extends THREE.Group {
           enemy.translateY(-enemy.height * 2);
         }
       });
+    };
+
+    this.updateGame = () => {
+      updateBullet();
+      updateEnemies();
     };
 
     const hitZone = (position) => {

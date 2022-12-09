@@ -141,6 +141,7 @@ function main() {
       screen.spawnEnemiesInterval = 0;
     }
     screen.updateEnemies();
+
     TWEEN.update();
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);

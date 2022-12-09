@@ -164,7 +164,6 @@ export default class SpaceInvadersGame extends THREE.Group {
       renderer.renderLists.dispose();
     };
 
-    this.updateBullet = () => {
     const updateBullet = () => {
       this.projectiles.forEach((projectile, index) => {
         const speed = 0.0122;
@@ -210,7 +209,6 @@ export default class SpaceInvadersGame extends THREE.Group {
     };
 
     this.spawnEnemiesInterval = 0;
-    this.updateEnemies = () => {
     const updateEnemies = () => {
       this.enemies.forEach((enemy, index) => {
         const speed = 0.0122;

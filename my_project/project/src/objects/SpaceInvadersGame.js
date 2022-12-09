@@ -53,7 +53,7 @@ export default class SpaceInvadersGame extends THREE.Group {
     screenGeometry.rotateY(Math.PI / 2);
 
     screenGeometry.scale(35, 35, 35);
-    screenGeometry.translate(0.005, 0, 0);
+    screenGeometry.translate(0.3, 0, 0);
     const screen = new THREE.Mesh(screenGeometry, corpusMaterial3);
     this.add(screen);
 
@@ -178,6 +178,10 @@ export default class SpaceInvadersGame extends THREE.Group {
       });
     };
 
+    const randomInRange = (min, max) => {
+      return Math.random() * (max - min) + min;
+    };
+
     //Enemies
     const createEnemy = (enemyWidth, enemyHeight) => {
       const enemyGeometry = new THREE.PlaneGeometry(enemyWidth, enemyHeight);
@@ -191,9 +195,8 @@ export default class SpaceInvadersGame extends THREE.Group {
       //spawn at random positions
       enemy.minSpawnpoint = (-screenWidth / 2 + enemyWidth / 2) * 35;
       enemy.maxSpawnpoint = (screenWidth / 2 - enemyWidth / 2) * 35;
-      let spawnRange =
-        Math.random() * (enemy.maxSpawnpoint - enemy.minSpawnpoint) +
-        enemy.minSpawnpoint;
+      let spawnRange = randomInRange(enemy.minSpawnpoint, enemy.maxSpawnpoint);
+
       enemy.translateZ(spawnRange);
       return enemy;
     };
@@ -280,5 +283,43 @@ export default class SpaceInvadersGame extends THREE.Group {
         return true;
       }
     };
+
+    const particlesCount = 250;
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesPosition = new Float32Array(particlesCount * 3);
+    const particlesSpawnPosition = {
+      widthMin: (-screenWidth / 2) * 35,
+      widthMax: (screenWidth / 2) * 35,
+      heightMin: (-screenHeight / 2) * 35,
+      heightMax: (screenHeight / 2) * 35,
+    };
+
+    for (
+      let x = 0, y = 1, z = 2;
+      x < particlesCount * 3;
+      x += 3, y += 3, z += 3
+    ) {
+      particlesPosition[x] = 0.15;
+
+      particlesPosition[y] = randomInRange(
+        particlesSpawnPosition.heightMin,
+        particlesSpawnPosition.heightMax
+      );
+      particlesPosition[z] = randomInRange(
+        particlesSpawnPosition.widthMin,
+        particlesSpawnPosition.widthMax
+      );
+    }
+
+    particlesGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(new Float32Array(particlesPosition), 3)
+    );
+
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.005,
+    });
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+    this.add(particles);
   }
 }

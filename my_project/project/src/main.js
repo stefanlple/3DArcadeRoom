@@ -22,14 +22,14 @@ function main() {
   room.position.set(0, 0, 0);
   window.scene.add(room);
 
-  /*  window.camera = new THREE.PerspectiveCamera(
+  window.camera = new THREE.PerspectiveCamera(
     45,
     window.innerWidth / window.innerHeight,
     0.1,
     1000
   );
-  window.camera.position.set(-100, 100, 100); */
-
+  window.camera.position.set(-100, 100, 100);
+  /* 
   window.camera = new THREE.PerspectiveCamera(
     45,
     window.innerWidth / window.innerHeight,
@@ -37,7 +37,7 @@ function main() {
     1000
   );
   window.camera.position.set(-2.3 * 35, 2.2 * 35, 0);
-  window.camera.lookAt(-0.51 * 35, 1.85974 * 35, 0);
+  window.camera.lookAt(-0.51 * 35, 1.85974 * 35, 0); */
 
   window.renderer = new THREE.WebGLRenderer({ antialias: true });
   window.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -46,14 +46,14 @@ function main() {
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
-  /*  const orbitControls = new CONTROLS.OrbitControls(
+  const orbitControls = new CONTROLS.OrbitControls(
     window.camera,
     window.renderer.domElement
   );
   orbitControls.target = new THREE.Vector3(0, 0, 0);
   //orbitControls.maxPolarAngle = Math.PI / 2.1;
 
-  orbitControls.update(); */
+  orbitControls.update();
 
   //Animations onKeyDown
   const cylinderBody = arcade.children[8];
@@ -135,7 +135,6 @@ function main() {
 
     //game
     screen.updateBullet();
-    console.log(screen.gameManager.lives);
     screen.spawnEnemiesInterval++;
     if (screen.spawnEnemiesInterval === 50) {
       screen.spawnEnemy(1, 1);

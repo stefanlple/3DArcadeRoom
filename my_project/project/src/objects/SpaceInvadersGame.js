@@ -283,7 +283,7 @@ export default class SpaceInvadersGame extends THREE.Group {
       let enemyHitZone = hitZone(enemy.position);
       let projectileHitZone = hitZone(projectile.position);
 
-      const collideDistance = playerSize * 35 - projectile.radius;
+      const collideDistance = playerSize * 35 - projectile.radius * 35;
       if (getDistance(projectileHitZone, enemyHitZone) < collideDistance) {
         return true;
       }

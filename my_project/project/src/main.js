@@ -134,12 +134,12 @@ function main() {
     arcade.pedalAnimation(arcade);
 
     //game
-    screen.updateBullet();
     screen.spawnEnemiesInterval++;
     if (screen.spawnEnemiesInterval === 50) {
       screen.spawnEnemy(1, 1);
       screen.spawnEnemiesInterval = 0;
     }
+    screen.updateGame();
 
     TWEEN.update();
     window.renderer.render(window.scene, window.camera);

@@ -7,7 +7,6 @@ import {
 import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
 import * as TWEEN from "tween";
 import { MathUtils } from "three";
-import { Scene } from "../../../../lib/three.js-r139/build/three.module.js";
 
 export default class SpaceInvadersGame extends THREE.Group {
   constructor() {
@@ -46,9 +45,16 @@ export default class SpaceInvadersGame extends THREE.Group {
     });
 
     const playerMaterial = new THREE.MeshPhongMaterial({
-      color: 0xfffff,
+      color: 0xffffff,
       flatShading: true,
-      map: new THREE.TextureLoader().load("/src/images/Spaceship.png"),
+      map: new THREE.TextureLoader().load("src/images/Spaceship.png"),
+      side: THREE.DoubleSide,
+    });
+    const alienMaterial = new THREE.MeshPhongMaterial({
+      color: 0xaa00aa,
+      flatShading: true,
+      map: new THREE.TextureLoader().load("src/images/Alien.png"),
+      side: THREE.DoubleSide,
     });
 
     /* canvas */
@@ -71,7 +77,7 @@ export default class SpaceInvadersGame extends THREE.Group {
     playerGeometry.scale(35, 35, 35);
     let player = new THREE.Mesh(playerGeometry, playerMaterial);
     this.add(player);
-    player.translateY(-(screenHeight / 2 - playerSize / 2) * 35);
+    player.translateY(-(screenHeight / 2 - playerSize / 2) * 35 + 0.615);
 
     player.move = (direction, speed) => {
       switch (direction) {
@@ -117,7 +123,7 @@ export default class SpaceInvadersGame extends THREE.Group {
       const bulletGeometry = new THREE.CircleGeometry(bulletRadius, 32);
       bulletGeometry.rotateY(Math.PI / 2);
       bulletGeometry.scale(35, 35, 35);
-      const bullet = new THREE.Mesh(bulletGeometry, corpusMaterial2);
+      const bullet = new THREE.Mesh(bulletGeometry, corpusMaterial);
       return bullet;
     };
 
@@ -193,7 +199,7 @@ export default class SpaceInvadersGame extends THREE.Group {
       const enemyGeometry = new THREE.PlaneGeometry(enemyWidth, enemyHeight);
       enemyGeometry.rotateY(Math.PI / 2);
       enemyGeometry.scale(35, 35, 35);
-      const enemy = new THREE.Mesh(enemyGeometry, corpusMaterial4);
+      const enemy = new THREE.Mesh(enemyGeometry, alienMaterial);
       enemy.translateY((screenHeight / 2 - enemyHeight / 2) * 35);
       enemy.height = enemyHeight;
       enemy.width = enemyWidth;
@@ -332,5 +338,35 @@ export default class SpaceInvadersGame extends THREE.Group {
     });
     const particles = new THREE.Points(particlesGeometry, particlesMaterial);
     this.add(particles);
+
+    const x = 0,
+      y = 0;
+    const heartShape = new THREE.Shape();
+    heartShape.moveTo(x + 5, y + 5);
+    heartShape.bezierCurveTo(x + 5, y + 5, x + 4, y, x, y);
+    heartShape.bezierCurveTo(x - 6, y, x - 6, y + 7, x - 6, y + 7);
+    heartShape.bezierCurveTo(x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19);
+    heartShape.bezierCurveTo(x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7);
+    heartShape.bezierCurveTo(x + 16, y + 7, x + 16, y, x + 10, y);
+    heartShape.bezierCurveTo(x + 7, y, x + 5, y + 5, x + 5, y + 5);
+
+    const heartGeometry = new THREE.ShapeGeometry(heartShape);
+    heartGeometry.rotateY(Math.PI / 2);
+    heartGeometry.rotateZ(Math.PI);
+    heartGeometry.scale(0.1, 0.1, 0.1);
+    const heart = new THREE.Mesh(heartGeometry, corpusMaterial);
+    this.add(heart);
+    heart.translateY((screenHeight / 2) * 35);
+    heart.translateZ((-screenHeight / 2) * 35);
+    console.log(heart);
+
+    /* const scoreFontLoader = new THREE */
+
+    /* scoreFontLoader.load("src/fonts/Arial.json", (font: THREE.Font) => {
+      const scoreTextGeometry = new THREE.TextGeometry("1", {
+        font: fonts,
+        size: 10,
+      });
+    }); */
   }
 }

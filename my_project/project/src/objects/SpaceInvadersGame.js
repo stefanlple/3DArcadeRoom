@@ -45,6 +45,12 @@ export default class SpaceInvadersGame extends THREE.Group {
       side: THREE.DoubleSide,
     });
 
+    const playerMaterial = new THREE.MeshPhongMaterial({
+      color: 0xfffff,
+      flatShading: true,
+      map: new THREE.TextureLoader().load("/src/images/Spaceship.png"),
+    });
+
     /* canvas */
     //
     const screenWidth = 1.13;
@@ -63,7 +69,7 @@ export default class SpaceInvadersGame extends THREE.Group {
     const playerGeometry = new THREE.PlaneGeometry(playerSize, playerSize);
     playerGeometry.rotateY(Math.PI / 2);
     playerGeometry.scale(35, 35, 35);
-    let player = new THREE.Mesh(playerGeometry, corpusMaterial2);
+    let player = new THREE.Mesh(playerGeometry, playerMaterial);
     this.add(player);
     player.translateY(-(screenHeight / 2 - playerSize / 2) * 35);
 

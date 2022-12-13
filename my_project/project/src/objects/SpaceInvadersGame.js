@@ -383,7 +383,9 @@ export default class SpaceInvadersGame extends THREE.Group {
               font: fonts,
             }
           );
-          const scoreTextMaterial = new THREE.MeshNormalMaterial();
+          const scoreTextMaterial = new THREE.MeshPhongMaterial({
+            color: 0xffc000,
+          });
           const textMesh = new THREE.Mesh(scoreTextGeometry, scoreTextMaterial);
           screen.add(textMesh);
           this.gameManager.currentScoreMesh.push(textMesh);
@@ -394,5 +396,25 @@ export default class SpaceInvadersGame extends THREE.Group {
       );
     };
     createScoreText();
+
+    const coinGeometry = new THREE.CylinderGeometry(
+      playerSize / 2,
+      playerSize / 2,
+      0.0175,
+      32
+    );
+    coinGeometry.rotateY(Math.PI / 2);
+    coinGeometry.scale(35, 35, 35);
+    const coinMaterial = new THREE.MeshStandardMaterial({
+      side: THREE.DoubleSide,
+      metalness: 0.2,
+      roughness: 0.1,
+      color: 0xffc000,
+    });
+    const coin = new THREE.Mesh(coinGeometry, coinMaterial);
+    coin.translateX(-13.5);
+    coin.translateY(-32);
+    coin.rotateZ(Math.PI / 2);
+    screen.add(coin);
   }
 }

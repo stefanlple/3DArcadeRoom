@@ -140,7 +140,7 @@ function main() {
       screen.spawnEnemiesInterval = 0;
     }
     screen.updateGame();
-    console.log(screen.gameManager.hearts);
+
     TWEEN.update();
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);

@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import { FontLoader } from "../../../../lib/three.js-r145/examples/jsm/loaders/FontLoader.js";
+import { TextGeometry } from "../../../../lib/three.js-r145/examples/jsm/geometries/TextGeometry.js";
 import {
   Animation,
   AnimationType,
@@ -13,8 +15,9 @@ export default class SpaceInvadersGame extends THREE.Group {
     super();
 
     this.gameManager = {
-      score: 10,
+      score: 0,
       hearts: [], //starts of with 3
+      currentScoreMesh: [],
     };
     this.enemies = [];
     this.projectiles = [];
@@ -235,7 +238,9 @@ export default class SpaceInvadersGame extends THREE.Group {
               this.projectiles.splice(indexProjectile, 1);
               removeObject3D(enemy);
               removeObject3D(projectile);
+              removeObject3D(this.gameManager.currentScoreMesh.pop());
               this.gameManager.score++;
+              createScoreText();
             }
           }
         });
@@ -255,7 +260,6 @@ export default class SpaceInvadersGame extends THREE.Group {
           this.enemies.splice(index, 1);
           removeObject3D(enemy);
           removeObject3D(this.gameManager.hearts.pop());
-          console.log(this.gameManager.hearts);
         } else {
           enemy.translateY(-enemy.height * 2);
         }
@@ -365,13 +369,30 @@ export default class SpaceInvadersGame extends THREE.Group {
       heart.translateX(-0.1);
     }
 
-    /* const scoreFontLoader = new THREE */
+    const createScoreText = () => {
+      const scoreFontLoader = new FontLoader();
 
-    /* scoreFontLoader.load("src/fonts/Arial.json", (font: THREE.Font) => {
-      const scoreTextGeometry = new THREE.TextGeometry("1", {
-        font: fonts,
-        size: 10,
-      });
-    }); */
+      scoreFontLoader.load(
+        "../../../../lib/three.js-r145/examples/fonts/helvetiker_bold.typeface.json",
+        (fonts) => {
+          const scoreTextGeometry = new TextGeometry(
+            `${this.gameManager.score}`,
+            {
+              height: 0.2,
+              size: 2.5,
+              font: fonts,
+            }
+          );
+          const scoreTextMaterial = new THREE.MeshNormalMaterial();
+          const textMesh = new THREE.Mesh(scoreTextGeometry, scoreTextMaterial);
+          screen.add(textMesh);
+          this.gameManager.currentScoreMesh.push(textMesh);
+          textMesh.rotateY(-Math.PI / 2);
+          textMesh.translateY((screenHeight / 2) * 35 - 4);
+          textMesh.translateX(-1);
+        }
+      );
+    };
+    createScoreText();
   }
 }

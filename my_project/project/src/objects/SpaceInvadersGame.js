@@ -13,8 +13,8 @@ export default class SpaceInvadersGame extends THREE.Group {
     super();
 
     this.gameManager = {
-      score: 0,
-      lives: 3,
+      score: 10,
+      hearts: [], //starts of with 3
     };
     this.enemies = [];
     this.projectiles = [];
@@ -225,7 +225,7 @@ export default class SpaceInvadersGame extends THREE.Group {
       this.enemies.forEach((enemy, index) => {
         const speed = 0.0122;
         //hit detection with player
-        if (this.gameManager.lives <= 0) {
+        if (this.gameManager.hearts.length <= 0) {
           //removeObject3D(this);
         }
         this.projectiles.forEach((projectile, indexProjectile) => {
@@ -245,7 +245,7 @@ export default class SpaceInvadersGame extends THREE.Group {
             this.enemies.splice(index, 1);
             removeObject3D(enemy);
             removeObject3D(player);
-            this.gameManager.lives = 0;
+            this.gameManager.hearts.length = 0;
           }
         }
         if (
@@ -254,7 +254,8 @@ export default class SpaceInvadersGame extends THREE.Group {
         ) {
           this.enemies.splice(index, 1);
           removeObject3D(enemy);
-          this.gameManager.lives--;
+          removeObject3D(this.gameManager.hearts.pop());
+          console.log(this.gameManager.hearts);
         } else {
           enemy.translateY(-enemy.height * 2);
         }
@@ -350,15 +351,19 @@ export default class SpaceInvadersGame extends THREE.Group {
     heartShape.bezierCurveTo(x + 16, y + 7, x + 16, y, x + 10, y);
     heartShape.bezierCurveTo(x + 7, y, x + 5, y + 5, x + 5, y + 5);
 
-    const heartGeometry = new THREE.ShapeGeometry(heartShape);
-    heartGeometry.rotateY(Math.PI / 2);
-    heartGeometry.rotateZ(Math.PI);
-    heartGeometry.scale(0.1, 0.1, 0.1);
-    const heart = new THREE.Mesh(heartGeometry, corpusMaterial);
-    this.add(heart);
-    heart.translateY((screenHeight / 2) * 35);
-    heart.translateZ((-screenHeight / 2) * 35);
-    console.log(heart);
+    const translateHeartsArray = [-1.5, 1.5, 4.5];
+    for (let i = 0; i < 3; i++) {
+      const heartGeometry = new THREE.ShapeGeometry(heartShape);
+      heartGeometry.rotateY(Math.PI / 2);
+      heartGeometry.rotateZ(Math.PI);
+      heartGeometry.scale(0.1, 0.1, 0.1);
+      const heart = new THREE.Mesh(heartGeometry, corpusMaterial);
+      screen.add(heart);
+      this.gameManager.hearts.push(heart);
+      heart.translateY((screenHeight / 2) * 35 - 1.5);
+      heart.translateZ((-screenHeight / 2) * 35 + translateHeartsArray[i]);
+      heart.translateX(-0.1);
+    }
 
     /* const scoreFontLoader = new THREE */
 

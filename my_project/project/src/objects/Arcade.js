@@ -20,7 +20,7 @@ export default class Arcade extends THREE.Group {
 
   addParts() {
     const corpusMaterial = new THREE.MeshPhongMaterial({
-      color: 0xf00000,
+      color: 0x12121f,
       flatShading: true,
       side: THREE.DoubleSide,
     });
@@ -28,6 +28,27 @@ export default class Arcade extends THREE.Group {
       color: 0xff50f0,
       flatShading: true,
       side: THREE.DoubleSide,
+    });
+
+    const buttonMaterialRed = new THREE.MeshLambertMaterial({
+      color: 0xdc143c,
+      flatShading: true,
+    });
+    const buttonMaterialBlue = new THREE.MeshLambertMaterial({
+      color: 0xaa336a,
+      flatShading: true,
+    });
+    const stickMaterial = new THREE.MeshLambertMaterial({
+      color: 0xaf0202,
+      flatShading: true,
+    });
+    const coinMashineMaterial = new THREE.MeshLambertMaterial({
+      color: 0x191970,
+      flatShading: true,
+    });
+    const coinMashineButtonMaterial = new THREE.MeshLambertMaterial({
+      color: 0x4682b4,
+      flatShading: true,
     });
 
     /*corpus*/
@@ -310,7 +331,7 @@ export default class Arcade extends THREE.Group {
       8
     );
     buttonGeometry.scale(35, 35, 35);
-    const button2 = new THREE.Mesh(buttonGeometry, corpusMaterial2);
+    const button2 = new THREE.Mesh(buttonGeometry, buttonMaterialBlue);
     button2.position.set(-0.758528 * 35, 1.41056 * 35, -0.181031 * 35);
     this.add(button2);
 
@@ -340,7 +361,7 @@ export default class Arcade extends THREE.Group {
     button2.tweenAnimation2 = releasedButtonTween(button2);
 
     //button3
-    const button3 = button2.clone();
+    const button3 = new THREE.Mesh(buttonGeometry, buttonMaterialRed);
     button3.position.set(-0.758528 * 35, 1.41056 * 35, -0.353658 * 35);
     this.add(button3);
 
@@ -359,7 +380,7 @@ export default class Arcade extends THREE.Group {
     );
     stickGeometry.scale(35, 35, 35);
     stickGeometry.translate(0, 0.042026 * 35, 0);
-    const stick = new THREE.Mesh(stickGeometry, corpusMaterial2);
+    const stick = new THREE.Mesh(stickGeometry, stickMaterial);
 
     //ball
     const ballGeometry = new THREE.SphereGeometry(0.0415);
@@ -430,7 +451,7 @@ export default class Arcade extends THREE.Group {
     coinMashineGeometry.translate(-0.856942 * 35, 0.968442 * 35, 0.000747 * 35);
     const coinMashineBody = new THREE.Mesh(
       coinMashineGeometry,
-      corpusMaterial2
+      coinMashineMaterial
     );
 
     //coin mashine cavity
@@ -477,7 +498,7 @@ export default class Arcade extends THREE.Group {
     coinMashineButtonGeometry.scale(35, 35, 35);
     const coinMashineButton = new THREE.Mesh(
       coinMashineButtonGeometry,
-      corpusMaterial2
+      coinMashineButtonMaterial
     );
     coinMashineButton.position.set(-0.925485 * 35, 1.0619 * 35, -0.011276 * 35);
     coinMashine.add(coinMashineButton);
@@ -561,7 +582,7 @@ export default class Arcade extends THREE.Group {
       32
     );
     cylinderGeometry.rotateX(Math.PI / 2);
-    const cylinder = new THREE.Mesh(cylinderGeometry, corpusMaterial2);
+    const cylinder = new THREE.Mesh(cylinderGeometry, corpusMaterial);
 
     //pedalRight
     const pedalRightGeometry = new THREE.BoxGeometry(
@@ -569,7 +590,7 @@ export default class Arcade extends THREE.Group {
       0.044733 * 35,
       0.172584 * 35
     );
-    const pedalRight = new THREE.Mesh(pedalRightGeometry, corpusMaterial);
+    const pedalRight = new THREE.Mesh(pedalRightGeometry, coinMashineMaterial);
     this.add(pedalRight);
 
     //pedalLeft

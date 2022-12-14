@@ -55,7 +55,7 @@ export default class SpaceInvadersGame extends THREE.Group {
       side: THREE.DoubleSide,
     });
     const alienMaterial = new THREE.MeshPhongMaterial({
-      color: 0xaa00aa,
+      color: 0x00aa00,
       flatShading: true,
       map: new THREE.TextureLoader().load("src/images/Alien.png"),
       side: THREE.DoubleSide,

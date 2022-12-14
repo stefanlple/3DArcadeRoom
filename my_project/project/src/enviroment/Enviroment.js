@@ -17,10 +17,10 @@ export default class Enviroment extends THREE.Group {
     const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
     const planeMaterial = new THREE.MeshStandardMaterial({
       side: THREE.DoubleSide,
-      metalness: 0.7,
-      roughness: 0.2,
-      color: 0x292929,
-      opacity: 0.7,
+      metalness: 0.9,
+      roughness: 0.9,
+      color: 0x101010,
+      opacity: 0.5,
       transparent: true,
     });
     const floor = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -45,7 +45,6 @@ export default class Enviroment extends THREE.Group {
     this.add(wall0);
 
     //mirror
-
     const groundMirror = new Reflector(planeGeometry, {
       clipBias: 0.003,
       textureWidth: window.innerWidth * window.devicePixelRatio,

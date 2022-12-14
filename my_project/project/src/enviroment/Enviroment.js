@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import * as DATGUI from "datgui";
 import * as CONTROLS from "controls";
+import { Reflector } from "../../../../lib/three.js-r145/examples/jsm/objects/Reflector.js";
 
 export default class Enviroment extends THREE.Group {
   constructor() {
@@ -16,10 +17,12 @@ export default class Enviroment extends THREE.Group {
     const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
     const planeMaterial = new THREE.MeshStandardMaterial({
       side: THREE.DoubleSide,
+      metalness: 0.7,
+      roughness: 0.2,
+      color: 0x292929,
+      opacity: 0.7,
+      transparent: true,
     });
-    planeMaterial.metalness = 0.7;
-    planeMaterial.roughness = 0.2;
-    planeMaterial.color = new THREE.Color(0x292929);
     const floor = new THREE.Mesh(planeGeometry, planeMaterial);
     floor.rotation.set(THREE.MathUtils.degToRad(-90), 0, 0);
     floor.receiveShadow = true;
@@ -29,13 +32,29 @@ export default class Enviroment extends THREE.Group {
       planeSize,
       (2 / 3) * planeSize
     );
-    const planeMaterialGrey = planeMaterial.clone();
+    const planeMaterialGrey = new THREE.MeshStandardMaterial({
+      side: THREE.DoubleSide,
+      metalness: 0.7,
+      roughness: 0.2,
+    });
     planeMaterialGrey.color = new THREE.Color(0x808080);
     const wall0 = new THREE.Mesh(wallGeometry, planeMaterialGrey);
     wall0.receiveShadow = true;
     wall0.position.z = -planeSize / 2;
     wall0.position.y = (1 / 3) * planeSize;
     this.add(wall0);
+
+    //mirror
+
+    const groundMirror = new Reflector(planeGeometry, {
+      clipBias: 0.003,
+      textureWidth: window.innerWidth * window.devicePixelRatio,
+      textureHeight: window.innerHeight * window.devicePixelRatio,
+      color: 0x777777,
+    });
+    groundMirror.position.y = -0.2;
+    groundMirror.rotateX(-Math.PI / 2);
+    scene.add(groundMirror);
 
     const wall1 = new THREE.Mesh(wallGeometry, planeMaterialGrey);
     wall1.receiveShadow = true;

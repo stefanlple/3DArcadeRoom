@@ -21,6 +21,7 @@ export default class SpaceInvadersGame extends THREE.Group {
     };
     this.enemies = [];
     this.projectiles = [];
+    this.coins = [];
     this.animations = [];
     this.addParts();
   }
@@ -397,24 +398,29 @@ export default class SpaceInvadersGame extends THREE.Group {
     };
     createScoreText();
 
-    const coinGeometry = new THREE.CylinderGeometry(
-      playerSize / 2,
-      playerSize / 2,
-      0.0175,
-      32
-    );
-    coinGeometry.rotateY(Math.PI / 2);
-    coinGeometry.scale(35, 35, 35);
-    const coinMaterial = new THREE.MeshStandardMaterial({
-      side: THREE.DoubleSide,
-      metalness: 0.2,
-      roughness: 0.1,
-      color: 0xffc000,
-    });
-    const coin = new THREE.Mesh(coinGeometry, coinMaterial);
-    coin.translateX(-13.5);
-    coin.translateY(-32);
-    coin.rotateZ(Math.PI / 2);
-    screen.add(coin);
+    const spawnCoins = () => {
+      for (let i = 0; i < this.gameManager.score; i++) {
+        const coinGeometry = new THREE.CylinderGeometry(
+          playerSize / 2,
+          playerSize / 2,
+          0.0175,
+          32
+        );
+        coinGeometry.rotateY(Math.PI / 2);
+        coinGeometry.scale(35, 35, 35);
+        const coinMaterial = new THREE.MeshStandardMaterial({
+          side: THREE.DoubleSide,
+          metalness: 0.2,
+          roughness: 0.1,
+          color: 0xffc000,
+        });
+        const coin = new THREE.Mesh(coinGeometry, coinMaterial);
+        coin.translateX(-13.5);
+        coin.translateY(-32);
+        coin.rotateZ(Math.PI / 2);
+        this.coins.push(coin);
+        screen.add(coin);
+      }
+    };
   }
 }

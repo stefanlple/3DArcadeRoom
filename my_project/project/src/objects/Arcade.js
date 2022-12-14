@@ -46,6 +46,14 @@ export default class Arcade extends THREE.Group {
       color: 0x191970,
       flatShading: true,
     });
+    const pedalMaterial = new THREE.MeshLambertMaterial({
+      color: 0x191970,
+      flatShading: true,
+      bumpMap: new THREE.TextureLoader().load(
+        "src/images/randomWhiteSpots.png"
+      ),
+      bumpScale: 0.2,
+    });
     const coinMashineButtonMaterial = new THREE.MeshLambertMaterial({
       color: 0x4682b4,
       flatShading: true,
@@ -590,7 +598,7 @@ export default class Arcade extends THREE.Group {
       0.044733 * 35,
       0.172584 * 35
     );
-    const pedalRight = new THREE.Mesh(pedalRightGeometry, coinMashineMaterial);
+    const pedalRight = new THREE.Mesh(pedalRightGeometry, pedalMaterial);
     this.add(pedalRight);
 
     //pedalLeft

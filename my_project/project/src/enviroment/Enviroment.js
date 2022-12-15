@@ -20,7 +20,7 @@ export default class Enviroment extends THREE.Group {
       metalness: 0.9,
       roughness: 0.9,
       color: 0x101010,
-      opacity: 0.5,
+      opacity: 0.8,
       transparent: true,
     });
     const floor = new THREE.Mesh(planeGeometry, planeMaterial);

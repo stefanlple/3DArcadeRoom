@@ -22,15 +22,7 @@ function main() {
   room.position.set(0, 0, 0);
   window.scene.add(room);
 
-  window.camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  window.camera.position.set(-100, 100, 100);
-
-  /* window.camera = new THREE.PerspectiveCamera(
+  /*   window.camera = new THREE.PerspectiveCamera(
     45,
     window.innerWidth / window.innerHeight,
     0.1,
@@ -45,6 +37,14 @@ function main() {
   window.renderer.shadowMap.enabled = true;
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
+
+  window.camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+  window.camera.position.set(-100, 100, 100);
 
   const orbitControls = new CONTROLS.OrbitControls(
     window.camera,

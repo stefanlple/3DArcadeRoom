@@ -43,25 +43,19 @@ export default class Arcade extends THREE.Group {
       flatShading: true,
     });
     const coinMashineMaterial = new THREE.MeshLambertMaterial({
-      color: 0x191970,
+      color: 0x25253f,
       flatShading: true,
     });
-    const pedalMaterial = new THREE.MeshLambertMaterial({
-      color: 0x191970,
-      flatShading: true,
-      bumpMap: new THREE.TextureLoader().load(
-        "src/images/randomWhiteSpots.png"
-      ),
-      bumpScale: 0.2,
-    });
+    const pedalMaterial = coinMashineMaterial.clone();
+
+    pedalMaterial.bumpMap = new THREE.TextureLoader().load(
+      "src/images/randomWhiteSpots.png"
+    );
+    pedalMaterial.bumpScale = 0.2;
+
     const coinMashineButtonMaterial = new THREE.MeshLambertMaterial({
-      color: 0x4682b4,
+      color: 0x454576,
       flatShading: true,
-    });
-    const neonYellowMaterial = new THREE.MeshPhongMaterial({
-      color: 0xfff01f,
-      flatShading: true,
-      side: THREE.DoubleSide,
     });
 
     /*corpus*/
@@ -201,7 +195,7 @@ export default class Arcade extends THREE.Group {
       -0.552276,
       2.81251,
       0.591929, //40
-      -0.733992,
+      -0.744387,
       2.77505,
       0.591929, //41
       -0.744387,
@@ -232,7 +226,7 @@ export default class Arcade extends THREE.Group {
       -0.552276,
       2.81251,
       -0.591929, //50
-      -0.733992,
+      -0.744387,
       2.77505,
       -0.591929, //51
       -0.744387,
@@ -325,15 +319,15 @@ export default class Arcade extends THREE.Group {
     buttonHolderGeometry.scale(35, 35, 35);
 
     const buttonHolder1 = new THREE.Mesh(buttonHolderGeometry, corpusMaterial);
-    buttonHolder1.position.set(-0.758528 * 35, 1.3904 * 35, +0.321495 * 35);
+    buttonHolder1.position.set(-0.758528 * 35, 1.3904 * 35, -0.321495 * 35);
     corpus.add(buttonHolder1);
 
     const buttonHolder2 = buttonHolder1.clone();
-    buttonHolder2.position.set(-0.758528 * 35, 1.3904 * 35, -0.181031 * 35);
+    buttonHolder2.position.set(-0.758528 * 35, 1.3904 * 35, 0.181031 * 35);
     corpus.add(buttonHolder2);
 
     const buttonHolder3 = buttonHolder1.clone();
-    buttonHolder3.position.set(-0.758528 * 35, 1.3904 * 35, -0.353658 * 35);
+    buttonHolder3.position.set(-0.758528 * 35, 1.3904 * 35, 0.353658 * 35);
     corpus.add(buttonHolder3);
 
     //button 2 -> first in the 2nd buttonholder slot
@@ -345,7 +339,7 @@ export default class Arcade extends THREE.Group {
     );
     buttonGeometry.scale(35, 35, 35);
     const button2 = new THREE.Mesh(buttonGeometry, buttonMaterialBlue);
-    button2.position.set(-0.758528 * 35, 1.41056 * 35, -0.181031 * 35);
+    button2.position.set(-0.758528 * 35, 1.41056 * 35, 0.181031 * 35);
     this.add(button2);
 
     //button2 & button3 Animation;
@@ -375,7 +369,7 @@ export default class Arcade extends THREE.Group {
 
     //button3
     const button3 = new THREE.Mesh(buttonGeometry, buttonMaterialRed);
-    button3.position.set(-0.758528 * 35, 1.41056 * 35, -0.353658 * 35);
+    button3.position.set(-0.758528 * 35, 1.41056 * 35, 0.353658 * 35);
     this.add(button3);
 
     //button3 Animation;
@@ -410,7 +404,7 @@ export default class Arcade extends THREE.Group {
       stick.matrix,
       stick.material
     );
-    joystick.position.set(-0.759288 * 35, 1.39423 * 35, 0.321495 * 35);
+    joystick.position.set(-0.759288 * 35, 1.39423 * 35, -0.321495 * 35);
     joystick.castShadow = true;
     this.add(joystick);
 
@@ -718,11 +712,11 @@ export default class Arcade extends THREE.Group {
       -0.691061, -0.581514, 1.49935, -0.691061, -0.990774, 1.50038, -0.691061,
       -0.990774, 1.15698, -0.691061, -0.739914, 0, -0.691061, 0.499795, 0,
       -0.691061, 0.498101, 2.77506, -0.691061, -0.552276, 2.81251, 0.591929,
-      -0.733992, 2.77505, 0.591929, -0.744387, 2.47771, 0.591929, -0.5036,
+      -0.744387, 2.77505, 0.591929, -0.744387, 2.47771, 0.591929, -0.5036,
       2.32456, 0.591929, -0.5036, 1.39492, 0.591929, -0.930213, 1.39475,
       0.591929, -0.930213, 1.17913, 0.591929, -0.700348, 0.10857, 0.591929,
       0.439235, 0.105621, 0.591929, 0.431033, 2.67783, 0.591929, -0.552276,
-      2.81251, -0.591929, -0.733992, 2.77505, -0.591929, -0.744387, 2.47771,
+      2.81251, -0.591929, -0.744387, 2.77505, -0.591929, -0.744387, 2.47771,
       -0.591929, -0.5036, 2.32456, -0.591929, -0.5036, 1.39492, -0.591929,
       -0.930213, 1.39475, -0.591929, -0.930213, 1.17913, -0.591929, -0.700348,
       0.10857, -0.591929, 0.439235, 0.105621, -0.591929, 0.431033, 2.67783,
@@ -751,11 +745,41 @@ export default class Arcade extends THREE.Group {
     );
     yellowNeonLightGeometry.setIndex(yellowNeonIndices);
     yellowNeonLightGeometry.computeVertexNormals();
+    const neonYellowMaterial = new THREE.MeshStandardMaterial({
+      color: 0xfff01f,
+      flatShading: true,
+      emissive: 0xfff01f,
+      side: THREE.DoubleSide,
+      opacity: 0.5,
+      transparent: true,
+    });
     const yellowNeonCorpus = new THREE.Mesh(
       yellowNeonLightGeometry,
       neonYellowMaterial
     );
     yellowNeonCorpus.castShadow = true;
-    this.add(yellowNeonCorpus);
+    corpus.add(yellowNeonCorpus);
+
+    const arcadeSignMaterial = new THREE.MeshPhongMaterial({
+      color: 0xffffff,
+      flatShading: true,
+      map: new THREE.TextureLoader().load("src/images/ArcadePrint.jpeg"),
+      side: THREE.DoubleSide,
+    });
+    const arcadeSignGeometry = new THREE.PlaneGeometry(
+      1.183858 * 35,
+      0.29734 * 35
+    );
+    const arcadeSign = new THREE.Mesh(arcadeSignGeometry, arcadeSignMaterial);
+    corpus.add(arcadeSign);
+    arcadeSign.translateY((2.47771 + 0.29734 / 2) * 35);
+    arcadeSign.translateX(-0.744387 * 35 - 0.1);
+    arcadeSign.rotateY(-Math.PI / 2);
+
+    console.log(this.children);
+    /* const playerGeometry = new THREE.PlaneGeometry(playerSize, playerSize);
+    playerGeometry.rotateY(Math.PI / 2);
+    playerGeometry.scale(35, 35, 35);
+    player.translateY(-(screenHeight / 2 - playerSize / 2) * 35 + 0.615); */
   }
 }

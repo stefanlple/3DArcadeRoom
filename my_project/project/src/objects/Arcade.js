@@ -779,13 +779,13 @@ export default class Arcade extends THREE.Group {
     player.translateY(-(screenHeight / 2 - playerSize / 2) * 35 + 0.615); */
 
     RectAreaLightUniformsLib.init();
-    const rectLightsWidth = (0.099132 * 35) / 2;
+    const rectLightsWidth = (0.099132 * 35) / 3;
     const rectLightsProperties = [
       //right side
       {
         height: 1.18387 * 35,
         positionX: -0.865344 * 35,
-        positionY: 1.18387 * 35 - (1.18387 * 35) / 2,
+        positionY: 0.57849 * 35,
         positionZ: -0.641495 * 35,
         rotationAngle: -12.38,
       },
@@ -842,7 +842,7 @@ export default class Arcade extends THREE.Group {
       {
         height: 1.18387 * 35,
         positionX: -0.865344 * 35,
-        positionY: 1.18387 * 35 - (1.18387 * 35) / 2,
+        positionY: 0.57849 * 35,
         positionZ: 0.641495 * 35,
         rotationAngle: -12.38,
       },

@@ -2,6 +2,7 @@ import * as THREE from "three";
 import * as DATGUI from "datgui";
 import * as CONTROLS from "controls";
 import * as TWEEN from "tween";
+import Stats from "../../../../lib/three.js-r145/examples/jsm/libs/stats.module.js";
 
 // Own modules
 import Arcade from "./objects/Arcade.js";
@@ -124,8 +125,11 @@ function main() {
   window.addEventListener("keyup", onDocumentKeyUp);
 
   const clock = new THREE.Clock();
+  const stats = new Stats();
+  document.body.appendChild(stats.dom);
 
   function mainLoop() {
+    stats.begin();
     const delta = clock.getDelta();
 
     /* arcade.animations.forEach((animation) => {
@@ -144,6 +148,7 @@ function main() {
     TWEEN.update();
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);
+    stats.end();
   }
 
   mainLoop();

@@ -742,9 +742,9 @@ export default class Arcade extends THREE.Group {
     yellowNeonLightGeometry.setIndex(yellowNeonIndices);
     yellowNeonLightGeometry.computeVertexNormals();
     const neonYellowMaterial = new THREE.MeshStandardMaterial({
-      color: 0xfff01f,
+      color: 0x12121f,
       flatShading: true,
-      emissive: 0xfff01f,
+      emissive: 0x12121f,
       side: THREE.DoubleSide,
       opacity: 0.5,
       transparent: true,
@@ -759,7 +759,7 @@ export default class Arcade extends THREE.Group {
     const arcadeSignMaterial = new THREE.MeshPhongMaterial({
       color: 0xffffff,
       flatShading: true,
-      map: new THREE.TextureLoader().load("src/images/ArcadePrint.jpeg"),
+      map: new THREE.TextureLoader().load("src/images/ArcadePrint.jpg"),
       side: THREE.DoubleSide,
     });
     const arcadeSignGeometry = new THREE.PlaneGeometry(
@@ -779,8 +779,9 @@ export default class Arcade extends THREE.Group {
     player.translateY(-(screenHeight / 2 - playerSize / 2) * 35 + 0.615); */
 
     RectAreaLightUniformsLib.init();
-    const rectLightsWidth = 0.099132 * 35;
+    const rectLightsWidth = (0.099132 * 35) / 2;
     const rectLightsProperties = [
+      //right side
       {
         height: 1.18387 * 35,
         positionX: -0.865344 * 35,
@@ -837,6 +838,7 @@ export default class Arcade extends THREE.Group {
         positionZ: -0.641495 * 35,
         rotationAngle: 97.91,
       },
+      //left side
       {
         height: 1.18387 * 35,
         positionX: -0.865344 * 35,
@@ -898,7 +900,7 @@ export default class Arcade extends THREE.Group {
     rectLightsProperties.forEach((rectLight) => {
       const rectLight1 = new THREE.RectAreaLight(
         0xffff00,
-        100,
+        10,
         rectLightsWidth,
         rectLight.height
       );

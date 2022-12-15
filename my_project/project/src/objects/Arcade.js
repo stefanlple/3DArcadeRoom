@@ -8,6 +8,8 @@ import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
 import * as TWEEN from "tween";
 import { MathUtils } from "three";
 import SpaceInvadersGame from "./SpaceInvadersGame.js";
+import { RectAreaLightUniformsLib } from "../../../../lib/three.js-r145/examples/jsm/lights/RectAreaLightUniformsLib.js";
+import { RectAreaLightHelper } from "../../../../lib/three.js-r145/examples/jsm/helpers/RectAreaLightHelper.js";
 
 export default class Arcade extends THREE.Group {
   constructor() {
@@ -31,16 +33,17 @@ export default class Arcade extends THREE.Group {
     });
 
     const buttonMaterialRed = new THREE.MeshLambertMaterial({
-      color: 0xdc143c,
+      color: 0x888888,
       flatShading: true,
     });
     const buttonMaterialBlue = new THREE.MeshLambertMaterial({
-      color: 0xaa336a,
+      color: 0xdc143c,
       flatShading: true,
     });
-    const stickMaterial = new THREE.MeshLambertMaterial({
-      color: 0xaf0202,
+    const stickMaterial = new THREE.MeshBasicMaterial({
+      color: 0x333333,
       flatShading: true,
+      roughness: 0.1,
     });
     const coinMashineMaterial = new THREE.MeshLambertMaterial({
       color: 0x25253f,
@@ -687,13 +690,6 @@ export default class Arcade extends THREE.Group {
     screen.translateY(1.85974 * 35);
     this.add(screen);
 
-    /* LIGHT */
-    /*  const rectLightsWidth = 0.066088 * 35;
-    const rectLight = new THREE.RectAreaLight(0xffffff, 100, 50, 50);
-    rectLight.position.set(0, 20, 0); //(-0.661872 * 35, 2.84734 * 35, 0.641495 * 35);
-    rectLight.lookAt(0, 100, 0);
-    this.add(rectLight); */
-
     const yellowNeonPositions = [
       -0.542951, 2.91963, 0.691061, -0.779445, 2.77506, 0.691061, -0.797771,
       2.47766, 0.691061, -0.506879, 2.32456, 0.691061, -0.581514, 1.49935,
@@ -781,5 +777,138 @@ export default class Arcade extends THREE.Group {
     playerGeometry.rotateY(Math.PI / 2);
     playerGeometry.scale(35, 35, 35);
     player.translateY(-(screenHeight / 2 - playerSize / 2) * 35 + 0.615); */
+
+    RectAreaLightUniformsLib.init();
+    const rectLightsWidth = 0.099132 * 35;
+    const rectLightsProperties = [
+      {
+        height: 1.18387 * 35,
+        positionX: -0.865344 * 35,
+        positionY: 1.18387 * 35 - (1.18387 * 35) / 2,
+        positionZ: -0.641495 * 35,
+        rotationAngle: -12.38,
+      },
+      {
+        height: 0.3434 * 35,
+        positionX: -0.990773 * 35,
+        positionY: 1.3286799999999999 * 35,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 0,
+      },
+      {
+        height: 0.409261 * 35,
+        positionX: -0.786144 * 35,
+        positionY: 1.50038 * 35,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 90,
+      },
+      {
+        height: 0.828373 * 35,
+        positionX: -0.5441965 * 35,
+        positionY: 1.9119549999999998 * 35,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 5.17,
+      },
+      {
+        height: 0.328721 * 35,
+        positionX: -0.652325 * 35,
+        positionY: 2.40111 * 35,
+        positionZ: -0.641495 * 35,
+        rotationAngle: -62.24,
+      },
+      {
+        height: 0.297959 * 35,
+        positionX: -0.7886075 * 35,
+        positionY: 2.626355 * 35,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 3.53,
+      },
+      {
+        height: 0.277184 * 35,
+        positionX: -0.6611975 * 35,
+        positionY: 2.847335 * 35,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 58.56,
+      },
+      {
+        height: 1.05104 * 35,
+        positionX: -0.022425000000000028 * 35,
+        positionY: 2.84734 * 35,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 97.91,
+      },
+      {
+        height: 1.18387 * 35,
+        positionX: -0.865344 * 35,
+        positionY: 1.18387 * 35 - (1.18387 * 35) / 2,
+        positionZ: 0.641495 * 35,
+        rotationAngle: -12.38,
+      },
+      {
+        height: 0.3434 * 35,
+        positionX: -0.990773 * 35,
+        positionY: 1.3286799999999999 * 35,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 0,
+      },
+      {
+        height: 0.409261 * 35,
+        positionX: -0.786144 * 35,
+        positionY: 1.50038 * 35,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 90,
+      },
+      {
+        height: 0.828373 * 35,
+        positionX: -0.5441965 * 35,
+        positionY: 1.9119549999999998 * 35,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 5.17,
+      },
+      {
+        height: 0.328721 * 35,
+        positionX: -0.652325 * 35,
+        positionY: 2.40111 * 35,
+        positionZ: 0.641495 * 35,
+        rotationAngle: -62.24,
+      },
+      {
+        height: 0.297959 * 35,
+        positionX: -0.7886075 * 35,
+        positionY: 2.626355 * 35,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 3.53,
+      },
+      {
+        height: 0.277184 * 35,
+        positionX: -0.6611975 * 35,
+        positionY: 2.847335 * 35,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 58.56,
+      },
+      {
+        height: 1.05104 * 35,
+        positionX: -0.022425000000000028 * 35,
+        positionY: 2.84734 * 35,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 97.91,
+      },
+    ];
+
+    rectLightsProperties.forEach((rectLight) => {
+      const rectLight1 = new THREE.RectAreaLight(
+        0xffff00,
+        100,
+        rectLightsWidth,
+        rectLight.height
+      );
+      corpus.add(rectLight1);
+      rectLight1.translateX(rectLight.positionX);
+      rectLight1.translateY(rectLight.positionY);
+      rectLight1.translateZ(rectLight.positionZ);
+      rectLight1.rotateY(Math.PI / 2);
+      rectLight1.rotateX(THREE.MathUtils.degToRad(rectLight.rotationAngle));
+      rectLight1.add(new RectAreaLightHelper(rectLight1));
+    });
   }
 }

@@ -746,7 +746,7 @@ export default class Arcade extends THREE.Group {
       flatShading: true,
       emissive: 0x12121f,
       side: THREE.DoubleSide,
-      opacity: 0.5,
+      opacity: 0.8,
       transparent: true,
     });
     const yellowNeonCorpus = new THREE.Mesh(
@@ -784,14 +784,14 @@ export default class Arcade extends THREE.Group {
       //right side
       {
         height: 1.18387 * 35,
-        positionX: -0.865344 * 35,
+        positionX: -0.865344 * 35 - 0.1,
         positionY: 0.57849 * 35,
         positionZ: -0.641495 * 35,
         rotationAngle: -12.38,
       },
       {
         height: 0.3434 * 35,
-        positionX: -0.990773 * 35,
+        positionX: -0.990773 * 35 - 0.1,
         positionY: 1.3286799999999999 * 35,
         positionZ: -0.641495 * 35,
         rotationAngle: 0,
@@ -799,13 +799,13 @@ export default class Arcade extends THREE.Group {
       {
         height: 0.409261 * 35,
         positionX: -0.786144 * 35,
-        positionY: 1.50038 * 35,
+        positionY: 1.50038 * 35 + 0.1,
         positionZ: -0.641495 * 35,
         rotationAngle: 90,
       },
       {
         height: 0.828373 * 35,
-        positionX: -0.5441965 * 35,
+        positionX: -0.5441965 * 35 - 0.1,
         positionY: 1.9119549999999998 * 35,
         positionZ: -0.641495 * 35,
         rotationAngle: 5.17,
@@ -813,20 +813,20 @@ export default class Arcade extends THREE.Group {
       {
         height: 0.328721 * 35,
         positionX: -0.652325 * 35,
-        positionY: 2.40111 * 35,
+        positionY: 2.40111 * 35 - 0.1,
         positionZ: -0.641495 * 35,
         rotationAngle: -62.24,
       },
       {
         height: 0.297959 * 35,
-        positionX: -0.7886075 * 35,
+        positionX: -0.7886075 * 35 - 0.1,
         positionY: 2.626355 * 35,
         positionZ: -0.641495 * 35,
         rotationAngle: 3.53,
       },
       {
         height: 0.277184 * 35,
-        positionX: -0.6611975 * 35,
+        positionX: -0.6611975 * 35 - 0.1,
         positionY: 2.847335 * 35,
         positionZ: -0.641495 * 35,
         rotationAngle: 58.56,
@@ -834,21 +834,21 @@ export default class Arcade extends THREE.Group {
       {
         height: 1.05104 * 35,
         positionX: -0.022425000000000028 * 35,
-        positionY: 2.84734 * 35,
+        positionY: 2.84734 * 35 + 0.1,
         positionZ: -0.641495 * 35,
         rotationAngle: 97.91,
       },
       //left side
       {
         height: 1.18387 * 35,
-        positionX: -0.865344 * 35,
+        positionX: -0.865344 * 35 - 0.1,
         positionY: 0.57849 * 35,
         positionZ: 0.641495 * 35,
         rotationAngle: -12.38,
       },
       {
         height: 0.3434 * 35,
-        positionX: -0.990773 * 35,
+        positionX: -0.990773 * 35 - 0.1,
         positionY: 1.3286799999999999 * 35,
         positionZ: 0.641495 * 35,
         rotationAngle: 0,
@@ -856,13 +856,13 @@ export default class Arcade extends THREE.Group {
       {
         height: 0.409261 * 35,
         positionX: -0.786144 * 35,
-        positionY: 1.50038 * 35,
+        positionY: 1.50038 * 35 + 0.1,
         positionZ: 0.641495 * 35,
         rotationAngle: 90,
       },
       {
         height: 0.828373 * 35,
-        positionX: -0.5441965 * 35,
+        positionX: -0.5441965 * 35 - 0.1,
         positionY: 1.9119549999999998 * 35,
         positionZ: 0.641495 * 35,
         rotationAngle: 5.17,
@@ -870,20 +870,20 @@ export default class Arcade extends THREE.Group {
       {
         height: 0.328721 * 35,
         positionX: -0.652325 * 35,
-        positionY: 2.40111 * 35,
+        positionY: 2.40111 * 35 - 0.1,
         positionZ: 0.641495 * 35,
         rotationAngle: -62.24,
       },
       {
         height: 0.297959 * 35,
-        positionX: -0.7886075 * 35,
+        positionX: -0.7886075 * 35 - 0.1,
         positionY: 2.626355 * 35,
         positionZ: 0.641495 * 35,
         rotationAngle: 3.53,
       },
       {
         height: 0.277184 * 35,
-        positionX: -0.6611975 * 35,
+        positionX: -0.6611975 * 35 - 0.1,
         positionY: 2.847335 * 35,
         positionZ: 0.641495 * 35,
         rotationAngle: 58.56,
@@ -891,7 +891,7 @@ export default class Arcade extends THREE.Group {
       {
         height: 1.05104 * 35,
         positionX: -0.022425000000000028 * 35,
-        positionY: 2.84734 * 35,
+        positionY: 2.84734 * 35 + 0.1,
         positionZ: 0.641495 * 35,
         rotationAngle: 97.91,
       },

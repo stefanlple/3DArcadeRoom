@@ -34,7 +34,7 @@ function main() {
 
   window.renderer = new THREE.WebGLRenderer({ antialias: true });
   window.renderer.setSize(window.innerWidth, window.innerHeight);
-  window.renderer.setClearColor(0x505050);
+  window.renderer.setClearColor(0x181818);
   window.renderer.shadowMap.enabled = true;
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
@@ -43,7 +43,7 @@ function main() {
     45,
     window.innerWidth / window.innerHeight,
     0.1,
-    1000
+    1500
   );
   window.camera.position.set(-100, 100, 100);
 

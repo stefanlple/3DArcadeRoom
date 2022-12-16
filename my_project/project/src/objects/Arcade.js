@@ -578,6 +578,7 @@ export default class Arcade extends THREE.Group {
       corpusMaterial
     );
     pedalMashineCorpus.castShadow = true;
+    pedalMashineCorpus.receiveShadow = true;
     this.add(pedalMashineCorpus);
 
     //cylinder
@@ -589,7 +590,6 @@ export default class Arcade extends THREE.Group {
     );
     cylinderGeometry.rotateX(Math.PI / 2);
     const cylinder = new THREE.Mesh(cylinderGeometry, corpusMaterial);
-    cylinder.castShadow = true;
 
     //pedalRight
     const pedalRightGeometry = new THREE.BoxGeometry(
@@ -599,10 +599,12 @@ export default class Arcade extends THREE.Group {
     );
     const pedalRight = new THREE.Mesh(pedalRightGeometry, pedalMaterial);
     this.add(pedalRight);
+    pedalRight.castShadow = true;
 
     //pedalLeft
     const pedalLeft = pedalRight.clone();
     this.add(pedalLeft);
+    pedalLeft.castShadow = true;
 
     this.pedalAnimation = function setPedalPostionAnimation(arcade) {
       const pedalLeft = arcade.children[6];
@@ -666,7 +668,6 @@ export default class Arcade extends THREE.Group {
     );
     cylinderBody.position.set(-1.41066 * 35, 0.459419 * 35, 0);
 
-    cylinderBody.castShadow = true;
     this.add(cylinderBody);
 
     //cylinderBody spinning animation

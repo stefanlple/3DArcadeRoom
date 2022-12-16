@@ -17,9 +17,9 @@ export default class Enviroment extends THREE.Group {
     const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
     const planeMaterial = new THREE.MeshStandardMaterial({
       side: THREE.DoubleSide,
-      metalness: 0.5,
+      metalness: 0.25,
       roughness: 0.1,
-      color: 0x101010,
+      color: 0x151515,
       opacity: 0.75,
       transparent: true,
     });
@@ -34,7 +34,8 @@ export default class Enviroment extends THREE.Group {
     );
     const planeMaterialGrey = new THREE.MeshLambertMaterial({
       side: THREE.DoubleSide,
-      color: 0x101010,
+      color: 0x090909,
+      emissive: 0x090909,
     });
     const wall0 = new THREE.Mesh(wallGeometry, planeMaterialGrey);
     wall0.receiveShadow = true;
@@ -66,7 +67,7 @@ export default class Enviroment extends THREE.Group {
     this.add(ambientLight);
 
     const spotLight = new THREE.SpotLight(0xffffff);
-    spotLight.position.set(100, 200, 100);
+    spotLight.position.set(-300, 100, 300);
     spotLight.intensity = 0.8;
     spotLight.target = floor;
     spotLight.angle = THREE.MathUtils.degToRad(30);
@@ -75,13 +76,13 @@ export default class Enviroment extends THREE.Group {
     spotLight.shadow.mapSize.set(2048, 2048);
     spotLight.shadow.camera.aspect = 1;
     spotLight.shadow.camera.near = 10;
-    spotLight.shadow.camera.far = 500;
+    spotLight.shadow.camera.far = 630;
     this.add(spotLight);
     window.scene.add(new THREE.CameraHelper(spotLight.shadow.camera));
 
     const gui = new DATGUI.GUI();
-    gui.add(spotLight.position, "x", -200, 200);
-    gui.add(spotLight.position, "y", 0, 200);
-    gui.add(spotLight.position, "z", -200, 200);
+    gui.add(spotLight.position, "x", -400, 400);
+    gui.add(spotLight.position, "y", -200, 400);
+    gui.add(spotLight.position, "z", -400, 400);
   }
 }

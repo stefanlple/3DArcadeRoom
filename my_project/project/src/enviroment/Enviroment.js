@@ -34,8 +34,8 @@ export default class Enviroment extends THREE.Group {
     );
     const planeMaterialGrey = new THREE.MeshLambertMaterial({
       side: THREE.DoubleSide,
+      color: 0x101010,
     });
-    planeMaterialGrey.color = new THREE.Color(0x101010);
     const wall0 = new THREE.Mesh(wallGeometry, planeMaterialGrey);
     wall0.receiveShadow = true;
     wall0.position.z = -planeSize / 2;

@@ -21,22 +21,17 @@ export default class Arcade extends THREE.Group {
   }
 
   addParts() {
-    const corpusMaterial = new THREE.MeshPhongMaterial({
+    const corpusMaterial = new THREE.MeshLambertMaterial({
       color: 0x12121f,
       flatShading: true,
       side: THREE.DoubleSide,
     });
-    const corpusMaterial2 = new THREE.MeshPhongMaterial({
-      color: 0xff50f0,
-      flatShading: true,
-      side: THREE.DoubleSide,
-    });
 
-    const buttonMaterialRed = new THREE.MeshLambertMaterial({
+    const buttonMaterialRed = new THREE.MeshBasicMaterial({
       color: 0x888888,
       flatShading: true,
     });
-    const buttonMaterialBlue = new THREE.MeshLambertMaterial({
+    const buttonMaterialBlue = new THREE.MeshBasicMaterial({
       color: 0xdc143c,
       flatShading: true,
     });
@@ -310,6 +305,7 @@ export default class Arcade extends THREE.Group {
     corpusGeometry.computeVertexNormals();
     const corpus = new THREE.Mesh(corpusGeometry, corpusMaterial);
     corpus.castShadow = true;
+    corpus.receiveShadow = true;
     this.add(corpus);
 
     //buttonHolder
@@ -593,6 +589,7 @@ export default class Arcade extends THREE.Group {
     );
     cylinderGeometry.rotateX(Math.PI / 2);
     const cylinder = new THREE.Mesh(cylinderGeometry, corpusMaterial);
+    cylinder.castShadow = true;
 
     //pedalRight
     const pedalRightGeometry = new THREE.BoxGeometry(
@@ -753,7 +750,6 @@ export default class Arcade extends THREE.Group {
       yellowNeonLightGeometry,
       neonYellowMaterial
     );
-    yellowNeonCorpus.castShadow = true;
     corpus.add(yellowNeonCorpus);
 
     const arcadeSignMaterial = new THREE.MeshPhongMaterial({
@@ -900,7 +896,7 @@ export default class Arcade extends THREE.Group {
     rectLightsProperties.forEach((rectLight) => {
       const rectLight1 = new THREE.RectAreaLight(
         0xffff00,
-        10,
+        100,
         rectLightsWidth,
         rectLight.height
       );

@@ -17,10 +17,10 @@ export default class Enviroment extends THREE.Group {
     const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
     const planeMaterial = new THREE.MeshStandardMaterial({
       side: THREE.DoubleSide,
-      metalness: 0.9,
-      roughness: 0.9,
+      metalness: 0.5,
+      roughness: 0.1,
       color: 0x101010,
-      opacity: 0.8,
+      opacity: 0.75,
       transparent: true,
     });
     const floor = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -32,12 +32,10 @@ export default class Enviroment extends THREE.Group {
       planeSize,
       (2 / 3) * planeSize
     );
-    const planeMaterialGrey = new THREE.MeshStandardMaterial({
+    const planeMaterialGrey = new THREE.MeshLambertMaterial({
       side: THREE.DoubleSide,
-      metalness: 0.7,
-      roughness: 0.2,
     });
-    planeMaterialGrey.color = new THREE.Color(0x808080);
+    planeMaterialGrey.color = new THREE.Color(0x101010);
     const wall0 = new THREE.Mesh(wallGeometry, planeMaterialGrey);
     wall0.receiveShadow = true;
     wall0.position.z = -planeSize / 2;

@@ -1,12 +1,6 @@
 import * as THREE from "three";
-import {
-  Animation,
-  AnimationType,
-  AnimationAxis,
-} from "../animation/Animation.js";
 import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
 import * as TWEEN from "tween";
-import { MathUtils } from "three";
 import SpaceInvadersGame from "./SpaceInvadersGame.js";
 import { RectAreaLightUniformsLib } from "../../../../lib/three.js-r145/examples/jsm/lights/RectAreaLightUniformsLib.js";
 import { RectAreaLightHelper } from "../../../../lib/three.js-r145/examples/jsm/helpers/RectAreaLightHelper.js";
@@ -17,6 +11,12 @@ export default class Arcade extends THREE.Group {
     this.name = "arcade";
     this.rectLights = [];
     this.animations = [];
+    this.state = {
+      powerOn: false,
+      inGame: false,
+      gameOver: false,
+    };
+    this.videoTexture = new Map();
     this.addParts();
   }
 
@@ -677,12 +677,6 @@ export default class Arcade extends THREE.Group {
       )
       .easing(TWEEN.Easing.Cubic.InOut);
 
-    /* screen */
-    const screen = new SpaceInvadersGame();
-    screen.translateX(-0.515 * 35);
-    screen.translateY(1.85974 * 35);
-    this.add(screen);
-
     const yellowNeonPositions = [
       -0.542951, 2.91963, 0.691061, -0.779445, 2.77506, 0.691061, -0.797771,
       2.47766, 0.691061, -0.506879, 2.32456, 0.691061, -0.581514, 1.49935,
@@ -905,13 +899,26 @@ export default class Arcade extends THREE.Group {
       return new TWEEN.Tween(object)
         .to({ intensity: 1 }, 9000)
         .easing(TWEEN.Easing.Sinusoidal.In)
-        .chain(new TWEEN.Tween(object).to({ intensity: 30 }, 1000));
+        .chain(new TWEEN.Tween(object).to({ intensity: 40 }, 1000))
+        .onComplete(() => {
+          this.state.powerOn = true;
+        });
     };
 
-    corpus.allRectLightTo100 = () => {
-      corpus.rectLights.forEach((e) => intensityRectLightsTween(e).start());
+    corpus.allRectLightTo100 = async () => {
+      for (const item of corpus.rectLights) {
+        await intensityRectLightsTween(item).start();
+      }
     };
 
-    const updateFunctionalState = () => {};
+    /* screen */
+    const screen = new SpaceInvadersGame();
+    screen.translateX(-0.515 * 35);
+    screen.translateY(1.85974 * 35);
+    this.add(screen);
   }
+
+  updateFunctionalState = () => {
+    console.log("hallo");
+  };
 }

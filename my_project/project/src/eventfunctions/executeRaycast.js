@@ -20,12 +20,13 @@ export function executeRaycast() {
   window.raycaster.setFromCamera(window.mousePosition, window.camera);
   let intersects = window.raycaster.intersectObject(window.scene, true);
 
-  //console.log(intersects.length);
   if (intersects.length > 0) {
     let firstHit = intersects[0].object;
-    if (findParentByName(firstHit, "arcade")) {
-      findParentByName(firstHit, "arcade").children[8].tweenAnimation.start();
-      findParentByName(firstHit, "arcade").children[0].allRectLightTo100();
+    const arcade = findParentByName(firstHit, "arcade");
+
+    if (arcade && arcade.state.powerOn === false) {
+      arcade.children[8].tweenAnimation.start();
+      arcade.children[0].allRectLightTo100();
     }
     //console.log(firstHit);
     //if (firstHit.name === "arcade") console.log(firstHit);

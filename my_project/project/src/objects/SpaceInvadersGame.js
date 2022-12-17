@@ -27,23 +27,23 @@ export default class SpaceInvadersGame extends THREE.Group {
   }
 
   addParts() {
-    const corpusMaterial = new THREE.MeshPhongMaterial({
+    const redMaterial = new THREE.MeshBasicMaterial({
       color: 0xf00000,
-      flatShading: true,
       side: THREE.DoubleSide,
     });
-    const corpusMaterial2 = new THREE.MeshPhongMaterial({
-      color: 0xff50f0,
-      flatShading: true,
+
+    document.video = document.createElement("video");
+    document.video.src = "src/videos/DVD.mp4";
+    document.video.loop = true;
+    document.video.play();
+    const videoMaterial = new THREE.MeshLambertMaterial({
+      color: 0xffffff,
       side: THREE.DoubleSide,
+      map: new THREE.VideoTexture(document.video),
     });
-    const corpusMaterial3 = new THREE.MeshPhongMaterial({
+
+    const blackScreenMaterial = new THREE.MeshPhongMaterial({
       color: 0x000000,
-      flatShading: true,
-      side: THREE.DoubleSide,
-    });
-    const corpusMaterial4 = new THREE.MeshPhongMaterial({
-      color: 0x00ff00,
       flatShading: true,
       side: THREE.DoubleSide,
     });
@@ -67,11 +67,10 @@ export default class SpaceInvadersGame extends THREE.Group {
     const screenHeight = 0.864;
     const screenGeometry = new THREE.PlaneGeometry(screenWidth, screenHeight);
     screenGeometry.rotateY(Math.PI / 2);
-
     screenGeometry.scale(35, 35, 35);
     screenGeometry.translate(0.3, 0, 0);
-    const screen = new THREE.Mesh(screenGeometry, corpusMaterial3);
-    this.add(screen);
+    const screen = new THREE.Mesh(screenGeometry, blackScreenMaterial);
+    //this.add(screen);
 
     /* player */
     //
@@ -80,7 +79,7 @@ export default class SpaceInvadersGame extends THREE.Group {
     playerGeometry.rotateY(Math.PI / 2);
     playerGeometry.scale(35, 35, 35);
     let player = new THREE.Mesh(playerGeometry, playerMaterial);
-    this.add(player);
+    screen.add(player);
     player.translateY(-(screenHeight / 2 - playerSize / 2) * 35 + 0.615);
 
     player.move = (direction, speed) => {
@@ -127,7 +126,7 @@ export default class SpaceInvadersGame extends THREE.Group {
       const bulletGeometry = new THREE.CircleGeometry(bulletRadius, 32);
       bulletGeometry.rotateY(Math.PI / 2);
       bulletGeometry.scale(35, 35, 35);
-      const bullet = new THREE.Mesh(bulletGeometry, corpusMaterial);
+      const bullet = new THREE.Mesh(bulletGeometry, redMaterial);
       return bullet;
     };
 
@@ -251,7 +250,9 @@ export default class SpaceInvadersGame extends THREE.Group {
             this.enemies.splice(index, 1);
             removeObject3D(enemy);
             removeObject3D(player);
-            this.gameManager.hearts.length = 0;
+            while (this.gameManager.hearts.length) {
+              removeObject3D(this.gameManager.hearts.pop());
+            }
           }
         }
         if (
@@ -343,7 +344,7 @@ export default class SpaceInvadersGame extends THREE.Group {
       size: 0.005,
     });
     const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-    this.add(particles);
+    screen.add(particles);
 
     const x = 0,
       y = 0;
@@ -362,7 +363,7 @@ export default class SpaceInvadersGame extends THREE.Group {
       heartGeometry.rotateY(Math.PI / 2);
       heartGeometry.rotateZ(Math.PI);
       heartGeometry.scale(0.1, 0.1, 0.1);
-      const heart = new THREE.Mesh(heartGeometry, corpusMaterial);
+      const heart = new THREE.Mesh(heartGeometry, redMaterial);
       screen.add(heart);
       this.gameManager.hearts.push(heart);
       heart.translateY((screenHeight / 2) * 35 - 1.5);
@@ -397,6 +398,17 @@ export default class SpaceInvadersGame extends THREE.Group {
       );
     };
     createScoreText();
+
+    //Video Plane
+    const videoPlaneGeometry = new THREE.PlaneGeometry(
+      screenWidth,
+      screenHeight
+    );
+    videoPlaneGeometry.rotateY(-Math.PI / 2);
+    videoPlaneGeometry.scale(35, 35, 35);
+    videoPlaneGeometry.translate(0.3, 0, 0);
+    const videoPlane = new THREE.Mesh(videoPlaneGeometry, videoMaterial);
+    this.add(videoPlane);
 
     const spawnCoins = () => {
       for (let i = 0; i < this.gameManager.score; i++) {

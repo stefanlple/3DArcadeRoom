@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import * as DATGUI from "datgui";
 import * as CONTROLS from "controls";
 import * as TWEEN from "tween";
 import Stats from "../../../../lib/three.js-r145/examples/jsm/libs/stats.module.js";
@@ -63,7 +62,7 @@ function main() {
   const cylinderBody = arcade.children[8];
   const joystick = arcade.children[3];
   const screen = arcade.children[9];
-  const player = screen.children[1];
+  const player = screen.children[0]?.children[0];
   const button2 = arcade.children[1];
   const button3 = arcade.children[2];
 
@@ -88,10 +87,10 @@ function main() {
           screen.shootTwo(screen, player.position.y, player.position.z);
         }
         break;
-      case 13: //Button Enter
+      /* case 13: //Button Enter
         cylinderBody.tweenAnimation.start();
         arcade.children[0].allRectLightTo100();
-        break;
+        break; */
       case 87: //Button W
         joystick.tweenAnimation("W").start(); // Button W
         player.move("up", speed);
@@ -136,9 +135,6 @@ function main() {
     stats.begin();
     const delta = clock.getDelta();
 
-    /* arcade.animations.forEach((animation) => {
-      animation.update(delta);
-    }); */
     arcade.pedalAnimation(arcade);
 
     //game

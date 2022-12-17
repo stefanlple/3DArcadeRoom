@@ -384,7 +384,7 @@ export default class SpaceInvadersGame extends THREE.Group {
               font: fonts,
             }
           );
-          const scoreTextMaterial = new THREE.MeshPhongMaterial({
+          const scoreTextMaterial = new THREE.MeshBasicMaterial({
             color: 0xffc000,
           });
           const textMesh = new THREE.Mesh(scoreTextGeometry, scoreTextMaterial);

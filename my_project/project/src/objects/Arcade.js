@@ -14,7 +14,7 @@ import { RectAreaLightHelper } from "../../../../lib/three.js-r145/examples/jsm/
 export default class Arcade extends THREE.Group {
   constructor() {
     super();
-
+    this.name = "arcade";
     this.rectLights = [];
     this.animations = [];
     this.addParts();
@@ -29,16 +29,12 @@ export default class Arcade extends THREE.Group {
 
     const buttonMaterialRed = new THREE.MeshBasicMaterial({
       color: 0x888888,
-      flatShading: true,
     });
     const buttonMaterialBlue = new THREE.MeshBasicMaterial({
       color: 0xdc143c,
-      flatShading: true,
     });
     const stickMaterial = new THREE.MeshBasicMaterial({
       color: 0x333333,
-      flatShading: true,
-      roughness: 0.1,
     });
     const coinMashineMaterial = new THREE.MeshLambertMaterial({
       color: 0x25253f,
@@ -51,9 +47,8 @@ export default class Arcade extends THREE.Group {
     );
     pedalMaterial.bumpScale = 0.2;
 
-    const coinMashineButtonMaterial = new THREE.MeshLambertMaterial({
+    const coinMashineButtonMaterial = new THREE.MeshBasicMaterial({
       color: 0x454576,
-      flatShading: true,
     });
 
     /*corpus*/
@@ -676,9 +671,9 @@ export default class Arcade extends THREE.Group {
         new THREE.Vector3(
           cylinderBody.rotation.x,
           cylinderBody.rotation.y,
-          cylinderBody.rotation.z - 4 * Math.PI
+          cylinderBody.rotation.z - 18 * Math.PI
         ),
-        5000
+        10000
       )
       .easing(TWEEN.Easing.Cubic.InOut);
 
@@ -744,8 +739,9 @@ export default class Arcade extends THREE.Group {
       flatShading: true,
       emissive: 0x12121f,
       side: THREE.DoubleSide,
-      opacity: 0.8,
+      opacity: 0.75,
       transparent: true,
+      roughness: 0.4,
     });
     const yellowNeonCorpus = new THREE.Mesh(
       yellowNeonLightGeometry,
@@ -753,9 +749,8 @@ export default class Arcade extends THREE.Group {
     );
     corpus.add(yellowNeonCorpus);
 
-    const arcadeSignMaterial = new THREE.MeshPhongMaterial({
+    const arcadeSignMaterial = new THREE.MeshBasicMaterial({
       color: 0xffffff,
-      flatShading: true,
       map: new THREE.TextureLoader().load("src/images/ArcadePrint.jpg"),
       side: THREE.DoubleSide,
     });
@@ -768,12 +763,6 @@ export default class Arcade extends THREE.Group {
     arcadeSign.translateY((2.47771 + 0.29734 / 2) * 35);
     arcadeSign.translateX(-0.744387 * 35 - 0.1);
     arcadeSign.rotateY(-Math.PI / 2);
-
-    console.log(this.children);
-    /* const playerGeometry = new THREE.PlaneGeometry(playerSize, playerSize);
-    playerGeometry.rotateY(Math.PI / 2);
-    playerGeometry.scale(35, 35, 35);
-    player.translateY(-(screenHeight / 2 - playerSize / 2) * 35 + 0.615); */
 
     RectAreaLightUniformsLib.init();
     const rectLightsWidth = (0.099132 * 35) / 3;
@@ -894,14 +883,16 @@ export default class Arcade extends THREE.Group {
       },
     ];
 
+    corpus.rectLights = [];
     rectLightsProperties.forEach((rectLight) => {
       const rectLight1 = new THREE.RectAreaLight(
         0xffff00,
-        100,
+        0.1,
         rectLightsWidth,
         rectLight.height
       );
       corpus.add(rectLight1);
+      corpus.rectLights.push(rectLight1);
       rectLight1.translateX(rectLight.positionX);
       rectLight1.translateY(rectLight.positionY);
       rectLight1.translateZ(rectLight.positionZ);
@@ -909,5 +900,18 @@ export default class Arcade extends THREE.Group {
       rectLight1.rotateX(THREE.MathUtils.degToRad(rectLight.rotationAngle));
       rectLight1.add(new RectAreaLightHelper(rectLight1));
     });
+
+    const intensityRectLightsTween = (object) => {
+      return new TWEEN.Tween(object)
+        .to({ intensity: 1 }, 9000)
+        .easing(TWEEN.Easing.Sinusoidal.In)
+        .chain(new TWEEN.Tween(object).to({ intensity: 30 }, 1000));
+    };
+
+    corpus.allRectLightTo100 = () => {
+      corpus.rectLights.forEach((e) => intensityRectLightsTween(e).start());
+    };
+
+    const updateFunctionalState = () => {};
   }
 }

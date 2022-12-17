@@ -10,10 +10,13 @@ import Enviroment from "./enviroment/enviroment.js";
 
 // Event functions
 import { updateAspectRatio } from "./eventfunctions/updateAspectRatio.js";
+import { calculateMousePosition } from "./eventfunctions/calculateMousePosition.js";
+import { executeRaycast } from "./eventfunctions/executeRaycast.js";
 
 function main() {
   window.scene = new THREE.Scene();
   window.scene.add(new THREE.AxesHelper(200));
+  window.scene.nane = "scene";
 
   const arcade = new Arcade();
   arcade.position.set(0, 0, 0);
@@ -23,18 +26,18 @@ function main() {
   room.position.set(0, 0, 0);
   window.scene.add(room);
 
-  /*   window.camera = new THREE.PerspectiveCamera(
+  window.camera = new THREE.PerspectiveCamera(
     45,
     window.innerWidth / window.innerHeight,
     0.1,
     1000
   );
   window.camera.position.set(-2.3 * 35, 2.2 * 35, 0);
-  window.camera.lookAt(-0.51 * 35, 1.85974 * 35, 0); */
+  window.camera.lookAt(-0.51 * 35, 1.85974 * 35, 0);
 
   window.renderer = new THREE.WebGLRenderer({ antialias: true });
   window.renderer.setSize(window.innerWidth, window.innerHeight);
-  window.renderer.setClearColor(0x181818);
+  window.renderer.setClearColor();
   window.renderer.shadowMap.enabled = true;
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
@@ -87,6 +90,7 @@ function main() {
         break;
       case 13: //Button Enter
         cylinderBody.tweenAnimation.start();
+        arcade.children[0].allRectLightTo100();
         break;
       case 87: //Button W
         joystick.tweenAnimation("W").start(); // Button W
@@ -156,3 +160,5 @@ function main() {
 
 window.onload = main;
 window.onresize = updateAspectRatio;
+window.onmousemove = calculateMousePosition;
+window.onclick = executeRaycast;

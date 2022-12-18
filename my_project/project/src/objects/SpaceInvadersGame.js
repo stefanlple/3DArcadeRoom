@@ -35,6 +35,7 @@ export default class SpaceInvadersGame extends THREE.Group {
     document.video = document.createElement("video");
     document.video.src = "src/videos/DVD.mp4";
     document.video.loop = true;
+    document.video.muted = "muted";
     document.video.play();
     const videoMaterial = new THREE.MeshLambertMaterial({
       color: 0xffffff,

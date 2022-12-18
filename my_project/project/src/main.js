@@ -31,7 +31,11 @@ function main() {
     0.1,
     1000
   );
-  window.camera.position.set(-2.3 * 35, 2.2 * 35, 0);
+  window.camera.position.set(
+    arcade.children[9].position.x - 62.475,
+    arcade.children[9].position.y + 11.9091,
+    0
+  );
   window.camera.lookAt(-0.51 * 35, 1.85974 * 35, 0);
 
   window.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -41,7 +45,7 @@ function main() {
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
-  window.camera = new THREE.PerspectiveCamera(
+  /* window.camera = new THREE.PerspectiveCamera(
     45,
     window.innerWidth / window.innerHeight,
     0.1,
@@ -56,10 +60,9 @@ function main() {
   orbitControls.target = new THREE.Vector3(0, 0, 0);
   //orbitControls.maxPolarAngle = Math.PI / 2.1;
 
-  orbitControls.update();
+  orbitControls.update(); */
 
   //Animations onKeyDown
-  const cylinderBody = arcade.children[8];
   const joystick = arcade.children[3];
   const screen = arcade.children[9];
   const player = screen.children[0]?.children[0];

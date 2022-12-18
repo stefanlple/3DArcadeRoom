@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
 import * as TWEEN from "tween";
-import SpaceInvadersGame from "./SpaceInvadersGame.js";
+import Screen from "./Screen.js";
 import { RectAreaLightUniformsLib } from "../../../../lib/three.js-r145/examples/jsm/lights/RectAreaLightUniformsLib.js";
 import { RectAreaLightHelper } from "../../../../lib/three.js-r145/examples/jsm/helpers/RectAreaLightHelper.js";
 
@@ -16,7 +16,6 @@ export default class Arcade extends THREE.Group {
       inGame: false,
       gameOver: false,
     };
-    this.videoTexture = new Map();
     this.addParts();
   }
 
@@ -912,7 +911,7 @@ export default class Arcade extends THREE.Group {
     };
 
     /* screen */
-    const screen = new SpaceInvadersGame();
+    const screen = new Screen();
     screen.translateX(-0.515 * 35);
     screen.translateY(1.85974 * 35);
     this.add(screen);

@@ -14,6 +14,7 @@ export default class SpaceInvadersGame extends THREE.Group {
   constructor() {
     super();
 
+    this.name = "spaceInvaders";
     this.gameManager = {
       score: 0,
       hearts: [], //starts of with 3
@@ -30,17 +31,6 @@ export default class SpaceInvadersGame extends THREE.Group {
     const redMaterial = new THREE.MeshBasicMaterial({
       color: 0xf00000,
       side: THREE.DoubleSide,
-    });
-
-    document.video = document.createElement("video");
-    document.video.src = "src/videos/DVD.mp4";
-    document.video.loop = true;
-    document.video.muted = "muted";
-    document.video.play();
-    const videoMaterial = new THREE.MeshLambertMaterial({
-      color: 0xffffff,
-      side: THREE.DoubleSide,
-      map: new THREE.VideoTexture(document.video),
     });
 
     const blackScreenMaterial = new THREE.MeshPhongMaterial({
@@ -71,7 +61,7 @@ export default class SpaceInvadersGame extends THREE.Group {
     screenGeometry.scale(35, 35, 35);
     screenGeometry.translate(0.3, 0, 0);
     const screen = new THREE.Mesh(screenGeometry, blackScreenMaterial);
-    //this.add(screen);
+    this.add(screen);
 
     /* player */
     //
@@ -399,17 +389,6 @@ export default class SpaceInvadersGame extends THREE.Group {
       );
     };
     createScoreText();
-
-    //Video Plane
-    const videoPlaneGeometry = new THREE.PlaneGeometry(
-      screenWidth,
-      screenHeight
-    );
-    videoPlaneGeometry.rotateY(-Math.PI / 2);
-    videoPlaneGeometry.scale(35, 35, 35);
-    videoPlaneGeometry.translate(0.3, 0, 0);
-    const videoPlane = new THREE.Mesh(videoPlaneGeometry, videoMaterial);
-    this.add(videoPlane);
 
     const spawnCoins = () => {
       for (let i = 0; i < this.gameManager.score; i++) {

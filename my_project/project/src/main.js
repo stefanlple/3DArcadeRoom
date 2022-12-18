@@ -18,11 +18,9 @@ function main() {
   window.scene.nane = "scene";
 
   const arcade = new Arcade();
-  arcade.position.set(0, 0, 0);
   window.scene.add(arcade);
 
   const room = new Enviroment();
-  room.position.set(0, 0, 0);
   window.scene.add(room);
 
   window.camera = new THREE.PerspectiveCamera(
@@ -141,7 +139,7 @@ function main() {
     arcade.pedalAnimation(arcade);
 
     //game
-    screen.spawnEnemiesInterval++;
+    if (screen) screen.spawnEnemiesInterval++;
     if (screen.spawnEnemiesInterval === 150) {
       screen.spawnEnemy(1, 1);
       screen.spawnEnemiesInterval = 0;

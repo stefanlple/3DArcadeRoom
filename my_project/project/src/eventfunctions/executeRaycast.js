@@ -25,8 +25,15 @@ export function executeRaycast() {
     const arcade = findParentByName(firstHit, "arcade");
 
     if (arcade && arcade.state.powerOn === false) {
-      arcade.children[8].tweenAnimation.start();
-      arcade.children[0].allRectLightTo100();
+      const cylinder = arcade.children[8];
+      const corpus = arcade.children[0];
+      cylinder.tweenAnimation.start();
+      corpus.allRectLightTo100();
+    }
+    if (arcade && arcade.state.powerOn === true) {
+      /* arcade.children[9].tweenAnimation.start();
+      arcade.children[0].allRectLightTo100(); */
+      arcade.children[9].changeScreenState();
     }
     //console.log(firstHit);
     //if (firstHit.name === "arcade") console.log(firstHit);

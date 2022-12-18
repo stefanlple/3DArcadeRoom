@@ -1,12 +1,7 @@
 import * as THREE from "three";
 import { FontLoader } from "../../../../lib/three.js-r145/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "../../../../lib/three.js-r145/examples/jsm/geometries/TextGeometry.js";
-import {
-  Animation,
-  AnimationType,
-  AnimationAxis,
-} from "../animation/Animation.js";
-import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
+import { removeObject3D } from "../utility/removeObject3D.js";
 import * as TWEEN from "tween";
 import { MathUtils } from "three";
 
@@ -149,25 +144,6 @@ export default class SpaceInvadersGame extends THREE.Group {
       screen.add(bullet2);
       this.projectiles.push(bullet1);
       this.projectiles.push(bullet2);
-    };
-
-    const removeObject3D = (object) => {
-      if (object.geometry) object.geometry.dispose();
-
-      if (object.material) {
-        if (object.material instanceof Array) {
-          // for better memory management and performance
-          object.material.forEach((material) => material.dispose());
-        } else {
-          // for better memory management and performance
-          object.material.dispose();
-        }
-      }
-
-      object.clear();
-      object.removeFromParent();
-      object = undefined; // the parent might be the scene or another object, but it is sure to be removed this way
-      renderer.renderLists.dispose();
     };
 
     const updateBullet = () => {

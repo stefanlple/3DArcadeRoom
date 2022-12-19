@@ -43,6 +43,7 @@ function main() {
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
+  //window states
   /* window.camera = new THREE.PerspectiveCamera(
     45,
     window.innerWidth / window.innerHeight,

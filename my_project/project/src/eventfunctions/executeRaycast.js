@@ -9,6 +9,13 @@ export function executeRaycast() {
   if (intersects.length > 0) {
     let firstHit = intersects[0].object;
     const arcade = findParentByName(firstHit, "arcade");
+    const scene = findParentByName(firstHit, "scene");
+    let camera;
+    scene.traverse((child) => {
+      if (child.name === "camera") {
+        camera = child;
+      }
+    });
 
     if (arcade && arcade.state.powerOn === false) {
       const cylinder = arcade.children[8];
@@ -18,6 +25,7 @@ export function executeRaycast() {
     }
     if (arcade && arcade.state.powerOn === true) {
       arcade.children[9].changeScreenState();
+      camera.animations.threeJSArcade();
     }
     //console.log(firstHit);
     //if (firstHit.name === "arcade") console.log(firstHit);

@@ -16,7 +16,7 @@ import Camera from "./experience/Camera.js";
 function main() {
   window.scene = new THREE.Scene();
   window.scene.add(new THREE.AxesHelper(200));
-  window.scene.nane = "scene";
+  window.scene.name = "scene";
 
   const arcade = new Arcade();
   window.scene.add(arcade);
@@ -50,7 +50,9 @@ function main() {
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
   const camera = new Camera();
+  room.add(camera);
   camera.instanciate(window);
+  console.log(camera);
 
   //Animations onKeyDown
   const joystick = arcade.children[3];

@@ -23,9 +23,11 @@ export function executeRaycast() {
       cylinder.tweenAnimation.start();
       corpus.allRectLightTo100();
     }
+
     if (arcade && arcade.state.powerOn === true) {
-      arcade.children[9].changeScreenState();
-      camera.animations.threeJSArcade();
+      camera.animations.threeJSArcade(2000, () => {
+        arcade.children[9].changeScreenState();
+      });
     }
     //console.log(firstHit);
     //if (firstHit.name === "arcade") console.log(firstHit);

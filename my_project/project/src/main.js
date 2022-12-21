@@ -24,6 +24,13 @@ function main() {
   const room = new Enviroment();
   window.scene.add(room);
 
+  window.renderer = new THREE.WebGLRenderer({ antialias: true });
+  window.renderer.setSize(window.innerWidth, window.innerHeight);
+  window.renderer.setClearColor();
+  window.renderer.shadowMap.enabled = true;
+
+  document.getElementById("3d_content").appendChild(window.renderer.domElement);
+
   /*   window.camera = new THREE.PerspectiveCamera(
     45,
     window.innerWidth / window.innerHeight,
@@ -41,18 +48,13 @@ function main() {
       arcade.children[9].position.y,
       arcade.children[9].position.z
     )
-  ); */
-  window.renderer = new THREE.WebGLRenderer({ antialias: true });
-  window.renderer.setSize(window.innerWidth, window.innerHeight);
-  window.renderer.setClearColor();
-  window.renderer.shadowMap.enabled = true;
-
-  document.getElementById("3d_content").appendChild(window.renderer.domElement);
+  );
+  console.log(window.camera.quaternion); */
 
   const camera = new Camera();
   room.add(camera);
   camera.instanciate(window);
-  console.log(camera);
+  console.log(window.camera.quaternion);
 
   //window states
   /* window.camera = new THREE.PerspectiveCamera(

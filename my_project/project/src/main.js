@@ -54,6 +54,24 @@ function main() {
   camera.instanciate(window);
   console.log(camera);
 
+  //window states
+  /* window.camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1500
+  );
+  window.camera.position.set(-100, 100, 100);
+
+  const orbitControls = new CONTROLS.OrbitControls(
+    window.camera,
+    window.renderer.domElement
+  );
+  orbitControls.target = new THREE.Vector3(0, 0, 0);
+  //orbitControls.maxPolarAngle = Math.PI / 2.1;
+
+  orbitControls.update(); */
+
   //Animations onKeyDown
   const joystick = arcade.children[3];
   const screen = arcade.children[9];

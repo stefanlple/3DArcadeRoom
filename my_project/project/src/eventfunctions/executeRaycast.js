@@ -2,20 +2,6 @@ import * as THREE from "three";
 
 window.raycaster = new THREE.Raycaster();
 
-function findParentByName(object, identifier) {
-  let current = object;
-  for (let i = 0; i < 10; i++) {
-    if (current) {
-      if (current.name === identifier) {
-        return current;
-      }
-      current = current.parent;
-    }
-  }
-
-  return false;
-}
-
 export function executeRaycast() {
   window.raycaster.setFromCamera(window.mousePosition, window.camera);
   let intersects = window.raycaster.intersectObject(window.scene, true);
@@ -84,5 +70,18 @@ export function executeRaycast() {
         firstHit.parentTelevision.animations.get("antenna_down").play();
       }
     } */
+  }
+  function findParentByName(object, identifier) {
+    let current = object;
+    for (let i = 0; i < 10; i++) {
+      if (current) {
+        if (current.name === identifier) {
+          return current;
+        }
+        current = current.parent;
+      }
+    }
+
+    return false;
   }
 }

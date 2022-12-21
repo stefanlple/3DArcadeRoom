@@ -11,6 +11,7 @@ import Enviroment from "./enviroment/enviroment.js";
 import { updateAspectRatio } from "./eventfunctions/updateAspectRatio.js";
 import { calculateMousePosition } from "./eventfunctions/calculateMousePosition.js";
 import { executeRaycast } from "./eventfunctions/executeRaycast.js";
+import Camera from "./experience/Camera.js";
 
 function main() {
   window.scene = new THREE.Scene();
@@ -23,7 +24,7 @@ function main() {
   const room = new Enviroment();
   window.scene.add(room);
 
-  window.camera = new THREE.PerspectiveCamera(
+  /*   window.camera = new THREE.PerspectiveCamera(
     45,
     window.innerWidth / window.innerHeight,
     0.1,
@@ -34,8 +35,13 @@ function main() {
     arcade.children[9].position.y + 11.9091,
     0
   );
-  window.camera.lookAt(-0.51 * 35, 1.85974 * 35, 0);
-
+  window.camera.lookAt(
+    new THREE.Vector3(
+      arcade.children[9].position.x,
+      arcade.children[9].position.y,
+      arcade.children[9].position.z
+    )
+  ); */
   window.renderer = new THREE.WebGLRenderer({ antialias: true });
   window.renderer.setSize(window.innerWidth, window.innerHeight);
   window.renderer.setClearColor();
@@ -43,26 +49,8 @@ function main() {
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
-  window.camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1500
-  );
-  window.camera.position.set(-250, 200, 250);
-
-  const orbitControls = new CONTROLS.OrbitControls(
-    window.camera,
-    window.renderer.domElement
-  );
-  orbitControls.target = new THREE.Vector3(40, 0, -40);
-  orbitControls.enableDamping = true;
-  orbitControls.rotateSpeed = 1.2;
-  orbitControls.zoomSpeed = 0.8;
-  orbitControls.maxPolarAngle = Math.PI / 2.1;
-
-  orbitControls.update();
-  //orbitControls.enabled = false;
+  const camera = new Camera();
+  camera.instanciate(window);
 
   //Animations onKeyDown
   const joystick = arcade.children[3];

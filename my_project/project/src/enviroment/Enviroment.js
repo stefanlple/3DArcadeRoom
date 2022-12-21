@@ -13,7 +13,7 @@ export default class Enviroment extends THREE.Group {
 
   addParts() {
     //room
-    const planeSize = 250;
+    const planeSize = 240;
     const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
     const planeMaterial = new THREE.MeshStandardMaterial({
       side: THREE.DoubleSide,
@@ -67,7 +67,7 @@ export default class Enviroment extends THREE.Group {
 
     //light
     const ambientLight = new THREE.AmbientLight(0xffffff);
-    ambientLight.intensity = 1;
+    ambientLight.intensity = 1.2;
     this.add(ambientLight);
 
     const spotLight = new THREE.SpotLight(0xffb7c5);
@@ -87,7 +87,7 @@ export default class Enviroment extends THREE.Group {
     const planeSize1 = 1200;
     const planeGeometry1 = new THREE.PlaneGeometry(planeSize1, planeSize1);
     const planeMaterial1 = new THREE.MeshStandardMaterial({
-      color: 0x020202,
+      color: 0x080808,
       roughness: 0.9,
       metalness: 0,
     });

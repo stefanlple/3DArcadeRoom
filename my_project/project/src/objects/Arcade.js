@@ -14,7 +14,6 @@ export default class Arcade extends THREE.Group {
     this.state = {
       powerOn: false,
       inGame: false,
-      gameOver: false,
     };
     this.addParts();
   }

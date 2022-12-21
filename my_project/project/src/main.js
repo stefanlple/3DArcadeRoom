@@ -43,22 +43,26 @@ function main() {
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
-  /* window.camera = new THREE.PerspectiveCamera(
+  window.camera = new THREE.PerspectiveCamera(
     45,
     window.innerWidth / window.innerHeight,
     0.1,
     1500
   );
-  window.camera.position.set(-100, 100, 100);
+  window.camera.position.set(-250, 200, 250);
 
   const orbitControls = new CONTROLS.OrbitControls(
     window.camera,
     window.renderer.domElement
   );
-  orbitControls.target = new THREE.Vector3(0, 0, 0);
-  //orbitControls.maxPolarAngle = Math.PI / 2.1;
+  orbitControls.target = new THREE.Vector3(40, 0, -40);
+  orbitControls.enableDamping = true;
+  orbitControls.rotateSpeed = 1.2;
+  orbitControls.zoomSpeed = 0.8;
+  orbitControls.maxPolarAngle = Math.PI / 2.1;
 
-  orbitControls.update(); */
+  orbitControls.update();
+  //orbitControls.enabled = false;
 
   //Animations onKeyDown
   const joystick = arcade.children[3];

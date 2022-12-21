@@ -31,8 +31,6 @@ export function executeRaycast() {
       corpus.allRectLightTo100();
     }
     if (arcade && arcade.state.powerOn === true) {
-      /* arcade.children[9].tweenAnimation.start();
-      arcade.children[0].allRectLightTo100(); */
       arcade.children[9].changeScreenState();
     }
     //console.log(firstHit);

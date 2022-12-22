@@ -44,7 +44,6 @@ export default class Screen extends THREE.Group {
     const dvdScreen = new DVDScreen();
     this.add(dvdScreen);
     dvdScreen.name = "DVDScreen";
-
     this.screenState = "dvd";
   };
 }

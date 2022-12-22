@@ -239,7 +239,6 @@ export default class SpaceInvadersGame extends THREE.Group {
       updateBullet();
       updateEnemies();
     };
-
     const hitZone = (position) => {
       return {
         z: position.z,

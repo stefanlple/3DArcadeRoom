@@ -40,6 +40,12 @@ export default class Camera extends THREE.Group {
           .to(
             {
               position: new THREE.Vector3(-250, 200, 250),
+              quaternion: new THREE.Quaternion(
+                -0.20780122565338044,
+                -0.372877809926707,
+                -0.0860740859433821,
+                0.9002066658330334
+              ),
             },
             duration
           )

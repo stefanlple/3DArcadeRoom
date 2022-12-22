@@ -62,22 +62,40 @@ function main() {
     0.1,
     1500
   );
-  window.camera.position.set(-100, 100, 100);
+  window.camera.position.set(-250, 200, 250);
 
   const orbitControls = new CONTROLS.OrbitControls(
     window.camera,
     window.renderer.domElement
   );
-  orbitControls.target = new THREE.Vector3(0, 0, 0);
-  //orbitControls.maxPolarAngle = Math.PI / 2.1;
+  orbitControls.target = new THREE.Vector3(40, 0, -40);
+  orbitControls.enableDamping = true;
+  orbitControls.rotateSpeed = 1.2;
+  orbitControls.zoomSpeed = 0.8;
+  orbitControls.maxPolarAngle = Math.PI / 2.1;
 
-  orbitControls.update(); */
+  orbitControls.update();
+  console.log(camera.quaternion); */
 
   //Animations onKeyDown
   const joystick = arcade.children[3];
   const screen = arcade.children[9];
   const button2 = arcade.children[1];
   const button3 = arcade.children[2];
+
+  let cameraObject;
+  //find camera
+  screen.traverseAncestors((parent) => {
+    //find scene then find camera
+    if (parent.name === "scene") {
+      parent.traverse((child) => {
+        if (child.name === "camera") {
+          cameraObject = child;
+        }
+      });
+    }
+  });
+
   let spaceInvadersGame;
 
   let button2Pressed = false;
@@ -87,7 +105,6 @@ function main() {
     let keyCode = which;
     const speed = 0.615 * 2;
     const player = spaceInvadersGame.children[0].children[0];
-    console.log(spaceInvadersGame.children);
     switch (keyCode) {
       case 74: //Button J
         console.log(arcade.state.inGame);
@@ -153,14 +170,12 @@ function main() {
   const clock = new THREE.Clock();
   const stats = new Stats();
   document.body.appendChild(stats.dom);
-
+  console.log(window.camera.position);
   function mainLoop() {
     stats.begin();
     const delta = clock.getDelta();
 
     arcade.pedalAnimation(arcade);
-
-    console.log(spaceInvadersGame);
     //game
     if (arcade.state.inGame) {
       screen.traverse((child) => {
@@ -172,6 +187,13 @@ function main() {
         spaceInvadersGame.spawnEnemiesInterval = 0;
       }
       spaceInvadersGame.updateGame();
+      if (!spaceInvadersGame.gameManager.hearts.length) {
+        cameraObject.animations.orbit(2000, () => {
+          arcade.children[9].changeScreenState(arcade.state);
+        });
+        arcade.state.inGame = false;
+        console.log(window.camera.position);
+      }
     }
 
     TWEEN.update();

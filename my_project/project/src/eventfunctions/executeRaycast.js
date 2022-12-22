@@ -16,7 +16,6 @@ export function executeRaycast() {
         camera = child;
       }
     });
-
     if (arcade && arcade.state.powerOn === false) {
       const cylinder = arcade.children[8];
       const corpus = arcade.children[0];
@@ -25,13 +24,11 @@ export function executeRaycast() {
     }
 
     if (arcade && arcade.state.powerOn && !arcade.state.inGame) {
-      camera.animations.threeJSArcade(2000, () => {
+      camera.animations.threeJSArcade(1000, () => {
         arcade.children[9].changeScreenState(arcade.state);
       });
     }
-    //console.log(firstHit);
     //if (firstHit.name === "arcade") console.log(firstHit);
-    //console.log(firstHit);
     /* let firstHit = intersects[0].object;
 
     if (firstHit.name === "powerKnob" || firstHit.name === "volumeKnob") {

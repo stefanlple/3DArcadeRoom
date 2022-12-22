@@ -192,47 +192,49 @@ export default class SpaceInvadersGame extends THREE.Group {
 
     this.spawnEnemiesInterval = 0;
     const updateEnemies = () => {
-      this.enemies.forEach((enemy, index) => {
-        const speed = 0.0122;
-        //hit detection with player
-        if (this.gameManager.hearts.length <= 0) {
-          //removeObject3D(this);
-        }
-        this.projectiles.forEach((projectile, indexProjectile) => {
-          if (this.hitDetectionWithBullet(enemy, projectile)) {
-            if (projectile.parent) {
+      try {
+        this.enemies.forEach((enemy, index) => {
+          const speed = 0.0122;
+          //hit detection with player
+          if (this.gameManager.hearts.length <= 0) {
+            //removeObject3D(this);
+          }
+          this.projectiles.forEach((projectile, indexProjectile) => {
+            if (this.hitDetectionWithBullet(enemy, projectile)) {
+              if (projectile.parent) {
+                this.enemies.splice(index, 1);
+                this.projectiles.splice(indexProjectile, 1);
+                removeObject3D(enemy);
+                removeObject3D(projectile);
+                removeObject3D(this.gameManager.currentScoreMesh.pop());
+                this.gameManager.score++;
+                createScoreText();
+              }
+            }
+          });
+
+          if (this.hitDetectionWithPlayer(enemy)) {
+            if (player.parent) {
               this.enemies.splice(index, 1);
-              this.projectiles.splice(indexProjectile, 1);
               removeObject3D(enemy);
-              removeObject3D(projectile);
-              removeObject3D(this.gameManager.currentScoreMesh.pop());
-              this.gameManager.score++;
-              createScoreText();
+              removeObject3D(player);
+              while (this.gameManager.hearts.length) {
+                removeObject3D(this.gameManager.hearts.pop());
+              }
             }
           }
-        });
-
-        if (this.hitDetectionWithPlayer(enemy)) {
-          if (player.parent) {
+          if (
+            enemy.position.y - (enemy.height / 2) * 35 - speed <=
+            screen.position.y - (screenHeight * 35) / 2
+          ) {
             this.enemies.splice(index, 1);
             removeObject3D(enemy);
-            removeObject3D(player);
-            while (this.gameManager.hearts.length) {
-              removeObject3D(this.gameManager.hearts.pop());
-            }
+            removeObject3D(this.gameManager.hearts.pop());
+          } else {
+            enemy.translateY(-enemy.height * 2);
           }
-        }
-        if (
-          enemy.position.y - (enemy.height / 2) * 35 - speed <=
-          screen.position.y - (screenHeight * 35) / 2
-        ) {
-          this.enemies.splice(index, 1);
-          removeObject3D(enemy);
-          removeObject3D(this.gameManager.hearts.pop());
-        } else {
-          enemy.translateY(-enemy.height * 2);
-        }
-      });
+        });
+      } catch (error) {}
     };
 
     this.updateGame = () => {

@@ -12,15 +12,18 @@ export default class Screen extends THREE.Group {
   addParts() {
     this.createScreen();
     this.changeScreenState = (arcadeState) => {
+      console.log(this.screenState);
       if (this.screenState === "game") {
+        console.log("hallo");
         this.traverse((child) => {
           if (child.name === "spaceInvadersScreen") {
             removeObject3D(child);
           }
         });
-        console.log(arcadeState);
-        arcadeState.inGame = false;
+
         this.createScreen();
+        arcadeState.inGame = false;
+        console.log(this.screenState);
       } else {
         this.traverse((child) => {
           if (child.name === "DVDScreen") {
@@ -29,6 +32,7 @@ export default class Screen extends THREE.Group {
         });
         arcadeState.inGame = true;
         this.createGame();
+        console.log(this.screenState);
       }
     };
   }

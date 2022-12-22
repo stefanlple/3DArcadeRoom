@@ -107,7 +107,6 @@ function main() {
     const player = spaceInvadersGame.children[0].children[0];
     switch (keyCode) {
       case 74: //Button J
-        console.log(arcade.state.inGame);
         if (arcade.state.inGame) {
           if (button2Pressed === false) {
             button2.tweenAnimation1.start(); //Button J
@@ -121,31 +120,41 @@ function main() {
         }
         break;
       case 75: //Button K
-        if (button3Pressed === false) {
-          button3.tweenAnimation1.start(); //Button K
-          button3Pressed = true;
-          spaceInvadersGame.shootTwo(
-            spaceInvadersGame,
-            player.position.y,
-            player.position.z
-          );
+        if (arcade.state.inGame) {
+          if (button3Pressed === false) {
+            button3.tweenAnimation1.start(); //Button K
+            button3Pressed = true;
+            spaceInvadersGame.shootTwo(
+              spaceInvadersGame,
+              player.position.y,
+              player.position.z
+            );
+          }
         }
         break;
       case 87: //Button W
-        joystick.tweenAnimation("W").start(); // Button W
-        player.move("up", speed);
+        if (arcade.state.inGame) {
+          joystick.tweenAnimation("W").start(); // Button W
+          player.move("up", speed);
+        }
         break;
       case 65: //Button A
-        joystick.tweenAnimation("A").start(); // Button A
-        player.move("left", speed);
+        if (arcade.state.inGame) {
+          joystick.tweenAnimation("A").start(); // Button A
+          player.move("left", speed);
+        }
         break;
       case 83: //Button S
-        joystick.tweenAnimation("S").start(); // Button S
-        player.move("down", speed);
+        if (arcade.state.inGame) {
+          joystick.tweenAnimation("S").start(); // Button S
+          player.move("down", speed);
+        }
         break;
       case 68: //Button D
-        joystick.tweenAnimation("D").start(); // Button D
-        player.move("right", speed);
+        if (arcade.state.inGame) {
+          joystick.tweenAnimation("D").start(); // Button D
+          player.move("right", speed);
+        }
         break;
     }
   };
@@ -154,12 +163,17 @@ function main() {
     let keyCode = which;
     switch (keyCode) {
       case 74: //Button J
-        button2.tweenAnimation2.start(); //Button J
-        button2Pressed = false;
+        if (arcade.state.inGame) {
+          button2.tweenAnimation2.start(); //Button J
+          button2Pressed = false;
+        }
         break;
+
       case 75: //Button K
-        button3.tweenAnimation2.start(); //Button K
-        button3Pressed = false;
+        if (arcade.state.inGame) {
+          button3.tweenAnimation2.start(); //Button K
+          button3Pressed = false;
+        }
         break;
     }
   };
@@ -170,12 +184,14 @@ function main() {
   const clock = new THREE.Clock();
   const stats = new Stats();
   document.body.appendChild(stats.dom);
-  console.log(window.camera.position);
+
+  let heartsHitsZero = false;
   function mainLoop() {
     stats.begin();
     const delta = clock.getDelta();
 
     arcade.pedalAnimation(arcade);
+    console.log(arcade.state.inGame);
     //game
     if (arcade.state.inGame) {
       screen.traverse((child) => {
@@ -187,15 +203,15 @@ function main() {
         spaceInvadersGame.spawnEnemiesInterval = 0;
       }
       spaceInvadersGame.updateGame();
-      if (!spaceInvadersGame.gameManager.hearts.length) {
-        cameraObject.animations.orbit(2000, () => {
-          arcade.children[9].changeScreenState(arcade.state);
-        });
-        arcade.state.inGame = false;
-        console.log(window.camera.position);
+
+      if (!spaceInvadersGame.gameManager.hearts.length && !heartsHitsZero) {
+        cameraObject.animations.orbit(
+          2000,
+          arcade.children[9].changeScreenState(arcade.state)
+        );
+        heartsHitsZero = true;
       }
     }
-
     TWEEN.update();
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);

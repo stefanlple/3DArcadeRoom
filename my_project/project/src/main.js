@@ -190,7 +190,6 @@ function main() {
     const delta = clock.getDelta();
 
     arcade.pedalAnimation(arcade);
-    console.log(arcade.state.inGame);
     //game
     if (arcade.state.inGame) {
       screen.traverse((child) => {

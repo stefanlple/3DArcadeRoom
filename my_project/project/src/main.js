@@ -49,12 +49,11 @@ function main() {
       arcade.children[9].position.z
     )
   );
-  console.log(window.camera.quaternion); */
+ */
 
   const camera = new Camera();
   room.add(camera);
   camera.instanciate(window);
-  console.log(window.camera.quaternion);
 
   //window states
   /* window.camera = new THREE.PerspectiveCamera(
@@ -77,9 +76,9 @@ function main() {
   //Animations onKeyDown
   const joystick = arcade.children[3];
   const screen = arcade.children[9];
-  const player = screen.children[0]?.children[0];
   const button2 = arcade.children[1];
   const button3 = arcade.children[2];
+  let spaceInvadersGame;
 
   let button2Pressed = false;
   let button3Pressed = false;
@@ -87,25 +86,34 @@ function main() {
   const onDocumentKeyDown = ({ which }) => {
     let keyCode = which;
     const speed = 0.615 * 2;
+    const player = spaceInvadersGame.children[0].children[0];
+    console.log(spaceInvadersGame.children);
     switch (keyCode) {
       case 74: //Button J
-        if (button2Pressed === false) {
-          button2.tweenAnimation1.start(); //Button J
-          button2Pressed = true;
-          screen.shootOne(screen, player.position.y, player.position.z);
+        console.log(arcade.state.inGame);
+        if (arcade.state.inGame) {
+          if (button2Pressed === false) {
+            button2.tweenAnimation1.start(); //Button J
+            button2Pressed = true;
+            spaceInvadersGame.shootOne(
+              spaceInvadersGame,
+              player.position.y,
+              player.position.z
+            );
+          }
         }
         break;
       case 75: //Button K
         if (button3Pressed === false) {
           button3.tweenAnimation1.start(); //Button K
           button3Pressed = true;
-          screen.shootTwo(screen, player.position.y, player.position.z);
+          spaceInvadersGame.shootTwo(
+            spaceInvadersGame,
+            player.position.y,
+            player.position.z
+          );
         }
         break;
-      /* case 13: //Button Enter
-        cylinderBody.tweenAnimation.start();
-        arcade.children[0].allRectLightTo100();
-        break; */
       case 87: //Button W
         joystick.tweenAnimation("W").start(); // Button W
         player.move("up", speed);
@@ -152,13 +160,19 @@ function main() {
 
     arcade.pedalAnimation(arcade);
 
+    console.log(spaceInvadersGame);
     //game
-    if (screen) screen.spawnEnemiesInterval++;
-    if (screen.spawnEnemiesInterval === 150) {
-      screen.spawnEnemy(1, 1);
-      screen.spawnEnemiesInterval = 0;
+    if (arcade.state.inGame) {
+      screen.traverse((child) => {
+        if (child.name == "spaceInvadersScreen") spaceInvadersGame = child;
+      });
+      if (spaceInvadersGame) spaceInvadersGame.spawnEnemiesInterval++;
+      if (spaceInvadersGame.spawnEnemiesInterval === 150) {
+        spaceInvadersGame.spawnEnemy(1, 1);
+        spaceInvadersGame.spawnEnemiesInterval = 0;
+      }
+      spaceInvadersGame.updateGame();
     }
-    //screen.updateGame();
 
     TWEEN.update();
     window.renderer.render(window.scene, window.camera);

@@ -62,8 +62,6 @@ export default class Camera extends THREE.Group {
           }
         });
 
-        console.log(arcadeScreen);
-
         new TWEEN.Tween(window.camera)
           .to(
             {

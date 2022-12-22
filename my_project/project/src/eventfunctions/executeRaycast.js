@@ -24,9 +24,9 @@ export function executeRaycast() {
       corpus.allRectLightTo100();
     }
 
-    if (arcade && arcade.state.powerOn === true) {
+    if (arcade && arcade.state.powerOn && !arcade.state.inGame) {
       camera.animations.threeJSArcade(2000, () => {
-        arcade.children[9].changeScreenState();
+        arcade.children[9].changeScreenState(arcade.state);
       });
     }
     //console.log(firstHit);

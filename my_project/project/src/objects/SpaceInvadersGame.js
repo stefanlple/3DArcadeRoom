@@ -10,6 +10,7 @@ export default class SpaceInvadersGame extends THREE.Group {
     super();
 
     this.name = "spaceInvaders";
+    this.heartsHitZero = false;
     this.gameManager = {
       score: 0,
       hearts: [], //starts of with 3

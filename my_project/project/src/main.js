@@ -204,13 +204,13 @@ function main() {
 
       if (
         !spaceInvadersGame.gameManager.hearts.length &&
-        !arcade.heartsHitZero
+        !spaceInvadersGame.heartsHitZero
       ) {
         cameraObject.animations.orbit(
           2000,
           arcade.children[9].changeScreenState(arcade.state)
         );
-        arcade.heartsHitsZero = true;
+        spaceInvadersGame.heartsHitsZero = true;
       }
     }
     TWEEN.update();

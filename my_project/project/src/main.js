@@ -185,7 +185,6 @@ function main() {
   const stats = new Stats();
   document.body.appendChild(stats.dom);
 
-  let heartsHitsZero = false;
   function mainLoop() {
     stats.begin();
     const delta = clock.getDelta();
@@ -204,12 +203,15 @@ function main() {
       }
       spaceInvadersGame.updateGame();
 
-      if (!spaceInvadersGame.gameManager.hearts.length && !heartsHitsZero) {
+      if (
+        !spaceInvadersGame.gameManager.hearts.length &&
+        !arcade.heartsHitZero
+      ) {
         cameraObject.animations.orbit(
           2000,
           arcade.children[9].changeScreenState(arcade.state)
         );
-        heartsHitsZero = true;
+        arcade.heartsHitsZero = true;
       }
     }
     TWEEN.update();

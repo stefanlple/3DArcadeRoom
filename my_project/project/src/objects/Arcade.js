@@ -16,6 +16,7 @@ export default class Arcade extends THREE.Group {
       inGame: false,
     };
     this.addParts();
+    this.heartsHitZero = false;
   }
 
   addParts() {

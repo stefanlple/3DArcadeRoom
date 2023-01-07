@@ -20,7 +20,7 @@ function main() {
   window.scene.name = "scene";
 
   const arcade = new Arcade();
-  arcade.translateX(100);
+  arcade.position.set(100, 0, 0);
   window.scene.add(arcade);
 
   const blenderArcade = new BlenderArcade();

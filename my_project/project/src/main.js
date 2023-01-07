@@ -36,57 +36,30 @@ function main() {
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
-  /*   window.camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  window.camera.position.set(
-    arcade.children[9].position.x - 62.475,
-    arcade.children[9].position.y + 11.9091,
-    0
-  );
-  window.camera.lookAt(
-    new THREE.Vector3(
-      arcade.children[9].position.x,
-      arcade.children[9].position.y,
-      arcade.children[9].position.z
-    )
-  );
- */
-
   const camera = new Camera();
   room.add(camera);
   camera.instanciate(window);
-
-  //window states
-  /* window.camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1500
-  );
-  window.camera.position.set(-250, 200, 250);
-
-  const orbitControls = new CONTROLS.OrbitControls(
-    window.camera,
-    window.renderer.domElement
-  );
-  orbitControls.target = new THREE.Vector3(40, 0, -40);
-  orbitControls.enableDamping = true;
-  orbitControls.rotateSpeed = 1.2;
-  orbitControls.zoomSpeed = 0.8;
-  orbitControls.maxPolarAngle = Math.PI / 2.1;
-
-  orbitControls.update();
-  console.log(camera.quaternion); */
 
   //Animations onKeyDown
   const joystick = arcade.children[3];
   const screen = arcade.children[9];
   const button2 = arcade.children[1];
   const button3 = arcade.children[2];
+  let button2Pressed = false;
+  let button3Pressed = false;
+
+  let blenderJoystick;
+  let blenderScreen = arcade.children[9];
+  let blenderButton2;
+  let blenderButton3;
+  let blenderButton2Pressed = false;
+  let blenderButton3Pressed = false;
+  setTimeout(() => {
+    blenderJoystick = blenderArcade.children[0]?.children[0];
+    blenderButton2 = blenderArcade.children[0]?.children[1];
+    blenderButton3 = blenderArcade.children[0]?.children[2];
+    console.log(blenderArcade.children[0]);
+  }, 1000);
 
   let cameraObject;
   //find camera
@@ -103,17 +76,18 @@ function main() {
 
   let spaceInvadersGame;
 
-  let button2Pressed = false;
-  let button3Pressed = false;
-
   const onDocumentKeyDown = ({ which }) => {
     let keyCode = which;
     const speed = 0.615 * 2;
-    const player = spaceInvadersGame.children[0].children[0];
+    const player = spaceInvadersGame?.children[0]?.children[0];
     switch (keyCode) {
       case 74: //Button J
+        if (!blenderButton2Pressed) {
+          blenderButton2.tweenAnimation1.start();
+          blenderButton2Pressed = true;
+        }
         if (arcade.state.inGame) {
-          if (button2Pressed === false) {
+          if (!button2Pressed) {
             button2.tweenAnimation1.start(); //Button J
             button2Pressed = true;
             spaceInvadersGame.shootOne(
@@ -125,6 +99,10 @@ function main() {
         }
         break;
       case 75: //Button K
+        if (!blenderButton3Pressed) {
+          blenderButton3.tweenAnimation1.start();
+          blenderButton3Pressed = true;
+        }
         if (arcade.state.inGame) {
           if (button3Pressed === false) {
             button3.tweenAnimation1.start(); //Button K
@@ -138,24 +116,28 @@ function main() {
         }
         break;
       case 87: //Button W
+        blenderJoystick.tweenAnimation(blenderJoystick, "W").start();
         if (arcade.state.inGame) {
           joystick.tweenAnimation("W").start(); // Button W
           player.move("up", speed);
         }
         break;
       case 65: //Button A
+        blenderJoystick.tweenAnimation(blenderJoystick, "A").start();
         if (arcade.state.inGame) {
           joystick.tweenAnimation("A").start(); // Button A
           player.move("left", speed);
         }
         break;
       case 83: //Button S
+        blenderJoystick.tweenAnimation(blenderJoystick, "S").start();
         if (arcade.state.inGame) {
           joystick.tweenAnimation("S").start(); // Button S
           player.move("down", speed);
         }
         break;
       case 68: //Button D
+        blenderJoystick.tweenAnimation(blenderJoystick, "D").start();
         if (arcade.state.inGame) {
           joystick.tweenAnimation("D").start(); // Button D
           player.move("right", speed);
@@ -168,6 +150,8 @@ function main() {
     let keyCode = which;
     switch (keyCode) {
       case 74: //Button J
+        blenderButton2.tweenAnimation2.start();
+        blenderButton2Pressed = false;
         if (arcade.state.inGame) {
           button2.tweenAnimation2.start(); //Button J
           button2Pressed = false;
@@ -175,6 +159,8 @@ function main() {
         break;
 
       case 75: //Button K
+        blenderButton3.tweenAnimation2.start();
+        blenderButton3Pressed = false;
         if (arcade.state.inGame) {
           button3.tweenAnimation2.start(); //Button K
           button3Pressed = false;
@@ -193,7 +179,8 @@ function main() {
   function mainLoop() {
     stats.begin();
     const delta = clock.getDelta();
-
+    /* console.log(blenderArcade.children[0]); */
+    /* console.log(blenderJoystick); */
     arcade.pedalAnimation(arcade);
     //game
     if (arcade.state.inGame) {

@@ -10,7 +10,6 @@ export default class Arcade extends THREE.Group {
     super();
     this.name = "arcade";
     this.rectLights = [];
-    this.animations = [];
     this.state = {
       powerOn: false,
       inGame: false,
@@ -289,6 +288,7 @@ export default class Arcade extends THREE.Group {
       }
       return modArray;
     }
+
     //corpus
     const corpusGeometry = new THREE.BufferGeometry();
     corpusGeometry.setAttribute(
@@ -368,6 +368,7 @@ export default class Arcade extends THREE.Group {
     //button3 Animation;
     button3.tweenAnimation1 = pressedButtonTween(button3);
     button3.tweenAnimation2 = releasedButtonTween(button3);
+
     /*joyStick*/
     /*--------*/
 

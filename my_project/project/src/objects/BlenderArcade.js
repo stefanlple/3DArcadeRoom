@@ -81,6 +81,19 @@ export default class BlenderArcade extends THREE.Group {
           );
       };
 
+      const rotateCylinder = (object) => {
+        return new TWEEN.Tween(object.rotation)
+          .to(
+            new THREE.Vector3(
+              object.rotation.x,
+              object.rotation.y + 18 * Math.PI,
+              object.rotation.z
+            ),
+            10000
+          )
+          .easing(TWEEN.Easing.Cubic.InOut);
+      };
+
       //gltf.scene.children.forEach((e) => console.log(""));
       gltf.scene.traverse(function (child) {
         if (child.isMesh) {
@@ -99,6 +112,13 @@ export default class BlenderArcade extends THREE.Group {
 
         if (child.name === "joystick") {
           child.tweenAnimation = toggleJoystickTween;
+        }
+
+        if (child.name === "Cylinder") {
+          console.log(child);
+          child.tweenAnimation = rotateCylinder(child);
+          console.log(child);
+          console.log("done");
         }
 
         thisTelevision.add(gltf.scene);

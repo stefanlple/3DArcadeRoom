@@ -54,11 +54,15 @@ function main() {
   let blenderButton3;
   let blenderButton2Pressed = false;
   let blenderButton3Pressed = false;
+
+  let cylinder;
+
   setTimeout(() => {
     blenderJoystick = blenderArcade.children[0]?.children[0];
     blenderButton2 = blenderArcade.children[0]?.children[1];
     blenderButton3 = blenderArcade.children[0]?.children[2];
-    console.log(blenderArcade.children[0]);
+
+    cylinder = blenderArcade.children[0]?.children[6];
   }, 1000);
 
   let cameraObject;
@@ -82,6 +86,7 @@ function main() {
     const player = spaceInvadersGame?.children[0]?.children[0];
     switch (keyCode) {
       case 74: //Button J
+        cylinder.tweenAnimation.start();
         if (!blenderButton2Pressed) {
           blenderButton2.tweenAnimation1.start();
           blenderButton2Pressed = true;

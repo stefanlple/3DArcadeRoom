@@ -6,6 +6,7 @@ import Stats from "../../../../lib/three.js-r145/examples/jsm/libs/stats.module.
 // Own modules
 import Arcade from "./objects/Arcade.js";
 import Enviroment from "./enviroment/enviroment.js";
+import BlenderArcade from "./objects/BlenderArcade.js";
 
 // Event functions
 import { updateAspectRatio } from "./eventfunctions/updateAspectRatio.js";
@@ -19,7 +20,11 @@ function main() {
   window.scene.name = "scene";
 
   const arcade = new Arcade();
+  arcade.translateX(100);
   window.scene.add(arcade);
+
+  const blenderArcade = new BlenderArcade();
+  window.scene.add(blenderArcade);
 
   const room = new Enviroment();
   window.scene.add(room);

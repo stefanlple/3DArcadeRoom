@@ -18,6 +18,30 @@ export default class BlenderArcade extends THREE.Group {
     };
     this.heartsHitZero = false;
     this.load(this);
+    this.setPedalPositionAnimation;
+  }
+
+  setPedalPositionAnimation(object) {
+    const pedalLeft = object?.children[8];
+    const pedalRight = object?.children[7];
+    const cylinderBody = object?.children[6];
+    console.log("dsfsd");
+    if (pedalLeft && pedalRight) {
+      pedalLeft.position.set(
+        -Math.cos(cylinderBody.rotation.y + 2 * Math.PI) * 35 * 0.345549 -
+          +1.41066 * 35,
+        Math.sin(cylinderBody.rotation.y + 2 * Math.PI) * 35 * 0.345549 +
+          0.459419 * 35,
+        -0.1548315 * 35
+      );
+      pedalRight.position.set(
+        -Math.cos(cylinderBody.rotation.y + Math.PI) * 35 * 0.345549 -
+          +1.41066 * 35,
+        Math.sin(cylinderBody.rotation.y + Math.PI) * 35 * 0.345549 +
+          0.459419 * 35,
+        0.1548315 * 35
+      );
+    }
   }
 
   load(thisTelevision) {
@@ -93,7 +117,7 @@ export default class BlenderArcade extends THREE.Group {
           )
           .easing(TWEEN.Easing.Cubic.InOut);
       };
-
+      console.log(gltf.scene);
       //gltf.scene.children.forEach((e) => console.log(""));
       gltf.scene.traverse(function (child) {
         if (child.isMesh) {
@@ -115,10 +139,7 @@ export default class BlenderArcade extends THREE.Group {
         }
 
         if (child.name === "Cylinder") {
-          console.log(child);
           child.tweenAnimation = rotateCylinder(child);
-          console.log(child);
-          console.log("done");
         }
 
         thisTelevision.add(gltf.scene);

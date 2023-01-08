@@ -186,6 +186,7 @@ function main() {
     const delta = clock.getDelta();
     /* console.log(blenderArcade.children[0]); */
     /* console.log(blenderJoystick); */
+    blenderArcade.setPedalPositionAnimation(blenderArcade.children[0]);
     arcade.pedalAnimation(arcade);
     //game
     if (arcade.state.inGame) {

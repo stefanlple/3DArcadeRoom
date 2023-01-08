@@ -20,10 +20,11 @@ function main() {
   window.scene.name = "scene";
 
   const arcade = new Arcade();
-  arcade.position.set(100, 0, 0);
+  arcade.position.set(100 - 17.5338, 0, 0);
   window.scene.add(arcade);
 
   const blenderArcade = new BlenderArcade();
+  blenderArcade.position.set(100 - 17.5338, 0, 60);
   window.scene.add(blenderArcade);
 
   const room = new Enviroment();
@@ -87,9 +88,6 @@ function main() {
     const player = spaceInvadersGame?.children[0]?.children[0];
     switch (keyCode) {
       case 74: //Button J
-        console.log(blenderArcade.children);
-        blenderArcade.allRectLightTo100();
-        cylinder.tweenAnimation.start();
         if (!blenderButton2Pressed) {
           blenderButton2.tweenAnimation1.start();
           blenderButton2Pressed = true;
@@ -187,8 +185,6 @@ function main() {
   function mainLoop() {
     stats.begin();
     const delta = clock.getDelta();
-    /* console.log(blenderArcade.children[0]); */
-    /* console.log(blenderJoystick); */
     blenderArcade.setPedalPositionAnimation(blenderArcade.children[0]);
     arcade.pedalAnimation(arcade);
     //game

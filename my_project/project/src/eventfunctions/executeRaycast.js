@@ -9,6 +9,7 @@ export function executeRaycast() {
   if (intersects.length > 0) {
     let firstHit = intersects[0].object;
     const arcade = findParentByName(firstHit, "arcade");
+    const blenderArcade = findParentByName(firstHit, "blenderArcade");
     const scene = findParentByName(firstHit, "scene");
     let camera;
     scene.traverse((child) => {
@@ -16,6 +17,7 @@ export function executeRaycast() {
         camera = child;
       }
     });
+    //arcade
     if (arcade && arcade.state.powerOn === false) {
       const cylinder = arcade.children[8];
       const corpus = arcade.children[0];
@@ -28,6 +30,14 @@ export function executeRaycast() {
         arcade.children[9].changeScreenState(arcade.state);
       });
     }
+
+    //blenderArcade
+    if (blenderArcade && blenderArcade.state.powerOn === false) {
+      const cylinder = blenderArcade.children[0]?.children[6];
+      cylinder.tweenAnimation.start();
+      blenderArcade.allRectLightTo100();
+    }
+
     //if (firstHit.name === "arcade") console.log(firstHit);
     /* let firstHit = intersects[0].object;
 

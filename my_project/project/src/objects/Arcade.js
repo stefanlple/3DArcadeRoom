@@ -913,12 +913,8 @@ export default class Arcade extends THREE.Group {
 
     /* screen */
     const screen = new Screen();
-    screen.translateX(-0.515 * 35);
+    screen.translateX(-0.517 * 35);
     screen.translateY(1.85974 * 35);
     this.add(screen);
   }
-
-  updateFunctionalState = () => {
-    console.log("hallo");
-  };
 }

@@ -10,7 +10,7 @@ export default class BlenderArcade extends THREE.Group {
     super();
     this.gltfLoader = new GLTFLoader();
     this.loadingDone = false;
-    this.name = "arcade";
+    this.name = "blenderArcade";
     this.rectLights = [];
     this.state = {
       powerOn: false,
@@ -95,7 +95,6 @@ export default class BlenderArcade extends THREE.Group {
           )
           .easing(TWEEN.Easing.Cubic.InOut);
       };
-      console.log(gltf.scene);
       gltf.scene.traverse(function (child) {
         if (child.isMesh) {
           child.parentTelevision = thisTelevision;
@@ -248,7 +247,7 @@ export default class BlenderArcade extends THREE.Group {
     this.rectLights = [];
     rectLightsProperties.forEach((rectLight) => {
       const rectLight1 = new THREE.RectAreaLight(
-        0xffff00,
+        0xffaa33,
         0.1,
         rectLightsWidth,
         rectLight.height
@@ -278,6 +277,12 @@ export default class BlenderArcade extends THREE.Group {
         await intensityRectLightsTween(item).start();
       }
     };
+
+    /* screen */
+    const screen = new Screen();
+    screen.translateX(-0.517 * 35);
+    screen.translateY(1.85974 * 35);
+    this.add(screen);
   }
 
   setPedalPositionAnimation(object) {

@@ -56,7 +56,7 @@ export default class Camera extends THREE.Group {
       this.animations.threeJSArcade = (duration, finished) => {
         let scene;
         let arcadeScreen;
-
+        let arcade;
         this.traverseAncestors((parent) => {
           if (parent.name === "scene") {
             scene = parent;
@@ -65,6 +65,7 @@ export default class Camera extends THREE.Group {
         scene.traverse((child) => {
           if (child.name === "arcade") {
             arcadeScreen = child.children[9];
+            arcade = child;
           }
         });
 
@@ -72,8 +73,8 @@ export default class Camera extends THREE.Group {
           .to(
             {
               position: new THREE.Vector3(
-                arcadeScreen.position.x - 62.475,
-                arcadeScreen.position.y + 11.9091,
+                arcade.position.x - 80.5,
+                arcade.position.y + 77,
                 0
               ),
               quaternion: new THREE.Quaternion(

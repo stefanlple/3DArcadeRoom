@@ -13,7 +13,7 @@ export default class Enviroment extends THREE.Group {
 
   addParts() {
     //room
-    const planeSize = 240;
+    const planeSize = 200;
     const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
     const planeMaterial = new THREE.MeshStandardMaterial({
       side: THREE.DoubleSide,
@@ -86,10 +86,8 @@ export default class Enviroment extends THREE.Group {
 
     const planeSize1 = 1200;
     const planeGeometry1 = new THREE.PlaneGeometry(planeSize1, planeSize1);
-    const planeMaterial1 = new THREE.MeshStandardMaterial({
+    const planeMaterial1 = new THREE.MeshBasicMaterial({
       color: 0x080808,
-      roughness: 0.9,
-      metalness: 0,
     });
     const floor1 = new THREE.Mesh(planeGeometry1, planeMaterial1);
     floor1.rotation.set(THREE.MathUtils.degToRad(-90), 0, 0);

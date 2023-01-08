@@ -86,6 +86,7 @@ function main() {
     const player = spaceInvadersGame?.children[0]?.children[0];
     switch (keyCode) {
       case 74: //Button J
+        //blenderArcade.allRectLightTo100();
         cylinder.tweenAnimation.start();
         if (!blenderButton2Pressed) {
           blenderButton2.tweenAnimation1.start();

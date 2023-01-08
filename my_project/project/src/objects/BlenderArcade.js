@@ -19,13 +19,169 @@ export default class BlenderArcade extends THREE.Group {
     this.heartsHitZero = false;
     this.load(this);
     this.setPedalPositionAnimation;
+    this.addPart();
+  }
+
+  addPart() {
+    RectAreaLightUniformsLib.init();
+    const rectLightsWidth = (0.099132 * 35) / 3;
+    const rectLightsProperties = [
+      //right side
+      {
+        height: 1.18387 * 35,
+        positionX: -0.865344 * 35 - 0.1,
+        positionY: 0.57849 * 35,
+        positionZ: -0.641495 * 35,
+        rotationAngle: -12.38,
+      },
+      {
+        height: 0.3434 * 35,
+        positionX: -0.990773 * 35 - 0.1,
+        positionY: 1.3286799999999999 * 35,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 0,
+      },
+      {
+        height: 0.409261 * 35,
+        positionX: -0.786144 * 35 - 0.1,
+        positionY: 1.50038 * 35 + 0.1,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 90,
+      },
+      {
+        height: 0.828373 * 35,
+        positionX: -0.5441965 * 35 - 0.1,
+        positionY: 1.9119549999999998 * 35,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 5.17,
+      },
+      {
+        height: 0.328721 * 35,
+        positionX: -0.652325 * 35,
+        positionY: 2.40111 * 35 - 0.1,
+        positionZ: -0.641495 * 35,
+        rotationAngle: -62.24,
+      },
+      {
+        height: 0.297959 * 35 + 0.1,
+        positionX: -0.7886075 * 35 - 0.1,
+        positionY: 2.626355 * 35 + 0.1,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 3.53,
+      },
+      {
+        height: 0.277184 * 35,
+        positionX: -0.6611975 * 35 - 0.1,
+        positionY: 2.847335 * 35 + 0.1,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 58.56,
+      },
+      {
+        height: 1.05104 * 35,
+        positionX: -0.022425000000000028 * 35 - 0.1,
+        positionY: 2.84734 * 35 + 0.1,
+        positionZ: -0.641495 * 35,
+        rotationAngle: 97.91,
+      },
+      //left side
+      {
+        height: 1.18387 * 35,
+        positionX: -0.865344 * 35 - 0.1,
+        positionY: 0.57849 * 35,
+        positionZ: 0.641495 * 35,
+        rotationAngle: -12.38,
+      },
+      {
+        height: 0.3434 * 35,
+        positionX: -0.990773 * 35 - 0.1,
+        positionY: 1.3286799999999999 * 35,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 0,
+      },
+      {
+        height: 0.409261 * 35,
+        positionX: -0.786144 * 35 - 0.1,
+        positionY: 1.50038 * 35 + 0.1,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 90,
+      },
+      {
+        height: 0.828373 * 35,
+        positionX: -0.5441965 * 35 - 0.1,
+        positionY: 1.9119549999999998 * 35,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 5.17,
+      },
+      {
+        height: 0.328721 * 35,
+        positionX: -0.652325 * 35,
+        positionY: 2.40111 * 35 - 0.1,
+        positionZ: 0.641495 * 35,
+        rotationAngle: -62.24,
+      },
+      {
+        height: 0.297959 * 35 + 0.1,
+        positionX: -0.7886075 * 35 - 0.1,
+        positionY: 2.626355 * 35 + 0.1,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 3.53,
+      },
+      {
+        height: 0.277184 * 35,
+        positionX: -0.6611975 * 35 - 0.1,
+        positionY: 2.847335 * 35 + 0.1,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 58.56,
+      },
+      {
+        height: 1.05104 * 35,
+        positionX: -0.022425000000000028 * 35 - 0.1,
+        positionY: 2.84734 * 35 + 0.1,
+        positionZ: 0.641495 * 35,
+        rotationAngle: 97.91,
+      },
+    ];
+
+    this.rectLights = [];
+    rectLightsProperties.forEach((rectLight) => {
+      const rectLight1 = new THREE.RectAreaLight(
+        0xffff00,
+        0.1,
+        rectLightsWidth,
+        rectLight.height
+      );
+      this.add(rectLight1);
+      this.rectLights.push(rectLight1);
+      rectLight1.translateX(rectLight.positionX);
+      rectLight1.translateY(rectLight.positionY);
+      rectLight1.translateZ(rectLight.positionZ);
+      rectLight1.rotateY(Math.PI / 2);
+      rectLight1.rotateX(THREE.MathUtils.degToRad(rectLight.rotationAngle));
+      rectLight1.add(new RectAreaLightHelper(rectLight1));
+    });
+
+    const intensityRectLightsTween = (object) => {
+      return new TWEEN.Tween(object)
+        .to({ intensity: 1 }, 9000)
+        .easing(TWEEN.Easing.Sinusoidal.In)
+        .chain(new TWEEN.Tween(object).to({ intensity: 40 }, 1000))
+        .onComplete(() => {
+          this.state.powerOn = true;
+        });
+    };
+
+    this.allRectLightTo100 = async () => {
+      for (const item of this.rectLights) {
+        await intensityRectLightsTween(item).start();
+      }
+    };
   }
 
   setPedalPositionAnimation(object) {
     const pedalLeft = object?.children[8];
     const pedalRight = object?.children[7];
     const cylinderBody = object?.children[6];
-    console.log("dsfsd");
+    //console.log("dsfsd");
     if (pedalLeft && pedalRight) {
       pedalLeft.position.set(
         -Math.cos(cylinderBody.rotation.y + 2 * Math.PI) * 35 * 0.345549 -

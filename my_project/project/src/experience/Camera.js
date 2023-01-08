@@ -68,14 +68,13 @@ export default class Camera extends THREE.Group {
             arcade = child;
           }
         });
-
         new TWEEN.Tween(window.camera)
           .to(
             {
               position: new THREE.Vector3(
                 arcade.position.x - 80.5,
                 arcade.position.y + 77,
-                0
+                arcade.position.z
               ),
               quaternion: new THREE.Quaternion(
                 -0.06649763679664024,
@@ -91,7 +90,42 @@ export default class Camera extends THREE.Group {
         this.disableOrbit();
       };
 
-      this.animations.blenderArcade = () => {};
+      this.animations.blenderArcade = (duration, finished) => {
+        let scene;
+        let blenderArcadeScreen;
+        let blenderArcade;
+        this.traverseAncestors((parent) => {
+          if (parent.name === "scene") {
+            scene = parent;
+          }
+        });
+        scene.traverse((child) => {
+          if (child.name === "blenderArcade") {
+            blenderArcadeScreen = child.children[17];
+            blenderArcade = child;
+          }
+        });
+        new TWEEN.Tween(window.camera)
+          .to(
+            {
+              position: new THREE.Vector3(
+                blenderArcade.position.x - 80.5,
+                blenderArcade.position.y + 77,
+                blenderArcade.position.z
+              ),
+              quaternion: new THREE.Quaternion(
+                -0.06649763679664024,
+                -0.7039730565159878,
+                -0.06649763679664024,
+                0.7039730565159877
+              ),
+            },
+            duration
+          )
+          .onComplete(finished)
+          .start();
+        this.disableOrbit();
+      };
     };
 
     this.update = () => {

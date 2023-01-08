@@ -50,7 +50,7 @@ function main() {
   let button3Pressed = false;
 
   let blenderJoystick;
-  let blenderScreen = arcade.children[9];
+  let blenderScreen;
   let blenderButton2;
   let blenderButton3;
   let blenderButton2Pressed = false;
@@ -60,11 +60,11 @@ function main() {
 
   setTimeout(() => {
     blenderArcade.children.unshift(blenderArcade.children.pop());
-
     blenderJoystick = blenderArcade.children[0]?.children[0];
     blenderButton2 = blenderArcade.children[0]?.children[1];
     blenderButton3 = blenderArcade.children[0]?.children[2];
     cylinder = blenderArcade.children[0]?.children[6];
+    blenderScreen = blenderArcade.children[0]?.children[10];
   }, 1000);
 
   let cameraObject;
@@ -81,16 +81,26 @@ function main() {
   });
 
   let spaceInvadersGame;
+  let blenderSpaceInvadersGame;
 
   const onDocumentKeyDown = ({ which }) => {
     let keyCode = which;
     const speed = 0.615 * 2;
     const player = spaceInvadersGame?.children[0]?.children[0];
+    const blenderArcadePlayer =
+      blenderSpaceInvadersGame?.children[0]?.children[0];
     switch (keyCode) {
       case 74: //Button J
-        if (!blenderButton2Pressed) {
-          blenderButton2.tweenAnimation1.start();
-          blenderButton2Pressed = true;
+        if (blenderArcade.state.inGame) {
+          if (!blenderButton2Pressed) {
+            blenderButton2.tweenAnimation1.start();
+            blenderButton2Pressed = true;
+            blenderSpaceInvadersGame.shootOne(
+              blenderSpaceInvadersGame,
+              blenderArcadePlayer.position.y,
+              blenderArcadePlayer.position.z
+            );
+          }
         }
         if (arcade.state.inGame) {
           if (!button2Pressed) {
@@ -105,9 +115,16 @@ function main() {
         }
         break;
       case 75: //Button K
-        if (!blenderButton3Pressed) {
-          blenderButton3.tweenAnimation1.start();
-          blenderButton3Pressed = true;
+        if (blenderArcade.state.inGame) {
+          if (!blenderButton3Pressed) {
+            blenderButton3.tweenAnimation1.start();
+            blenderButton3Pressed = true;
+            blenderSpaceInvadersGame.shootTwo(
+              blenderSpaceInvadersGame,
+              blenderArcadePlayer.position.y,
+              blenderArcadePlayer.position.z
+            );
+          }
         }
         if (arcade.state.inGame) {
           if (button3Pressed === false) {
@@ -122,28 +139,40 @@ function main() {
         }
         break;
       case 87: //Button W
-        blenderJoystick.tweenAnimation(blenderJoystick, "W").start();
+        if (blenderArcade.state.inGame) {
+          blenderJoystick.tweenAnimation(blenderJoystick, "W").start();
+          blenderArcadePlayer.move("up", speed);
+        }
         if (arcade.state.inGame) {
           joystick.tweenAnimation("W").start(); // Button W
           player.move("up", speed);
         }
         break;
       case 65: //Button A
-        blenderJoystick.tweenAnimation(blenderJoystick, "A").start();
+        if (blenderArcade.state.inGame) {
+          blenderJoystick.tweenAnimation(blenderJoystick, "A").start();
+          blenderArcadePlayer.move("left", speed);
+        }
         if (arcade.state.inGame) {
           joystick.tweenAnimation("A").start(); // Button A
           player.move("left", speed);
         }
         break;
       case 83: //Button S
-        blenderJoystick.tweenAnimation(blenderJoystick, "S").start();
+        if (blenderArcade.state.inGame) {
+          blenderJoystick.tweenAnimation(blenderJoystick, "S").start();
+          blenderArcadePlayer.move("down", speed);
+        }
         if (arcade.state.inGame) {
           joystick.tweenAnimation("S").start(); // Button S
           player.move("down", speed);
         }
         break;
       case 68: //Button D
-        blenderJoystick.tweenAnimation(blenderJoystick, "D").start();
+        if (blenderArcade.state.inGame) {
+          blenderJoystick.tweenAnimation(blenderJoystick, "D").start();
+          blenderArcadePlayer.move("right", speed);
+        }
         if (arcade.state.inGame) {
           joystick.tweenAnimation("D").start(); // Button D
           player.move("right", speed);
@@ -156,8 +185,10 @@ function main() {
     let keyCode = which;
     switch (keyCode) {
       case 74: //Button J
-        blenderButton2.tweenAnimation2.start();
-        blenderButton2Pressed = false;
+        if (blenderArcade.state.inGame) {
+          blenderButton2.tweenAnimation2.start();
+          blenderButton2Pressed = false;
+        }
         if (arcade.state.inGame) {
           button2.tweenAnimation2.start(); //Button J
           button2Pressed = false;
@@ -165,8 +196,10 @@ function main() {
         break;
 
       case 75: //Button K
-        blenderButton3.tweenAnimation2.start();
-        blenderButton3Pressed = false;
+        if (blenderArcade.state.inGame) {
+          blenderButton3.tweenAnimation2.start();
+          blenderButton3Pressed = false;
+        }
         if (arcade.state.inGame) {
           button3.tweenAnimation2.start(); //Button K
           button3Pressed = false;
@@ -187,11 +220,12 @@ function main() {
     const delta = clock.getDelta();
     blenderArcade.setPedalPositionAnimation(blenderArcade.children[0]);
     arcade.pedalAnimation(arcade);
-    //game
+    //arcade game
     if (arcade.state.inGame) {
       screen.traverse((child) => {
         if (child.name == "spaceInvadersScreen") spaceInvadersGame = child;
       });
+
       if (spaceInvadersGame) spaceInvadersGame.spawnEnemiesInterval++;
       if (spaceInvadersGame.spawnEnemiesInterval === 150) {
         spaceInvadersGame.spawnEnemy(1, 1);
@@ -210,6 +244,32 @@ function main() {
         spaceInvadersGame.heartsHitsZero = true;
       }
     }
+    //blender arcade game
+    if (blenderArcade.state.inGame) {
+      blenderScreen.traverse((child) => {
+        if (child.name == "spaceInvadersScreen")
+          blenderSpaceInvadersGame = child;
+      });
+      if (blenderSpaceInvadersGame)
+        blenderSpaceInvadersGame.spawnEnemiesInterval++;
+      if (blenderSpaceInvadersGame.spawnEnemiesInterval === 150) {
+        blenderSpaceInvadersGame.spawnEnemy(1, 1);
+        blenderSpaceInvadersGame.spawnEnemiesInterval = 0;
+      }
+      blenderSpaceInvadersGame.updateGame();
+
+      if (
+        !blenderSpaceInvadersGame.gameManager.hearts.length &&
+        !blenderSpaceInvadersGame.heartsHitZero
+      ) {
+        cameraObject.animations.orbit(
+          2000,
+          blenderScreen.changeScreenState(blenderArcade.state)
+        );
+        blenderSpaceInvadersGame.heartsHitsZero = true;
+      }
+    }
+
     TWEEN.update();
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);

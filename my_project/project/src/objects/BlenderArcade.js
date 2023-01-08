@@ -121,6 +121,11 @@ export default class BlenderArcade extends THREE.Group {
         thisTelevision.add(gltf.scene);
         thisTelevision.loadingDone = true;
       });
+      /* screen */
+      const screen = new Screen();
+      screen.translateX(-0.517 * 35);
+      screen.translateY(1.85974 * 35);
+      gltf.scene.add(screen);
     });
   }
 
@@ -245,6 +250,7 @@ export default class BlenderArcade extends THREE.Group {
     ];
 
     this.rectLights = [];
+
     rectLightsProperties.forEach((rectLight) => {
       const rectLight1 = new THREE.RectAreaLight(
         0xffaa33,
@@ -277,12 +283,6 @@ export default class BlenderArcade extends THREE.Group {
         await intensityRectLightsTween(item).start();
       }
     };
-
-    /* screen */
-    const screen = new Screen();
-    screen.translateX(-0.517 * 35);
-    screen.translateY(1.85974 * 35);
-    this.add(screen);
   }
 
   setPedalPositionAnimation(object) {

@@ -183,13 +183,13 @@ export default class BlenderArcade extends THREE.Group {
         positionZ: -0.641495 * 35,
         rotationAngle: 58.56,
       },
-      {
+      /* {
         height: 1.05104 * 35,
         positionX: -0.022425000000000028 * 35 - 0.1,
         positionY: 2.84734 * 35 + 0.1,
         positionZ: -0.641495 * 35,
         rotationAngle: 97.91,
-      },
+      }, */
       //left side
       {
         height: 1.18387 * 35,
@@ -240,13 +240,13 @@ export default class BlenderArcade extends THREE.Group {
         positionZ: 0.641495 * 35,
         rotationAngle: 58.56,
       },
-      {
+      /* {
         height: 1.05104 * 35,
         positionX: -0.022425000000000028 * 35 - 0.1,
         positionY: 2.84734 * 35 + 0.1,
         positionZ: 0.641495 * 35,
         rotationAngle: 97.91,
-      },
+      }, */
     ];
 
     this.rectLights = [];

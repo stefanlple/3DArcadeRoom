@@ -7,6 +7,7 @@ import Stats from "../../../../lib/three.js-r145/examples/jsm/libs/stats.module.
 import Arcade from "./objects/Arcade.js";
 import Enviroment from "./enviroment/enviroment.js";
 import BlenderArcade from "./objects/BlenderArcade.js";
+import Physics from "./physics/Physics.js";
 
 // Event functions
 import { updateAspectRatio } from "./eventfunctions/updateAspectRatio.js";
@@ -18,6 +19,9 @@ function main() {
   window.scene = new THREE.Scene();
   window.scene.add(new THREE.AxesHelper(200));
   window.scene.name = "scene";
+
+  window.physics = new Physics();
+  window.physics.setup(0, -200, 0, 1 / 240, true);
 
   const arcade = new Arcade();
   arcade.position.set(100 - 17.5338, 0, 0);
@@ -271,6 +275,7 @@ function main() {
     }
 
     TWEEN.update();
+    window.physics.update(delta);
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);
     stats.end();

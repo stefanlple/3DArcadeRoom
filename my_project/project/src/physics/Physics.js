@@ -1,10 +1,8 @@
-import * as CANNON from '../../../../lib/cannon-es-0.19.0/dist/cannon-es.js';
-import CannonDebugger from '../../../../lib/cannon-es-debugger-0.1.4/dist/cannon-es-debugger.js';
+import * as CANNON from "../../../../lib/cannon-es-0.20.0/dist/cannon-es.js";
+import CannonDebugger from "../../../../lib/cannon-es-debugger-1.0.0/dist/cannon-es-debugger.js";
 
 export default class Physics {
-
   constructor(debugRendering = false) {
-
     this.world = new CANNON.World();
 
     this.stepSize = 0;
@@ -18,7 +16,6 @@ export default class Physics {
   }
 
   setup(gravityX, gravityY, gravityZ, stepSize, addFloor) {
-
     this.world.gravity.set(gravityX, gravityY, gravityZ);
     this.world.broadphase = new CANNON.NaiveBroadphase();
     this.stepSize = stepSize;
@@ -26,7 +23,7 @@ export default class Physics {
     if (addFloor) {
       let floor = new CANNON.Body({
         shape: new CANNON.Plane(),
-        mass: 0
+        mass: 0,
       });
       floor.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
       this.world.addBody(floor);
@@ -34,13 +31,11 @@ export default class Physics {
   }
 
   addPair(object, body) {
-
     this.objects.push(object);
     this.bodies.push(body);
   }
 
   update(delta) {
-
     // Step physics world forward
     this.timeToGo += delta;
     while (this.timeToGo >= this.stepSize) {
@@ -58,10 +53,19 @@ export default class Physics {
     return this.world;
   }
 
-  addBox(object, mass, dimX, dimY, dimZ, offsetX = 0, offsetY = 0, offsetZ = 0, sleeping = false) {
-
+  addBox(
+    object,
+    mass,
+    dimX,
+    dimY,
+    dimZ,
+    offsetX = 0,
+    offsetY = 0,
+    offsetZ = 0,
+    sleeping = false
+  ) {
     // Create body with specified mass
-    const body = new CANNON.Body({mass: mass});
+    const body = new CANNON.Body({ mass: mass });
 
     // Add shape (~collider) to physical body
     const dimension = new CANNON.Vec3(dimX / 2, dimY / 2, dimZ / 2);
@@ -84,17 +88,36 @@ export default class Physics {
     this.addPair(object, body);
   }
 
-  addCylinder(object, mass, upperRadius, lowerRadius, height, segments,
-              offsetX = 0, offsetY = 0, offsetZ = 0,
-              eulerX = 0, eulerY = 0, eulerZ = 0,
-              sleeping = false) {
-
+  addCylinder(
+    object,
+    mass,
+    upperRadius,
+    lowerRadius,
+    height,
+    segments,
+    offsetX = 0,
+    offsetY = 0,
+    offsetZ = 0,
+    eulerX = 0,
+    eulerY = 0,
+    eulerZ = 0,
+    sleeping = false
+  ) {
     // Create body with specified mass
-    const body = new CANNON.Body({mass: mass});
+    const body = new CANNON.Body({ mass: mass });
 
     const offset = new CANNON.Vec3(offsetX, offsetY, offsetZ);
-    const rotation = new CANNON.Quaternion().setFromEuler(eulerX, eulerY, eulerZ, "XYZ");
-    body.addShape(new CANNON.Cylinder(upperRadius, lowerRadius, height, segments), offset, rotation);
+    const rotation = new CANNON.Quaternion().setFromEuler(
+      eulerX,
+      eulerY,
+      eulerZ,
+      "XYZ"
+    );
+    body.addShape(
+      new CANNON.Cylinder(upperRadius, lowerRadius, height, segments),
+      offset,
+      rotation
+    );
 
     // Copy initial transformation from visual object
     body.position.copy(object.position);
@@ -113,16 +136,19 @@ export default class Physics {
   }
 
   addConvexPolyhedron(object, mass, vertices, faces, sleeping = false) {
-
     // Create body with specified mass
-    const body = new CANNON.Body({mass: mass});
+    const body = new CANNON.Body({ mass: mass });
 
     // Add shape (~collider) to physical body
     const cannonVertices = [];
     vertices.forEach(function (position) {
-      cannonVertices.push(new CANNON.Vec3(position[0], position[1], position[2]));
+      cannonVertices.push(
+        new CANNON.Vec3(position[0], position[1], position[2])
+      );
     });
-    body.addShape(new CANNON.ConvexPolyhedron({vertices: cannonVertices, faces: faces}));
+    body.addShape(
+      new CANNON.ConvexPolyhedron({ vertices: cannonVertices, faces: faces })
+    );
 
     // Copy initial transformation from visual object
     body.position.copy(object.position);
@@ -141,9 +167,8 @@ export default class Physics {
   }
 
   addSphereWithVelocity(object, mass, radius, velocityVector) {
-
     // Create body with specified mass
-    const body = new CANNON.Body({mass: mass});
+    const body = new CANNON.Body({ mass: mass });
 
     // Add shape (~collider) to physical body
     body.addShape(new CANNON.Sphere(radius));

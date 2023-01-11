@@ -2,12 +2,14 @@ import * as THREE from "three";
 import * as DATGUI from "datgui";
 import * as CONTROLS from "controls";
 import { Reflector } from "../../../../lib/three.js-r145/examples/jsm/objects/Reflector.js";
+import { FontLoader } from "../../../../lib/three.js-r145/examples/jsm/loaders/FontLoader.js";
+import { TextGeometry } from "../../../../lib/three.js-r145/examples/jsm/geometries/TextGeometry.js";
 
 export default class Enviroment extends THREE.Group {
   constructor() {
     super();
 
-    this.animations = [];
+    this.ballList = [];
     this.addParts();
   }
 
@@ -95,6 +97,55 @@ export default class Enviroment extends THREE.Group {
     floor1.receiveShadow = true;
     this.add(floor1);
 
+    const nameTextLoader = new FontLoader();
+
+    nameTextLoader.load(
+      "../../../../lib/three.js-r145/examples/fonts/helvetiker_bold.typeface.json",
+      (fonts) => {
+        const nameTextGeometry = new TextGeometry("STEFAN LE", {
+          height: 2,
+          size: 18,
+          font: fonts,
+        });
+        const nameTextMaterial = new THREE.MeshPhongMaterial({
+          color: 0xffc000,
+          emissive: 0xffc000,
+        });
+        const textMesh = new THREE.Mesh(nameTextGeometry, nameTextMaterial);
+        this.add(textMesh);
+        textMesh.translateY((planeSize / 5) * 1.6);
+        textMesh.translateZ(-planeSize / 2 + 1);
+        textMesh.translateX(-70);
+      }
+    );
+
+    const leftPlaneBallLight = [1];
+    leftPlaneBallLight.forEach((e) => {
+      const ballGeometry = new THREE.SphereGeometry(1.5);
+      const ballMaterial = new THREE.MeshPhongMaterial({
+        color: 0xffc000,
+        emissive: 0xffc000,
+      });
+      const ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
+      this.add(ballMesh);
+    });
+
+    const LEDLightGeometry = new THREE.PlaneGeometry(10, planeSize - 0.1);
+    LEDLightGeometry.rotateZ(Math.PI / 2);
+    const LEDLightMaterial = new THREE.MeshPhongMaterial({
+      color: 0xff0000,
+      emissive: 0xfffffff,
+    });
+    const LEDMesh = new THREE.Mesh(LEDLightGeometry, LEDLightMaterial);
+    LEDMesh.translateY(115);
+    LEDMesh.translateZ(-planeSize / 2 + 0.2);
+    this.add(LEDMesh);
+
+    const LEDMeshCopy = LEDMesh.clone();
+    LEDMeshCopy.translateZ(planeSize / 2 + 0.2);
+    LEDMeshCopy.translateX(planeSize / 2 - 0.2);
+    LEDMeshCopy.rotateY(-Math.PI / 2);
+    this.add(LEDMeshCopy);
     /* const backLight = new THREE.SpotLight(0xa66fb5);
     backLight.position.set(300, 150, -300);
     backLight.intensity = 20;

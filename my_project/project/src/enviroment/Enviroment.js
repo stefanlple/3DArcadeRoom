@@ -100,9 +100,9 @@ export default class Enviroment extends THREE.Group {
     const nameTextLoader = new FontLoader();
 
     nameTextLoader.load("../project/src/fonts/arcade_regular.json", (fonts) => {
-      const nameTextGeometry = new TextGeometry("STEFAN LE", {
+      const nameTextGeometry = new TextGeometry("-STEFAN LE-", {
         height: 4,
-        size: 24,
+        size: 21,
         font: fonts,
       });
       const nameTextMaterial = new THREE.MeshPhongMaterial({
@@ -113,7 +113,7 @@ export default class Enviroment extends THREE.Group {
       this.add(textMesh);
       textMesh.translateY((planeSize / 5) * 1.6);
       textMesh.translateZ(-planeSize / 2 + 1);
-      textMesh.translateX(-70);
+      textMesh.translateX(-80);
     });
 
     const leftPlaneBallLight = [1];

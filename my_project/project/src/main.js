@@ -20,15 +20,13 @@ function main() {
   window.scene.add(new THREE.AxesHelper(200));
   window.scene.name = "scene";
 
-  window.physics = new Physics();
-  window.physics.setup(0, -200, 0, 1 / 240, true);
-
   const arcade = new Arcade();
   arcade.position.set(100 - 17.5338, 0, 0);
   window.scene.add(arcade);
 
   const blenderArcade = new BlenderArcade();
   blenderArcade.position.set(100 - 17.5338, 0, 60);
+  blenderArcade.addPhysics();
   window.scene.add(blenderArcade);
 
   const room = new Enviroment();
@@ -44,6 +42,9 @@ function main() {
   const camera = new Camera();
   room.add(camera);
   camera.instanciate(window);
+
+  window.physics = new Physics(true);
+  window.physics.setup(0, -200, 0, 1 / 240, true);
 
   //Animations onKeyDown
   const joystick = arcade.children[3];
@@ -62,7 +63,7 @@ function main() {
 
   let cylinder;
 
-  setTimeout(() => {
+  /*   setTimeout(() => {
     blenderArcade.children.unshift(blenderArcade.children.pop());
     blenderJoystick = blenderArcade.children[0]?.children[0];
     blenderButton2 = blenderArcade.children[0]?.children[1];
@@ -70,7 +71,7 @@ function main() {
     cylinder = blenderArcade.children[0]?.children[6];
     blenderScreen = blenderArcade.children[0]?.children[10];
   }, 1000);
-
+ */
   let cameraObject;
   //find camera
   screen.traverseAncestors((parent) => {
@@ -222,8 +223,20 @@ function main() {
   function mainLoop() {
     stats.begin();
     const delta = clock.getDelta();
+    window.physics.update(delta);
     blenderArcade.setPedalPositionAnimation(blenderArcade.children[0]);
     arcade.pedalAnimation(arcade);
+
+    if (blenderArcade.loadingDone) {
+      blenderArcade.children.unshift(blenderArcade.children.pop());
+      blenderJoystick = blenderArcade.children[0]?.children[0];
+      blenderButton2 = blenderArcade.children[0]?.children[1];
+      blenderButton3 = blenderArcade.children[0]?.children[2];
+      cylinder = blenderArcade.children[0]?.children[6];
+      blenderScreen = blenderArcade.children[0]?.children[10];
+      blenderArcade.loadingDone = false;
+    }
+
     //arcade game
     if (arcade.state.inGame) {
       screen.traverse((child) => {
@@ -275,7 +288,7 @@ function main() {
     }
 
     TWEEN.update();
-    window.physics.update(delta);
+
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);
     stats.end();

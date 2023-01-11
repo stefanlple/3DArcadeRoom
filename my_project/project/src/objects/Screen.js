@@ -12,7 +12,6 @@ export default class Screen extends THREE.Group {
   addParts() {
     this.createScreen();
     this.changeScreenState = (arcadeState) => {
-      console.log(this.screenState);
       if (this.screenState === "game") {
         this.traverse((child) => {
           if (child.name === "spaceInvadersScreen") {

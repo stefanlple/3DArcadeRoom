@@ -117,10 +117,9 @@ export default class BlenderArcade extends THREE.Group {
         if (child.name === "Cylinder") {
           child.tweenAnimation = rotateCylinder(child);
         }
-
-        thisTelevision.add(gltf.scene);
-        thisTelevision.loadingDone = true;
       });
+      thisTelevision.add(gltf.scene);
+      thisTelevision.loadingDone = true;
       /* screen */
       const screen = new Screen();
       screen.translateX(-0.517 * 35);
@@ -303,6 +302,23 @@ export default class BlenderArcade extends THREE.Group {
         Math.sin(cylinderBody.rotation.y + Math.PI) * 35 * 0.345549 +
           0.459419 * 35,
         0.1548315 * 35
+      );
+    }
+  }
+
+  addPhysics() {
+    if (this.loadingDone === false) {
+      window.setTimeout(this.addPhysics.bind(this), 100);
+    } else {
+      const boundingBox = new THREE.Box3().setFromObject(this);
+      const boudingBoxSize = new THREE.Vector3();
+      boundingBox.getSize(boudingBoxSize);
+      windows.physics.addBox(
+        this,
+        10,
+        boudingBoxSize.x,
+        boudingBoxSize.y,
+        boundingBox.z
       );
     }
   }

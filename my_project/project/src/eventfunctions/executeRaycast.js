@@ -48,7 +48,6 @@ export function executeRaycast() {
           blenderArcade.state
         );
       });
-      console.log(blenderArcade);
     }
   }
   function findParentByName(object, identifier) {

@@ -33,7 +33,7 @@ export default class Enviroment extends THREE.Group {
 
     const wallGeometry = new THREE.PlaneGeometry(
       planeSize,
-      (2 / 3) * planeSize
+      (2.8 / 4) * planeSize
     );
     const planeMaterialGrey = new THREE.MeshLambertMaterial({
       side: THREE.DoubleSide,
@@ -65,7 +65,7 @@ export default class Enviroment extends THREE.Group {
     });
     groundMirror.position.y = -0.2;
     groundMirror.rotateX(-Math.PI / 2);
-    scene.add(groundMirror);
+    this.add(groundMirror);
 
     //light
     const ambientLight = new THREE.AmbientLight(0xffffff);
@@ -74,7 +74,7 @@ export default class Enviroment extends THREE.Group {
 
     const spotLight = new THREE.SpotLight(0xffb7c5);
     spotLight.position.set(-300, 100, 300);
-    spotLight.intensity = 2;
+    spotLight.intensity = 2.2;
     spotLight.target = floor;
     spotLight.angle = THREE.MathUtils.degToRad(30);
     spotLight.penumbra = 1.0;
@@ -99,25 +99,22 @@ export default class Enviroment extends THREE.Group {
 
     const nameTextLoader = new FontLoader();
 
-    nameTextLoader.load(
-      "../../../../lib/three.js-r145/examples/fonts/helvetiker_bold.typeface.json",
-      (fonts) => {
-        const nameTextGeometry = new TextGeometry("STEFAN LE", {
-          height: 2,
-          size: 18,
-          font: fonts,
-        });
-        const nameTextMaterial = new THREE.MeshPhongMaterial({
-          color: 0xffc000,
-          emissive: 0xffc000,
-        });
-        const textMesh = new THREE.Mesh(nameTextGeometry, nameTextMaterial);
-        this.add(textMesh);
-        textMesh.translateY((planeSize / 5) * 1.6);
-        textMesh.translateZ(-planeSize / 2 + 1);
-        textMesh.translateX(-70);
-      }
-    );
+    nameTextLoader.load("../project/src/fonts/arcade_regular.json", (fonts) => {
+      const nameTextGeometry = new TextGeometry("STEFAN LE", {
+        height: 4,
+        size: 24,
+        font: fonts,
+      });
+      const nameTextMaterial = new THREE.MeshPhongMaterial({
+        color: 0xff5733,
+        emissive: 0xff5733,
+      });
+      const textMesh = new THREE.Mesh(nameTextGeometry, nameTextMaterial);
+      this.add(textMesh);
+      textMesh.translateY((planeSize / 5) * 1.6);
+      textMesh.translateZ(-planeSize / 2 + 1);
+      textMesh.translateX(-70);
+    });
 
     const leftPlaneBallLight = [1];
     leftPlaneBallLight.forEach((e) => {
@@ -130,14 +127,14 @@ export default class Enviroment extends THREE.Group {
       this.add(ballMesh);
     });
 
-    const LEDLightGeometry = new THREE.PlaneGeometry(10, planeSize - 0.1);
+    const LEDLightGeometry = new THREE.PlaneGeometry(5, planeSize);
     LEDLightGeometry.rotateZ(Math.PI / 2);
     const LEDLightMaterial = new THREE.MeshPhongMaterial({
-      color: 0xff0000,
-      emissive: 0xfffffff,
+      color: 0xbf40bf,
+      emissive: 0xbf40bf,
     });
     const LEDMesh = new THREE.Mesh(LEDLightGeometry, LEDLightMaterial);
-    LEDMesh.translateY(115);
+    LEDMesh.translateY(128);
     LEDMesh.translateZ(-planeSize / 2 + 0.2);
     this.add(LEDMesh);
 
@@ -146,6 +143,26 @@ export default class Enviroment extends THREE.Group {
     LEDMeshCopy.translateX(planeSize / 2 - 0.2);
     LEDMeshCopy.rotateY(-Math.PI / 2);
     this.add(LEDMeshCopy);
+
+    const LEDLightGeometryCyan = new THREE.PlaneGeometry(5, planeSize);
+    LEDLightGeometryCyan.rotateZ(Math.PI / 2);
+    const LEDLightCyanMaterial = new THREE.MeshPhongMaterial({
+      color: 0x3f888f,
+      emissive: 0x3f888f,
+    });
+    const LEDCyanMesh = new THREE.Mesh(
+      LEDLightGeometryCyan,
+      LEDLightCyanMaterial
+    );
+    LEDCyanMesh.translateY(120);
+    LEDCyanMesh.translateZ(-planeSize / 2 + 0.2);
+    this.add(LEDCyanMesh);
+
+    const LEDCyanMeshCopy = LEDCyanMesh.clone();
+    LEDCyanMeshCopy.translateZ(planeSize / 2 + 0.2);
+    LEDCyanMeshCopy.translateX(planeSize / 2 - 0.2);
+    LEDCyanMeshCopy.rotateY(-Math.PI / 2);
+    this.add(LEDCyanMeshCopy);
     /* const backLight = new THREE.SpotLight(0xa66fb5);
     backLight.position.set(300, 150, -300);
     backLight.intensity = 20;

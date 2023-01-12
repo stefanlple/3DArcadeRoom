@@ -17,7 +17,7 @@ export default class Camera extends THREE.Group {
         0.1,
         1500
       );
-      window.camera.position.set(-220, 200, 220);
+      window.camera.position.set(-220, 160, 220);
       this.orbitControls = new CONTROLS.OrbitControls(
         window.camera,
         window.renderer.domElement

@@ -11,7 +11,9 @@ export default class Physics {
     this.bodies = [];
 
     if (debugRendering) {
-      this.debugger = new CannonDebugger(window.scene, this.world.bodies);
+      this.debugger = new CannonDebugger(window.scene, this.world);
+    } else {
+      this.debugger = null;
     }
   }
 
@@ -46,6 +48,11 @@ export default class Physics {
     for (let i = 0; i < this.objects.length; i++) {
       this.objects[i].position.copy(this.bodies[i].position);
       this.objects[i].quaternion.copy(this.bodies[i].quaternion);
+    }
+
+    // Update debugger
+    if (this.debugger !== null) {
+      this.debugger.update();
     }
   }
 

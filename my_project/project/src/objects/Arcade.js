@@ -899,7 +899,7 @@ export default class Arcade extends THREE.Group {
       return new TWEEN.Tween(object)
         .to({ intensity: 1 }, 9000)
         .easing(TWEEN.Easing.Sinusoidal.In)
-        .chain(new TWEEN.Tween(object).to({ intensity: 40 }, 1000))
+        .chain(new TWEEN.Tween(object).to({ intensity: 100 }, 1000))
         .onComplete(() => {
           this.state.powerOn = true;
         });
@@ -916,5 +916,21 @@ export default class Arcade extends THREE.Group {
     screen.translateX(-0.517 * 35);
     screen.translateY(1.85974 * 35);
     this.add(screen);
+  }
+
+  addPhysics() {
+    const boundingBox = new THREE.Box3().setFromObject(this);
+    const boudingBoxSize = new THREE.Vector3();
+    boundingBox.getSize(boudingBoxSize);
+    window.physics.addBox(
+      this,
+      10,
+      boudingBoxSize.x - 2,
+      boudingBoxSize.y,
+      boudingBoxSize.z,
+      -boudingBoxSize.x / 4,
+      boudingBoxSize.y / 2,
+      0
+    );
   }
 }

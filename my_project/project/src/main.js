@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import * as CONTROLS from "controls";
 import * as TWEEN from "tween";
 import Stats from "../../../../lib/three.js-r145/examples/jsm/libs/stats.module.js";
 
@@ -20,13 +19,17 @@ function main() {
   window.scene.add(new THREE.AxesHelper(200));
   window.scene.name = "scene";
 
+  window.physics = new Physics(true);
+  window.physics.setup(0, -200, 0, 1 / 240, true);
+
   const arcade = new Arcade();
   arcade.position.set(100 - 17.5338, 0, 0);
+  arcade.addPhysics();
   window.scene.add(arcade);
 
   const blenderArcade = new BlenderArcade();
   blenderArcade.position.set(100 - 17.5338, 0, 60);
-  blenderArcade.addPhysics();
+  //blenderArcade.addPhysics();
   window.scene.add(blenderArcade);
 
   const room = new Enviroment();
@@ -42,9 +45,6 @@ function main() {
   const camera = new Camera();
   room.add(camera);
   camera.instanciate(window);
-
-  window.physics = new Physics(true);
-  window.physics.setup(0, -200, 0, 1 / 240, true);
 
   //Animations onKeyDown
   const joystick = arcade.children[3];
@@ -234,6 +234,8 @@ function main() {
       blenderButton3 = blenderArcade.children[0]?.children[2];
       cylinder = blenderArcade.children[0]?.children[6];
       blenderScreen = blenderArcade.children[0]?.children[10];
+      blenderArcade.addPhysics();
+
       blenderArcade.loadingDone = false;
     }
 
@@ -288,7 +290,6 @@ function main() {
     }
 
     TWEEN.update();
-
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);
     stats.end();

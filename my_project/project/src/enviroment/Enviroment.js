@@ -20,7 +20,7 @@ export default class Enviroment extends THREE.Group {
     const planeMaterial = new THREE.MeshStandardMaterial({
       side: THREE.DoubleSide,
       metalness: 0.25,
-      roughness: 0.1,
+      roughness: 0.8,
       color: 0x151515,
       opacity: 0.75,
       transparent: true,
@@ -102,7 +102,7 @@ export default class Enviroment extends THREE.Group {
     nameTextLoader.load("../project/src/fonts/arcade_regular.json", (fonts) => {
       const nameTextGeometry = new TextGeometry("-STEFAN LE-", {
         height: 4,
-        size: 21,
+        size: 20,
         font: fonts,
       });
       const nameTextMaterial = new THREE.MeshPhongMaterial({
@@ -113,10 +113,10 @@ export default class Enviroment extends THREE.Group {
       this.add(textMesh);
       textMesh.translateY((planeSize / 5) * 1.6);
       textMesh.translateZ(-planeSize / 2 + 1);
-      textMesh.translateX(-80);
+      textMesh.translateX(-82);
     });
 
-    const leftPlaneBallLight = [1];
+    /* const leftPlaneBallLight = [1];
     leftPlaneBallLight.forEach((e) => {
       const ballGeometry = new THREE.SphereGeometry(1.5);
       const ballMaterial = new THREE.MeshPhongMaterial({
@@ -125,8 +125,9 @@ export default class Enviroment extends THREE.Group {
       });
       const ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
       this.add(ballMesh);
-    });
+    }); */
 
+    const translateLightY = 126;
     const LEDLightGeometry = new THREE.PlaneGeometry(5, planeSize);
     LEDLightGeometry.rotateZ(Math.PI / 2);
     const LEDLightMaterial = new THREE.MeshPhongMaterial({
@@ -134,7 +135,7 @@ export default class Enviroment extends THREE.Group {
       emissive: 0xbf40bf,
     });
     const LEDMesh = new THREE.Mesh(LEDLightGeometry, LEDLightMaterial);
-    LEDMesh.translateY(128);
+    LEDMesh.translateY(translateLightY);
     LEDMesh.translateZ(-planeSize / 2 + 0.2);
     this.add(LEDMesh);
 
@@ -154,7 +155,7 @@ export default class Enviroment extends THREE.Group {
       LEDLightGeometryCyan,
       LEDLightCyanMaterial
     );
-    LEDCyanMesh.translateY(120);
+    LEDCyanMesh.translateY(translateLightY - 8);
     LEDCyanMesh.translateZ(-planeSize / 2 + 0.2);
     this.add(LEDCyanMesh);
 

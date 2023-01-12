@@ -1,6 +1,9 @@
 import * as THREE from "three";
 import * as TWEEN from "tween";
 import Stats from "../../../../lib/three.js-r145/examples/jsm/libs/stats.module.js";
+import { EffectComposer } from "../../../../lib/three.js-r145/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "../../../../lib/three.js-r145/examples/jsm/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "../../../../lib/three.js-r145/examples/jsm/postprocessing/UnrealBloomPass.js";
 
 // Own modules
 import Arcade from "./objects/Arcade.js";
@@ -12,6 +15,11 @@ import Physics from "./physics/Physics.js";
 import { updateAspectRatio } from "./eventfunctions/updateAspectRatio.js";
 import { calculateMousePosition } from "./eventfunctions/calculateMousePosition.js";
 import { executeRaycast } from "./eventfunctions/executeRaycast.js";
+import {
+  keyDownAction,
+  keyUpAction,
+} from "./eventfunctions/executeKeyAction.js";
+
 import Camera from "./experience/Camera.js";
 
 function main() {
@@ -19,7 +27,7 @@ function main() {
   window.scene.add(new THREE.AxesHelper(200));
   window.scene.name = "scene";
 
-  window.physics = new Physics(true);
+  window.physics = new Physics(false);
   window.physics.setup(0, -200, 0, 1 / 240, true);
 
   const arcade = new Arcade();
@@ -40,11 +48,15 @@ function main() {
   window.renderer.setClearColor();
   window.renderer.shadowMap.enabled = true;
 
-  document.getElementById("3d_content").appendChild(window.renderer.domElement);
-
   const camera = new Camera();
   room.add(camera);
   camera.instanciate(window);
+
+  const renderScene = new RenderPass(window.scene, window.camera);
+  const composer = new EffectComposer(window.renderer);
+  composer.addPass(renderScene);
+
+  document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
   //Animations onKeyDown
   const joystick = arcade.children[3];
@@ -289,6 +301,7 @@ function main() {
       }
     }
 
+    composer.render();
     TWEEN.update();
     window.renderer.render(window.scene, window.camera);
     requestAnimationFrame(mainLoop);
@@ -302,3 +315,5 @@ window.onload = main;
 window.onresize = updateAspectRatio;
 window.onmousemove = calculateMousePosition;
 window.onclick = executeRaycast;
+window.onkeydown = keyDownAction;
+window.onkeyup = keyUpAction;

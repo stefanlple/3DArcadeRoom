@@ -116,16 +116,25 @@ export default class Enviroment extends THREE.Group {
       textMesh.translateX(-82);
     });
 
-    /* const leftPlaneBallLight = [1];
-    leftPlaneBallLight.forEach((e) => {
-      const ballGeometry = new THREE.SphereGeometry(1.5);
-      const ballMaterial = new THREE.MeshPhongMaterial({
-        color: 0xffc000,
-        emissive: 0xffc000,
-      });
-      const ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
-      this.add(ballMesh);
-    }); */
+    nameTextLoader.load(
+      "../project/src/fonts/pressstart_2P_regular.json",
+      (fonts) => {
+        const nameTextGeometry = new TextGeometry("'(=^.^=)'", {
+          height: 4,
+          size: 8,
+          font: fonts,
+        });
+        const nameTextMaterial = new THREE.MeshPhongMaterial({
+          color: 0xff5733,
+          emissive: 0xff5733,
+        });
+        const textMesh = new THREE.Mesh(nameTextGeometry, nameTextMaterial);
+        this.add(textMesh);
+        textMesh.translateY((planeSize / 5) * 1.2);
+        textMesh.translateZ(-planeSize / 2 + 1);
+        textMesh.translateX(-57);
+      }
+    );
 
     const translateLightY = 126;
     const LEDLightGeometry = new THREE.PlaneGeometry(5, planeSize);
@@ -164,20 +173,7 @@ export default class Enviroment extends THREE.Group {
     LEDCyanMeshCopy.translateX(planeSize / 2 - 0.2);
     LEDCyanMeshCopy.rotateY(-Math.PI / 2);
     this.add(LEDCyanMeshCopy);
-    /* const backLight = new THREE.SpotLight(0xa66fb5);
-    backLight.position.set(300, 150, -300);
-    backLight.intensity = 20;
-    backLight.target = floor;
-    backLight.angle = THREE.MathUtils.degToRad(30);
-    backLight.penumbra = 0.5;
-    backLight.castShadow = true;
-    backLight.shadow.mapSize.set(2048, 2048);
-    backLight.shadow.camera.aspect = 1;
-    backLight.shadow.camera.near = 250;
-    backLight.shadow.camera.far = 800;
-    this.add(backLight);
-    window.scene.add(new THREE.CameraHelper(backLight.shadow.camera));
-*/
+
     const gui = new DATGUI.GUI();
     gui.add(spotLight.position, "x", -400, 400);
     gui.add(spotLight.position, "y", -200, 400);

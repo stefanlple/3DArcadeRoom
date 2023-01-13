@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import * as DATGUI from "datgui";
-import * as CONTROLS from "controls";
+import * as CANNON from "../../../../lib/cannon-es-0.20.0/dist/cannon-es.js";
 import { Reflector } from "../../../../lib/three.js-r145/examples/jsm/objects/Reflector.js";
 import { FontLoader } from "../../../../lib/three.js-r145/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "../../../../lib/three.js-r145/examples/jsm/geometries/TextGeometry.js";
@@ -55,6 +55,18 @@ export default class Enviroment extends THREE.Group {
     wall1.position.y = (1 / 3) * planeSize;
     wall1.position.z = 0;
     this.add(wall1);
+
+    const addPhysicsToWall = (wall) => {
+      window.physics.addBox(wall, 100000, 10, 120, 180, 0, 0, 0, true);
+      window.physics.getBody(wall).fixedRotation = true;
+      window.physics.getBody(wall).updateMassProperties();
+      window.physics
+        .getBody(wall)
+        .quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), wall.rotation.y);
+    };
+
+    addPhysicsToWall(wall0);
+    addPhysicsToWall(wall1);
 
     //mirror
     const groundMirror = new Reflector(planeGeometry, {
@@ -173,6 +185,18 @@ export default class Enviroment extends THREE.Group {
     LEDCyanMeshCopy.translateX(planeSize / 2 - 0.2);
     LEDCyanMeshCopy.rotateY(-Math.PI / 2);
     this.add(LEDCyanMeshCopy);
+
+    const pictureGeometry = new THREE.PlaneGeometry(48, 65);
+    const pictureMaterial = new THREE.MeshBasicMaterial({
+      side: THREE.DoubleSide,
+      color: 0xffffff,
+    });
+    const picture = new THREE.Mesh(pictureGeometry, pictureMaterial);
+    picture.rotation.set(0, Math.PI / 2, 0);
+    picture.translateY(70);
+    picture.translateX(60);
+    picture.translateZ(planeSize / 2 - 0.3);
+    this.add(picture);
 
     const gui = new DATGUI.GUI();
     gui.add(spotLight.position, "x", -400, 400);

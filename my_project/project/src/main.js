@@ -27,7 +27,7 @@ function main() {
   window.scene.add(new THREE.AxesHelper(200));
   window.scene.name = "scene";
 
-  window.physics = new Physics(false);
+  window.physics = new Physics(true);
   window.physics.setup(0, -200, 0, 1 / 240, true);
 
   const arcade = new Arcade();

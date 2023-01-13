@@ -193,4 +193,7 @@ export default class Physics {
     // Register object-body-pair
     this.addPair(object, body);
   }
+  getBody(object) {
+    return this.bodies[this.objects.indexOf(object)];
+  }
 }

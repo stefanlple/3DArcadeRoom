@@ -27,7 +27,7 @@ function main() {
   window.scene.add(new THREE.AxesHelper(200));
   window.scene.name = "scene";
 
-  window.physics = new Physics(true);
+  window.physics = new Physics(false);
   window.physics.setup(0, -200, 0, 1 / 240, true);
 
   const arcade = new Arcade();
@@ -318,6 +318,18 @@ function main() {
   mainLoop();
 }
 
+/* document.getElementById("startButton").addEventListener("click", function (event) {
+  let highPerformance = document.getElementById("checkBox").checked;
+  console.log("HighPerformance: " + highPerformance);
+  main(highPerformance);
+  document.getElementById("overlay").remove();
+  window.onresize = updateAspectRatio;
+  window.onmousemove = calculateMousePosition;
+  window.onclick = executeRaycast;
+  window.onkeydown = keyDownAction;
+  window.onkeyup = keyUpAction;
+});
+ */
 window.onload = main;
 window.onresize = updateAspectRatio;
 window.onmousemove = calculateMousePosition;

@@ -8,7 +8,7 @@ export function keyDownAction(event) {
       if (!window.spaceDown) {
         window.spaceDown = true;
 
-        const ballRadius = 2;
+        const ballRadius = 40;
         const ballGeometry = new THREE.SphereGeometry(ballRadius, 16, 16);
         const ball = new THREE.Mesh(
           ballGeometry,
@@ -31,7 +31,7 @@ export function keyDownAction(event) {
         velocityVectorWC.multiplyScalar(800);
         window.physics.addSphereWithVelocity(
           ball,
-          1,
+          100,
           ballRadius,
           velocityVectorWC
         );

@@ -44,29 +44,43 @@ export default class Enviroment extends THREE.Group {
     wall0.receiveShadow = true;
     wall0.castShadow = true;
     wall0.position.z = -planeSize / 2;
-    wall0.position.y = (1 / 3) * planeSize;
+    wall0.position.y = ((2.8 / 4) * planeSize) / 2;
+    wall0.rotateY(Math.PI);
     this.add(wall0);
 
     const wall1 = wall0.clone();
     wall1.receiveShadow = true;
     wall1.castShadow = true;
-    wall1.rotateY((1 / 2) * Math.PI);
     wall1.position.x = planeSize / 2;
-    wall1.position.y = (1 / 3) * planeSize;
     wall1.position.z = 0;
     this.add(wall1);
 
-    const addPhysicsToWall = (wall) => {
-      window.physics.addBox(wall, 100000, 10, 120, 180, 0, 0, 0, true);
+    const addPhysicsToWall = (wall, rotate = false) => {
+      const boundingBox = new THREE.Box3().setFromObject(wall);
+      const boudingBoxSize = new THREE.Vector3();
+      boundingBox.getSize(boudingBoxSize);
+      window.physics.addBox(
+        wall,
+        100000,
+        boudingBoxSize.x,
+        boudingBoxSize.y,
+        boudingBoxSize.z,
+        0,
+        0,
+        0
+      );
       window.physics.getBody(wall).fixedRotation = true;
       window.physics.getBody(wall).updateMassProperties();
-      window.physics
-        .getBody(wall)
-        .quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), wall.rotation.y);
+      window.physics.getBody(wall).velocity.set(0, 0, 0);
+      if (rotate) {
+        const axis = new CANNON.Vec3(0, 1, 0);
+        const angle = Math.PI / 2;
+        window.physics.getBody(wall).quaternion.setFromAxisAngle(axis, angle);
+      }
     };
 
     addPhysicsToWall(wall0);
-    addPhysicsToWall(wall1);
+    addPhysicsToWall(wall1, true);
 
     //mirror
     const groundMirror = new Reflector(planeGeometry, {

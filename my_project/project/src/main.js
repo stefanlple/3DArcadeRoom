@@ -37,7 +37,6 @@ function main() {
 
   const blenderArcade = new BlenderArcade();
   blenderArcade.position.set(100 - 17.5338, 0, 60);
-  //blenderArcade.addPhysics();
   window.scene.add(blenderArcade);
 
   const room = new Enviroment();
@@ -55,6 +54,13 @@ function main() {
   const renderScene = new RenderPass(window.scene, window.camera);
   const composer = new EffectComposer(window.renderer);
   composer.addPass(renderScene);
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    1.6,
+    0.1,
+    0.1
+  );
+  composer.addPass(bloomPass);
 
   document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
@@ -247,7 +253,8 @@ function main() {
       cylinder = blenderArcade.children[0]?.children[6];
       blenderScreen = blenderArcade.children[0]?.children[10];
       blenderArcade.addPhysics();
-
+      arcade.addSound();
+      blenderArcade.addSound();
       blenderArcade.loadingDone = false;
     }
 

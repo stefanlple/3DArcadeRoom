@@ -933,4 +933,15 @@ export default class Arcade extends THREE.Group {
       0
     );
   }
+  addSound() {
+    const sound = new THREE.PositionalAudio(window.camera.children[0]);
+    const audioLoader = new THREE.AudioLoader();
+    audioLoader.load("src/sounds/space_invaders.mp3", function (buffer) {
+      sound.setBuffer(buffer);
+      sound.setRefDistance(20);
+      sound.setVolume(0.5);
+      sound.setLoop(true);
+    });
+    this.add(sound);
+  }
 }

@@ -41,7 +41,7 @@ export default class Camera extends THREE.Group {
       audioLoader.load("./src/sounds/arcade_background.mp3", function (buffer) {
         sound.setBuffer(buffer);
         sound.setLoop(true);
-        sound.setVolume(0.5);
+        sound.setVolume(0.015);
         sound.play();
       });
     };
@@ -49,7 +49,14 @@ export default class Camera extends THREE.Group {
     this.setAnimations = () => {
       this.animations = {};
 
+      let scene;
+      let arcade;
+      let blenderArcade;
+
       this.animations.orbit = (duration) => {
+        arcade?.children[10].stop();
+        blenderArcade?.children[15].stop();
+
         new TWEEN.Tween(window.camera)
           .to(
             {
@@ -68,9 +75,6 @@ export default class Camera extends THREE.Group {
       };
 
       this.animations.threeJSArcade = (duration, finished) => {
-        let scene;
-        let arcadeScreen;
-        let arcade;
         this.traverseAncestors((parent) => {
           if (parent.name === "scene") {
             scene = parent;
@@ -78,10 +82,10 @@ export default class Camera extends THREE.Group {
         });
         scene.traverse((child) => {
           if (child.name === "arcade") {
-            arcadeScreen = child.children[9];
             arcade = child;
           }
         });
+        arcade.children[10].play();
         new TWEEN.Tween(window.camera)
           .to(
             {
@@ -105,9 +109,6 @@ export default class Camera extends THREE.Group {
       };
 
       this.animations.blenderArcade = (duration, finished) => {
-        let scene;
-        let blenderArcadeScreen;
-        let blenderArcade;
         this.traverseAncestors((parent) => {
           if (parent.name === "scene") {
             scene = parent;
@@ -115,10 +116,12 @@ export default class Camera extends THREE.Group {
         });
         scene.traverse((child) => {
           if (child.name === "blenderArcade") {
-            blenderArcadeScreen = child.children[17];
             blenderArcade = child;
           }
         });
+
+        blenderArcade.children[15].play();
+
         new TWEEN.Tween(window.camera)
           .to(
             {

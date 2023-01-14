@@ -231,7 +231,7 @@ function main() {
 
   const clock = new THREE.Clock();
   const stats = new Stats();
-  document.body.appendChild(stats.dom);
+  //document.body.appendChild(stats.dom);
 
   function mainLoop() {
     stats.begin();

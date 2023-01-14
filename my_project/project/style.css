@@ -1,5 +1,5 @@
 :root {
-  --clr-neon: #3964c3;
+  --clr-neon: #4d74c9;
   --clr-bg: #060a13;
 }
 
@@ -18,7 +18,6 @@ body {
   background: var(--clr-bg);
   font-family: "Balsamiq Sans";
   color: var(--clr-neon);
-  padding-right: 20rem;
 }
 
 #startButton {
@@ -80,4 +79,8 @@ body {
 #startButton:hover::after,
 #startButton:focus::after {
   opacity: 1;
+}
+
+#overlay {
+  transform: translate(0%, 155%);
 }

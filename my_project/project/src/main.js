@@ -44,19 +44,19 @@ function main() {
   room.add(camera);
   camera.instanciate(window);
 
-  /* const renderScene = new RenderPass(window.scene, window.camera);
+  /*  const renderScene = new RenderPass(window.scene, window.camera);
   const composer = new EffectComposer(window.renderer);
   composer.addPass(renderScene);
 
   const bloomPass = new UnrealBloomPass(
     new THREE.Vector2(window.innerWidth, window.innerHeight),
     1,
-    0.1,
-    1
+    0,
+    0
   );
-  composer.addPass(bloomPass); 
+  composer.addPass(bloomPass); */
 
-  renderer.toneMapping = THREE.CineonToneMapping;
+  /* renderer.toneMapping = THREE.CineonToneMapping;
   renderer.toneMappingExposure = 1.5; */
 
   const arcade = new Arcade();
@@ -305,7 +305,7 @@ function main() {
     TWEEN.update();
 
     /* bloom filter */
-    //composer.render();
+    /* composer.render(); */
 
     /* without filter */
     window.renderer.render(window.scene, window.camera);

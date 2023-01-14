@@ -41,7 +41,7 @@ export default class Camera extends THREE.Group {
       audioLoader.load("./src/sounds/arcade_background.mp3", function (buffer) {
         sound.setBuffer(buffer);
         sound.setLoop(true);
-        sound.setVolume(0.015);
+        sound.setVolume(0.0175);
         sound.play();
       });
     };

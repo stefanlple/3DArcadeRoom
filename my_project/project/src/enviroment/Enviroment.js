@@ -204,12 +204,14 @@ export default class Enviroment extends THREE.Group {
     const pictureMaterial = new THREE.MeshBasicMaterial({
       side: THREE.DoubleSide,
       color: 0xffffff,
+      map: new THREE.TextureLoader().load("src/images/Poster.png"),
     });
     const picture = new THREE.Mesh(pictureGeometry, pictureMaterial);
-    picture.rotation.set(0, Math.PI / 2, 0);
+
     picture.translateY(70);
     picture.translateX(60);
     picture.translateZ(planeSize / 2 - 0.3);
+    picture.rotation.set(0, (3 / 2) * Math.PI, 0);
     this.add(picture);
 
     const gui = new DATGUI.GUI();

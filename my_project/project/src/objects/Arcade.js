@@ -899,7 +899,7 @@ export default class Arcade extends THREE.Group {
       return new TWEEN.Tween(object)
         .to({ intensity: 1 }, 9000)
         .easing(TWEEN.Easing.Sinusoidal.In)
-        .chain(new TWEEN.Tween(object).to({ intensity: 100 }, 1000))
+        .chain(new TWEEN.Tween(object).to({ intensity: 150 }, 1000))
         .onComplete(() => {
           this.state.powerOn = true;
         });

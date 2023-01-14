@@ -24,7 +24,7 @@ import Camera from "./experience/Camera.js";
 
 function main() {
   window.scene = new THREE.Scene();
-  window.scene.add(new THREE.AxesHelper(200));
+  //window.scene.add(new THREE.AxesHelper(200));
   window.scene.name = "scene";
 
   window.renderer = new THREE.WebGLRenderer({ antialias: true });

@@ -110,7 +110,7 @@ export default class Enviroment extends THREE.Group {
     spotLight.shadow.camera.near = 10;
     spotLight.shadow.camera.far = 1500;
     this.add(spotLight);
-    window.scene.add(new THREE.CameraHelper(spotLight.shadow.camera));
+    //window.scene.add(new THREE.CameraHelper(spotLight.shadow.camera));
 
     const planeSize1 = 1200;
     const planeGeometry1 = new THREE.PlaneGeometry(planeSize1, planeSize1);

@@ -317,21 +317,21 @@ function main() {
   mainLoop();
 }
 
-/* document.getElementById("startButton").addEventListener("click", function (event) {
-  let highPerformance = document.getElementById("checkBox").checked;
-  console.log("HighPerformance: " + highPerformance);
-  main(highPerformance);
-  document.getElementById("overlay").remove();
-  window.onresize = updateAspectRatio;
-  window.onmousemove = calculateMousePosition;
-  window.onclick = executeRaycast;
-  window.onkeydown = keyDownAction;
-  window.onkeyup = keyUpAction;
-});
- */
-window.onload = main;
+document
+  .getElementById("startButton")
+  .addEventListener("click", function (event) {
+    main();
+    document.getElementById("overlay").remove();
+    window.onresize = updateAspectRatio;
+    window.onmousemove = calculateMousePosition;
+    window.onclick = executeRaycast;
+    window.onkeydown = keyDownAction;
+    window.onkeyup = keyUpAction;
+  });
+
+/* window.onload = main;
 window.onresize = updateAspectRatio;
 window.onmousemove = calculateMousePosition;
 window.onclick = executeRaycast;
 window.onkeydown = keyDownAction;
-window.onkeyup = keyUpAction;
+window.onkeyup = keyUpAction; */

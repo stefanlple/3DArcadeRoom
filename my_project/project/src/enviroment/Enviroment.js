@@ -209,14 +209,14 @@ export default class Enviroment extends THREE.Group {
     const picture = new THREE.Mesh(pictureGeometry, pictureMaterial);
 
     picture.translateY(70);
-    picture.translateX(60);
-    picture.translateZ(planeSize / 2 - 0.3);
+    picture.translateX(planeSize / 2 - 0.3);
+    picture.translateZ(-60);
     picture.rotation.set(0, (3 / 2) * Math.PI, 0);
     this.add(picture);
 
-    const gui = new DATGUI.GUI();
+    /* const gui = new DATGUI.GUI();
     gui.add(spotLight.position, "x", -400, 400);
     gui.add(spotLight.position, "y", -200, 400);
-    gui.add(spotLight.position, "z", -400, 400);
+    gui.add(spotLight.position, "z", -400, 400); */
   }
 }

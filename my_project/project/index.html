@@ -6,7 +6,10 @@
     <link rel="shortcut icon" href="#" />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body style="margin: 0; overflow: hidden background-color=black">
+  <body>
+    <div id="overlay" style="transform: translate(50%, 100%)">
+      <a id="startButton">START</a>
+    </div>
     <div id="3d_content"></div>
     <script type="importmap">
       {
@@ -22,13 +25,5 @@
     <script type="module" src="./src/main.js"></script>
 
     <!-- Overlay for initial interaction (audio context creation precondition) -->
-
-    <!-- <div id="overlay" style="transform: translate(50%, 100%)">
-      <a href="#" id="startButton">START</a>
-      <input type="checkbox" id="checkBox" />
-      <label for="checkBox" style="color: white">High Performance Mode</label>
-    </div>
-  
-  <div class="bg"></div> -->
   </body>
 </html>

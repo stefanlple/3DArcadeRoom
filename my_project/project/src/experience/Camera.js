@@ -17,7 +17,7 @@ export default class Camera extends THREE.Group {
         0.1,
         1500
       );
-      window.camera.position.set(-220, 160, 220);
+      window.camera.position.set(-207, 150, 207);
       this.orbitControls = new CONTROLS.OrbitControls(
         window.camera,
         window.renderer.domElement
@@ -60,7 +60,7 @@ export default class Camera extends THREE.Group {
         new TWEEN.Tween(window.camera)
           .to(
             {
-              position: new THREE.Vector3(-250, 200, 250),
+              position: new THREE.Vector3(-207, 170, 207),
               quaternion: new THREE.Quaternion(
                 -0.20780122565338044,
                 -0.372877809926707,

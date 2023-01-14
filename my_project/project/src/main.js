@@ -27,8 +27,37 @@ function main() {
   window.scene.add(new THREE.AxesHelper(200));
   window.scene.name = "scene";
 
+  window.renderer = new THREE.WebGLRenderer({ antialias: true });
+  window.renderer.setSize(window.innerWidth, window.innerHeight);
+  window.renderer.setClearColor();
+  window.renderer.shadowMap.enabled = true;
+
+  document.getElementById("3d_content").appendChild(window.renderer.domElement);
+
   window.physics = new Physics(false);
   window.physics.setup(0, -200, 0, 1 / 240, true);
+
+  const room = new Enviroment();
+  window.scene.add(room);
+
+  const camera = new Camera();
+  room.add(camera);
+  camera.instanciate(window);
+
+  /* const renderScene = new RenderPass(window.scene, window.camera);
+  const composer = new EffectComposer(window.renderer);
+  composer.addPass(renderScene);
+
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    1,
+    0.1,
+    1
+  );
+  composer.addPass(bloomPass); 
+
+  renderer.toneMapping = THREE.CineonToneMapping;
+  renderer.toneMappingExposure = 1.5; */
 
   const arcade = new Arcade();
   arcade.position.set(100 - 17.5338, 0, 0);
@@ -38,31 +67,6 @@ function main() {
   const blenderArcade = new BlenderArcade();
   blenderArcade.position.set(100 - 17.5338, 0, 60);
   window.scene.add(blenderArcade);
-
-  const room = new Enviroment();
-  window.scene.add(room);
-
-  window.renderer = new THREE.WebGLRenderer({ antialias: true });
-  window.renderer.setSize(window.innerWidth, window.innerHeight);
-  window.renderer.setClearColor();
-  window.renderer.shadowMap.enabled = true;
-
-  const camera = new Camera();
-  room.add(camera);
-  camera.instanciate(window);
-
-  const renderScene = new RenderPass(window.scene, window.camera);
-  const composer = new EffectComposer(window.renderer);
-  composer.addPass(renderScene);
-  const bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    1.6,
-    0.1,
-    0.1
-  );
-  composer.addPass(bloomPass);
-
-  document.getElementById("3d_content").appendChild(window.renderer.domElement);
 
   //Animations onKeyDown
   const joystick = arcade.children[3];
@@ -81,15 +85,6 @@ function main() {
 
   let cylinder;
 
-  /*   setTimeout(() => {
-    blenderArcade.children.unshift(blenderArcade.children.pop());
-    blenderJoystick = blenderArcade.children[0]?.children[0];
-    blenderButton2 = blenderArcade.children[0]?.children[1];
-    blenderButton3 = blenderArcade.children[0]?.children[2];
-    cylinder = blenderArcade.children[0]?.children[6];
-    blenderScreen = blenderArcade.children[0]?.children[10];
-  }, 1000);
- */
   let cameraObject;
   //find camera
   screen.traverseAncestors((parent) => {
@@ -257,7 +252,6 @@ function main() {
       blenderArcade.addSound();
       blenderArcade.loadingDone = false;
     }
-
     //arcade game
     if (arcade.state.inGame) {
       screen.traverse((child) => {
@@ -308,9 +302,14 @@ function main() {
       }
     }
 
-    composer.render();
     TWEEN.update();
+
+    /* bloom filter */
+    //composer.render();
+
+    /* without filter */
     window.renderer.render(window.scene, window.camera);
+
     requestAnimationFrame(mainLoop);
     stats.end();
   }

@@ -1,9 +1,9 @@
 import * as THREE from "three";
 import * as TWEEN from "tween";
 import Stats from "../../../../lib/three.js-r145/examples/jsm/libs/stats.module.js";
-import { EffectComposer } from "../../../../lib/three.js-r145/examples/jsm/postprocessing/EffectComposer.js";
+/* import { EffectComposer } from "../../../../lib/three.js-r145/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "../../../../lib/three.js-r145/examples/jsm/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "../../../../lib/three.js-r145/examples/jsm/postprocessing/UnrealBloomPass.js";
+import { UnrealBloomPass } from "../../../../lib/three.js-r145/examples/jsm/postprocessing/UnrealBloomPass.js"; */
 
 // Own modules
 import Arcade from "./objects/Arcade.js";

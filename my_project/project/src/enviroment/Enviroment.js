@@ -84,7 +84,6 @@ export default class Enviroment extends THREE.Group {
 
     //mirror
     const groundMirror = new Reflector(planeGeometry, {
-      clipBias: 0.003,
       textureWidth: window.innerWidth * window.devicePixelRatio,
       textureHeight: window.innerHeight * window.devicePixelRatio,
       color: 0x777777,
@@ -109,6 +108,7 @@ export default class Enviroment extends THREE.Group {
     spotLight.shadow.camera.aspect = 1;
     spotLight.shadow.camera.near = 10;
     spotLight.shadow.camera.far = 1500;
+    spotLight.shadow.bias = -0.0001;
     this.add(spotLight);
     //window.scene.add(new THREE.CameraHelper(spotLight.shadow.camera));
 

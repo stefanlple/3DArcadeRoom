@@ -132,8 +132,8 @@ export default class BlenderArcade extends THREE.Group {
     RectAreaLightUniformsLib.init();
     const rectLightsWidth = (0.099132 * 35) / 3;
     const rectLightsProperties = [
-      //right side
-      {
+      /* //right side
+       {
         height: 1.18387 * 35,
         positionX: -0.865344 * 35 - 0.1,
         positionY: 0.57849 * 35,
@@ -153,7 +153,7 @@ export default class BlenderArcade extends THREE.Group {
         positionY: 1.50038 * 35 + 0.1,
         positionZ: -0.641495 * 35,
         rotationAngle: 90,
-      },
+      },*/
       {
         height: 0.828373 * 35,
         positionX: -0.5441965 * 35 - 0.1,
@@ -161,6 +161,7 @@ export default class BlenderArcade extends THREE.Group {
         positionZ: -0.641495 * 35,
         rotationAngle: 5.17,
       },
+      /*
       {
         height: 0.328721 * 35,
         positionX: -0.652325 * 35,
@@ -182,13 +183,7 @@ export default class BlenderArcade extends THREE.Group {
         positionZ: -0.641495 * 35,
         rotationAngle: 58.56,
       },
-      /* {
-        height: 1.05104 * 35,
-        positionX: -0.022425000000000028 * 35 - 0.1,
-        positionY: 2.84734 * 35 + 0.1,
-        positionZ: -0.641495 * 35,
-        rotationAngle: 97.91,
-      }, */
+
       //left side
       {
         height: 1.18387 * 35,
@@ -210,7 +205,7 @@ export default class BlenderArcade extends THREE.Group {
         positionY: 1.50038 * 35 + 0.1,
         positionZ: 0.641495 * 35,
         rotationAngle: 90,
-      },
+      },*/
       {
         height: 0.828373 * 35,
         positionX: -0.5441965 * 35 - 0.1,
@@ -218,7 +213,7 @@ export default class BlenderArcade extends THREE.Group {
         positionZ: 0.641495 * 35,
         rotationAngle: 5.17,
       },
-      {
+      /*{
         height: 0.328721 * 35,
         positionX: -0.652325 * 35,
         positionY: 2.40111 * 35 - 0.1,
@@ -238,13 +233,6 @@ export default class BlenderArcade extends THREE.Group {
         positionY: 2.847335 * 35 + 0.1,
         positionZ: 0.641495 * 35,
         rotationAngle: 58.56,
-      },
-      /* {
-        height: 1.05104 * 35,
-        positionX: -0.022425000000000028 * 35 - 0.1,
-        positionY: 2.84734 * 35 + 0.1,
-        positionZ: 0.641495 * 35,
-        rotationAngle: 97.91,
       }, */
     ];
 

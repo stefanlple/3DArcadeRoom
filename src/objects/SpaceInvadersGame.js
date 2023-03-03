@@ -1,6 +1,6 @@
 import * as THREE from "three";
-import { FontLoader } from "../../../../lib/three.js-r145/examples/jsm/loaders/FontLoader.js";
-import { TextGeometry } from "../../../../lib/three.js-r145/examples/jsm/geometries/TextGeometry.js";
+import { FontLoader } from "../../lib/three.js-r145/examples/jsm/loaders/FontLoader.js";
+import { TextGeometry } from "../../lib/three.js-r145/examples/jsm/geometries/TextGeometry.js";
 import { removeObject3D } from "../utility/removeObject3D.js";
 import * as TWEEN from "tween";
 import { MathUtils } from "three";
@@ -344,7 +344,7 @@ export default class SpaceInvadersGame extends THREE.Group {
       const scoreFontLoader = new FontLoader();
 
       scoreFontLoader.load(
-        "../../../../lib/three.js-r145/examples/fonts/helvetiker_bold.typeface.json",
+        "../../lib/three.js-r145/examples/fonts/helvetiker_bold.typeface.json",
         (fonts) => {
           const scoreTextGeometry = new TextGeometry(
             `${this.gameManager.score}`,

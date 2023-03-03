@@ -1,9 +1,9 @@
 import * as THREE from "three";
-import CSG from "../../../../lib/three-CSGMesh/three-csg.js";
+import CSG from "../../lib/three-CSGMesh/three-csg.js";
 import * as TWEEN from "tween";
 import Screen from "./Screen.js";
-import { RectAreaLightUniformsLib } from "../../../../lib/three.js-r145/examples/jsm/lights/RectAreaLightUniformsLib.js";
-import { RectAreaLightHelper } from "../../../../lib/three.js-r145/examples/jsm/helpers/RectAreaLightHelper.js";
+import { RectAreaLightUniformsLib } from "../../lib/three.js-r145/examples/jsm/lights/RectAreaLightUniformsLib.js";
+import { RectAreaLightHelper } from "../../lib/three.js-r145/examples/jsm/helpers/RectAreaLightHelper.js";
 
 export default class Arcade extends THREE.Group {
   constructor() {

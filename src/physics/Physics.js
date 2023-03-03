@@ -1,5 +1,5 @@
-import * as CANNON from "../../../../lib/cannon-es-0.20.0/dist/cannon-es.js";
-import CannonDebugger from "../../../../lib/cannon-es-debugger-1.0.0/dist/cannon-es-debugger.js";
+import * as CANNON from "../../lib/cannon-es-0.20.0/dist/cannon-es.js";
+import CannonDebugger from "../../lib/cannon-es-debugger-1.0.0/dist/cannon-es-debugger.js";
 
 export default class Physics {
   constructor(debugRendering = false) {

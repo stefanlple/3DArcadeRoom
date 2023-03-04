@@ -125,7 +125,7 @@ export default class Enviroment extends THREE.Group {
 
     const nameTextLoader = new FontLoader();
 
-    nameTextLoader.load("../src/fonts/arcade_regular.json", (fonts) => {
+    nameTextLoader.load("src/fonts/arcade_regular.json", (fonts) => {
       const nameTextGeometry = new TextGeometry("-STEFAN LE-", {
         height: 4,
         size: 20,
@@ -142,7 +142,7 @@ export default class Enviroment extends THREE.Group {
       textMesh.translateX(-82);
     });
 
-    nameTextLoader.load("../src/fonts/pressstart_2P_regular.json", (fonts) => {
+    nameTextLoader.load("src/fonts/pressstart_2P_regular.json", (fonts) => {
       const nameTextGeometry = new TextGeometry("'(=^.^=)'", {
         height: 4,
         size: 8,

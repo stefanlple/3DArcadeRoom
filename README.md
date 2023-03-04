@@ -2,6 +2,8 @@
 
 The two arcade-machines are interactable.
 
+#Link []()
+
 ## Manual
 
 - **Step 1**:

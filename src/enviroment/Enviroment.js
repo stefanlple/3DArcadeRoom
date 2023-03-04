@@ -125,7 +125,7 @@ export default class Enviroment extends THREE.Group {
 
     const nameTextLoader = new FontLoader();
 
-    nameTextLoader.load("../project/src/fonts/arcade_regular.json", (fonts) => {
+    nameTextLoader.load("../src/fonts/arcade_regular.json", (fonts) => {
       const nameTextGeometry = new TextGeometry("-STEFAN LE-", {
         height: 4,
         size: 20,
@@ -142,25 +142,22 @@ export default class Enviroment extends THREE.Group {
       textMesh.translateX(-82);
     });
 
-    nameTextLoader.load(
-      "../project/src/fonts/pressstart_2P_regular.json",
-      (fonts) => {
-        const nameTextGeometry = new TextGeometry("'(=^.^=)'", {
-          height: 4,
-          size: 8,
-          font: fonts,
-        });
-        const nameTextMaterial = new THREE.MeshPhongMaterial({
-          color: 0xff5733,
-          emissive: 0xff5733,
-        });
-        const textMesh = new THREE.Mesh(nameTextGeometry, nameTextMaterial);
-        this.add(textMesh);
-        textMesh.translateY((planeSize / 5) * 1.2);
-        textMesh.translateZ(-planeSize / 2 + 1);
-        textMesh.translateX(-57);
-      }
-    );
+    nameTextLoader.load("../src/fonts/pressstart_2P_regular.json", (fonts) => {
+      const nameTextGeometry = new TextGeometry("'(=^.^=)'", {
+        height: 4,
+        size: 8,
+        font: fonts,
+      });
+      const nameTextMaterial = new THREE.MeshPhongMaterial({
+        color: 0xff5733,
+        emissive: 0xff5733,
+      });
+      const textMesh = new THREE.Mesh(nameTextGeometry, nameTextMaterial);
+      this.add(textMesh);
+      textMesh.translateY((planeSize / 5) * 1.2);
+      textMesh.translateZ(-planeSize / 2 + 1);
+      textMesh.translateX(-57);
+    });
 
     const translateLightY = 126;
     const LEDLightGeometry = new THREE.PlaneGeometry(5, planeSize);

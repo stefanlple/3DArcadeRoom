@@ -2,11 +2,10 @@
 
 Interactive 3D Application. Built with Three.js
 
-The two arcade-machines are interactable.
-
 ## Link: [Website](https://super-pavlova-0d45ca.netlify.app/)
 
 ## Manual
+The two arcade-machines are interactable.
 
 - **Step 1**:
   Click on the machine to turn it on.

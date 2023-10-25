@@ -1,5 +1,7 @@
 # ARCADE-ROOM:
 
+Interactive 3D Application. Built with THREE.JS
+
 The two arcade-machines are interactable.
 
 ## Link: [Website](https://super-pavlova-0d45ca.netlify.app/)

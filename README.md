@@ -1,6 +1,6 @@
 # ARCADE-ROOM:
 
-Interactive 3D Application. Built with THREE.JS
+Interactive 3D Application. Built with Three.js
 
 The two arcade-machines are interactable.
 
